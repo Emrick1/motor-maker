@@ -1,6 +1,13 @@
 
 Motor maker unity/Library/
 Motor maker unity/Logs/
+Motor maker unity/Temp/
+Motor maker unity/Obj/
+Motor maker unity/Build/
+Motor maker unity/Builds/
+Motor maker unity/UserSettings/
+Motor maker unity/MemoryCaptures/
+
 # This .gitignore file should be placed at the root of your Unity project directory
 #
 # Get latest from https://github.com/github/gitignore/blob/main/Unity.gitignore
