@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-public class SwitchSceneToGarage : MonoBehaviour
+public class SwitchScene : MonoBehaviour
 {
-   public void SwitchToGarage()
+   public void SwitchTo(int sceneIndex)
    {
-      SceneManager.LoadSceneAsync(1);
+      SceneManager.LoadSceneAsync(sceneIndex);
    }
 }
