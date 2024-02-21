@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("MechanicalLibrary")]
+[assembly: AssemblyTitle("Mechanix")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("MechanicalLibrary")]
+[assembly: AssemblyProduct("Mechanix")]
 [assembly: AssemblyCopyright("Copyright ©  2024")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -19,7 +19,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("EBFC26A8-74DD-4FD3-9ED9-6729B9AC3C2B")]
+[assembly: Guid("391ECA89-D9AB-4100-9DDE-5C6916BB2D6C")]
 
 // Version information for an assembly consists of the following four values:
 //

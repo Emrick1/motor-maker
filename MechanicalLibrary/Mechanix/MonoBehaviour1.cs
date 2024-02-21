@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace MechanicalLibrary
+namespace Mechanix
 {
     public class MonoBehaviour1 : MonoBehaviour
     {
