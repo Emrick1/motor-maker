@@ -3,13 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization;
+using UnityEngine;
 using UnityEngine.Windows;
 
 
 namespace Mechanix
 {
     [Serializable]
-    public class Car
+    public class Car : MonoBehaviour
     {
         private Engine engine;
         private Gearbox gearbox;
