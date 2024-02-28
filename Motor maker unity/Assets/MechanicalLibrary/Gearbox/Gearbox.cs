@@ -47,14 +47,6 @@ namespace Mechanix
                 ratio *= (-1) ;}
 
             return ratio;
-        }
-
-            
-        
-
-        private double ratioOf(int driver, int follower)
-        {
-            return (double) follower / driver;
-        } 
+        }         
     }
 }
