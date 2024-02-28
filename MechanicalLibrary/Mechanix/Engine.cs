@@ -1,35 +1,69 @@
 ﻿namespace Mechanix
 {
-    public class Engine
+    public abstract class Engine : IMechanicalPiece
     {
         private double mass; //masse du moteur (kg)
-        private int nbCylindre; //nombre de cylindre
-        private double volume; //volume global (L)
-        private double volumeCylindre; //volume par cylindre (L)
         private double hp; //puissance du moteur (cheval vapeur)
-        private int rpmMax; //Rotations Par Minutes(RPM)
+        private int rpmMax; //Rotations Par Minutes(RPM) Maximum
+        private int rpmMin; //Rotations Par Minutes(RPM) Minimum
         private double torque; //rotation de base à la sortie du moteur(vers la transmission)
-
-        public Engine(double mass, int nbCylindre, double volume, double volumeCylindre, double hp, int rpmMax, double torque)
-        {
-            this.mass = mass;
-            this.nbCylindre = nbCylindre;
-            this.volume = volume;
-            this.volumeCylindre = volumeCylindre;
-            this.hp = hp;
-            this.rpmMax = rpmMax;
-            this.torque = torque;
-        }
+        private double energyConsumption; //indice de consommation d'énergie(par seconde)
 
         public Engine()
         {
-            this.mass = 0;
-            this.nbCylindre = 0;
-            this.volume = 0;
-            this.volumeCylindre = 0;
-            this.hp = 0;
-            this.rpmMax = 0;
-            this.torque = 0;
+            mass = 0;
+            hp = 0;
+            rpmMax = 0;
+            rpmMin = 0;
+            torque = 0;
+            energyConsumption = 0;
         }
+
+        protected Engine(double mass, double hp, int rpmMax, int rpmMin, double torque, double energyConsumption)
+        {
+            this.mass = mass;
+            this.hp = hp;
+            this.rpmMax = rpmMax;
+            this.rpmMin = rpmMin;
+            this.torque = torque;
+            this.energyConsumption = energyConsumption;
+        }
+
+        public double Mass
+        {
+            get => mass;
+            set => mass = value;
+        }
+
+        public double Hp
+        {
+            get => hp;
+            set => hp = value;
+        }
+
+        public int RpmMax
+        {
+            get => rpmMax;
+            set => rpmMax = value;
+        }
+
+        public int RpmMin
+        {
+            get => rpmMin;
+            set => rpmMin = value;
+        }
+
+        public double Torque
+        {
+            get => torque;
+            set => torque = value;
+        }
+        
+        public double EnergyConsumption
+        {
+            get => energyConsumption;
+            set => energyConsumption = value;
+        }
+
     }
 }
