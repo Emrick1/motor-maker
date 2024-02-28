@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Mechanix
 {
@@ -36,27 +37,16 @@ namespace Mechanix
             gears = new List<Gear>();
         }
 
-        public double calculateRatio()
+        public double calculateRatio(Gear menant, Gear menee, Boolean recule)
         {
-            double ratio = 1;
-            if (gears.Count >= 2)
-            {
-                Gear gear1;
-                Gear gear2;
-                for (int i = 0; i < gears.Count; i++)
-                {
-                    gear1 = gears[i - 1];
-                    gear2 = gears[i];
-                    ratio *= ratioOf(gear1.NbDents, gear2.NbDents);
-                }
-            }
+            double ratio;
+
+            ratio = (menant.NbDents/menee.NbDents);
+
+            if(recule) {
+                ratio *= (-1) ;}
 
             return ratio;
-        }
-
-        private double ratioOf(int driver, int follower)
-        {
-            return (double) follower / driver;
-        } 
+        }         
     }
 }
