@@ -1,6 +1,8 @@
-﻿namespace Mechanix
+﻿using UnityEngine;
+
+namespace Mechanix
 {
-    public class Transmission : IMechanicalPiece
+    public class Transmission : MonoBehaviour, IMechanicalPiece
     {
         
     }

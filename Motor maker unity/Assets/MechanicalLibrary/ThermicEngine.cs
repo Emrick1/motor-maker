@@ -1,4 +1,6 @@
-﻿namespace Mechanix
+﻿using UnityEngine;
+
+namespace Mechanix
 {
     public class ThermicEngine : Engine
     {

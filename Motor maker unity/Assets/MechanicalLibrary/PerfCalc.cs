@@ -1,6 +1,8 @@
-﻿namespace Mechanix
+﻿using UnityEngine;
+
+namespace Mechanix
 {
-    public class PerfCalc
+    public class PerfCalc : MonoBehaviour
     {
         private Car car;
         private int gearSelected = 0;//gearSelected

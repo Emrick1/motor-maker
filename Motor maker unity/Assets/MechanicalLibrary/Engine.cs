@@ -1,6 +1,8 @@
-﻿namespace Mechanix
+﻿using UnityEngine;
+
+namespace Mechanix
 {
-    public abstract class Engine : IMechanicalPiece
+    public abstract class Engine : MonoBehaviour, IMechanicalPiece 
     {
         private double mass; //masse du moteur (kg)
         private double hp; //puissance du moteur (cheval vapeur)

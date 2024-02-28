@@ -2,7 +2,7 @@
 
 namespace Mechanix
 {
-    public class ElectricEngine : Engine
+    public class ElectricEngine : Engine 
     {
         public ElectricEngine() : base()
         {

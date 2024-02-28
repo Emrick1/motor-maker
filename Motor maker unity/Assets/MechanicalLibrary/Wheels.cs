@@ -1,6 +1,8 @@
-﻿namespace Mechanix
+﻿using UnityEngine;
+
+namespace Mechanix 
 {
-    public class Wheels : IMechanicalPiece
+    public class Wheels : MonoBehaviour, IMechanicalPiece
     {
         private double mass;
         private double asphaltAdherence; //coefficient entre 0 et 1
