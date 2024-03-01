@@ -3,10 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using UnityEngine;
 
 namespace Mechanix
 {
-    public class Enregistreur
+    public class Enregistreur : MonoBehaviour
     {
         /*
         private void LoadSettingsV1()
