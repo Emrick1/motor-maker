@@ -1,56 +1,56 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Mechanix
 {
     public class Wheels : MonoBehaviour, IMechanicalPiece
     {
-        private double mass;
-        private double asphaltAdherence; //coefficient entre 0 et 1
-        private double dirtAdherence; //coefficient entre 0 et 1
-        private double sandAdherence; //coefficient entre 0 et 1
-        private double generalAdherence; //coefficient entre 0 et 1
-        private double pressure;
-        private double contactArea;
-        private double radialRigidity;
-        private double radialTyreDeflexion;
-        private double radius;
-        private double width;
-        private double frictionForce;
-        private double normalForce;
-        private double carLoad;
+        private static double mass;
+        private static double asphaltAdherence; //coefficient entre 0 et 1
+        private static double dirtAdherence; //coefficient entre 0 et 1
+        private static double sandAdherence; //coefficient entre 0 et 1
+        private static double generalAdherence; //coefficient entre 0 et 1
+        private static double pressure;
+        private static double contactArea;
+        private static double radialRigidity;
+        private static double radialTyreDeflexion;
+        private static double radius;
+        private static double width;
+        private static double frictionForce;
+        private static double normalForce;
+        private static double carLoad;
+        public Slider RpmSlider;
 
-        public Wheels(double asphaltAdherence,
-                      double dirtAdherence,
-                      double sandAdherence,
-                      double generalAdherence,
-                      double radialRigidity,
-                      double radius,
-                      double width,
-                      double mass,
-                      double pressure)
+        public static void WheelsSetValues(double asphaltAdherenceSet,
+                      double dirtAdherenceSet,
+                      double sandAdherenceSet,
+                      double generalAdherenceSet,
+                      double radialRigiditySet,
+                      double radiusSet,
+                      double widthSet,
+                      double massSet)
         {
-            this.radialRigidity = radialRigidity;
-            this.radius = radius;
-            this.width = width;
-            this.mass = mass;
-            this.pressure = pressure;
+            radialRigidity = radialRigiditySet;
+            radius = radiusSet;
+            width = widthSet;
+            mass = massSet;
             carLoad = mass * 9.81;
-            this.asphaltAdherence = asphaltAdherence;
-            this.dirtAdherence = dirtAdherence;
-            this.sandAdherence = sandAdherence;
-            this.generalAdherence = generalAdherence;
+            asphaltAdherence = asphaltAdherenceSet;
+            dirtAdherence = dirtAdherenceSet;
+            sandAdherence = sandAdherenceSet;
+            generalAdherence = generalAdherenceSet;
             UpdateGeneralAdherence();
             CalculateTyreFriction();
         }
 
-        public double Mass
+        public static double Mass
         {
             get => mass;
             set => mass = value;
             }
 
-        public double AsphaltAdherence
+        public static double AsphaltAdherence
         {
             get => asphaltAdherence;
             set
@@ -60,7 +60,7 @@ namespace Mechanix
             }
         }
 
-        public double DirtAdherence
+        public static double DirtAdherence
         {
             get => dirtAdherence;
             set
@@ -70,7 +70,7 @@ namespace Mechanix
             }
         }
 
-        public double SandAdherence
+        public static double SandAdherence
         {
             get => sandAdherence;
             set
@@ -80,24 +80,30 @@ namespace Mechanix
             }
         }
 
-        public double GeneralAdherence
+        public static double GeneralAdherence
         {
             get => generalAdherence;
             set => generalAdherence = value;
         }
 
-        public void UpdateGeneralAdherence()
+        public static double Pressure
+        {
+            get => pressure;
+            set => pressure = value;
+        }
+
+        public static void UpdateGeneralAdherence()
         {
             if (asphaltAdherence != null && dirtAdherence != null && sandAdherence != null)
             {
-                this.generalAdherence = (asphaltAdherence + dirtAdherence + sandAdherence) / 3;
+                generalAdherence = (asphaltAdherence + dirtAdherence + sandAdherence) / 3;
             } else
             {
-                this.generalAdherence = 1;
+                generalAdherence = 1;
             }
         }
 
-        public void CalculateTyreFriction()
+        public static void CalculateTyreFriction()
         {
             radialTyreDeflexion = (carLoad / 4) / radialRigidity;
             contactArea = width * (1.4 * Math.Sqrt(radialTyreDeflexion * ((2 * radius) - radialTyreDeflexion)));
@@ -106,6 +112,11 @@ namespace Mechanix
         }
 
         void Start()
+        {
+            
+        }
+
+        private void Update()
         {
             
         }

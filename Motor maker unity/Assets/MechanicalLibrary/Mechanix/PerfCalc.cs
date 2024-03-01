@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Windows;
 using Input = UnityEngine.Input;
+using static Mechanix.Wheels;
 
 namespace Mechanix
 {
@@ -14,8 +15,6 @@ namespace Mechanix
         public TextMeshProUGUI ValueText;
         private static int RPMmax = 9000;
         private static double RPM = 0;
-        private static Wheels wheels = new Wheels(1, 1, 1, 1, 200, 300, 300, 3000);
-
 
         public PerfCalc(Car car)
         {
@@ -35,12 +34,12 @@ namespace Mechanix
 
         void Start()
         {
-            
+            Wheels.WheelsSetValues(1, 1, 1, 1, 200, 300, 300, 3000);
         }
 
         void Update()
         {
-            wheels.Pressure = PressureSlider.value;
+            Wheels.Pressure = PressureSlider.value;
             if (Input.GetKey(KeyCode.W))
             {
                 if (RPM < RPMmax)
@@ -64,7 +63,7 @@ namespace Mechanix
             ValueText.text = "Stats :"
                 + "\nRPM:" + RPM.ToString()
                 + "\nSlider:" + PressureSlider.value.ToString()
-                + "\nPressure:" + wheels.Pressure.ToString();
+                + "\nPressure:" + Wheels.Pressure.ToString();
         }
     }
 }
