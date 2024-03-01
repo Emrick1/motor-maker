@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="4f89077f-e9bf-4b24-a4a8-df477976b883" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/Assets/MechanicalLibrary/Car.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MechanicalLibrary/Car.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MechanicalLibrary/ElectricEngine.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MechanicalLibrary/ElectricEngine.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MechanicalLibrary/Engine.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MechanicalLibrary/Engine.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MechanicalLibrary/Enregistreur.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MechanicalLibrary/Enregistreur.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MechanicalLibrary/Gearbox.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MechanicalLibrary/Gearbox/Gear.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MechanicalLibrary/Gearbox/Gear.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MechanicalLibrary/Gearbox/Gearbox.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MechanicalLibrary/Gearbox/Gearbox.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MechanicalLibrary/IMechanicalPiece.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MechanicalLibrary/IMechanicalPiece.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MechanicalLibrary/MonoBehaviour1.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MechanicalLibrary/MonoBehaviour1.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MechanicalLibrary/PerfCalc.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MechanicalLibrary/PerfCalc.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MechanicalLibrary/Properties.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MechanicalLibrary/Settings.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MechanicalLibrary/Settings.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MechanicalLibrary/Skins.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MechanicalLibrary/Skins.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MechanicalLibrary/ThermicEngine.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MechanicalLibrary/ThermicEngine.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MechanicalLibrary/Transmission.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MechanicalLibrary/Transmission.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MechanicalLibrary/Wheels.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MechanicalLibrary/Wheels.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MechanicalLibrary/obj.meta" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ProjectId" id="2d3uG2UpC8FUd0yUDPJ8qwZ4FCl" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
+    <configuration name="Start Unity" type="RunUnityExe" factoryName="Unity Executable">
+      <option name="EXE_PATH" value="C:\Program Files\Unity 2022.1.3f1\Editor\Unity.exe" />
+      <option name="PROGRAM_PARAMETERS" value="-projectPath &quot;U:\H24\motor-maker\Motor maker unity&quot; -debugCodeOptimization" />
+      <option name="WORKING_DIRECTORY" value="U:\H24\motor-maker\Motor maker unity" />
+      <option name="PASS_PARENT_ENVS" value="1" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Unit Tests (batch mode)" type="RunUnityExe" factoryName="Unity Executable">
+      <option name="EXE_PATH" value="C:\Program Files\Unity 2022.1.3f1\Editor\Unity.exe" />
+      <option name="PROGRAM_PARAMETERS" value="-runTests -batchmode -projectPath &quot;U:\H24\motor-maker\Motor maker unity&quot; -testResults Logs/results.xml -testPlatform EditMode -debugCodeOptimization" />
+      <option name="WORKING_DIRECTORY" value="U:\H24\motor-maker\Motor maker unity" />
+      <option name="PASS_PARENT_ENVS" value="1" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+      <option name="allowRunningInParallel" value="false" />
+      <option name="listenPortForConnections" value="false" />
+      <option name="pid" />
+      <option name="projectPathOnTarget" />
+      <option name="selectedOptions">
+        <list />
+      </option>
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4f89077f-e9bf-4b24-a4a8-df477976b883" name="Changes" comment="" />
+      <created>1709248983519</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1709248983519</updated>
+      <workItem from="1709248984558" duration="189000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+</project>
