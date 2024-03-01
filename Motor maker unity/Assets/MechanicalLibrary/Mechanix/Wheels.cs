@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -90,6 +91,11 @@ namespace Mechanix
         {
             get => pressure;
             set => pressure = value;
+        }
+
+        public static Dictionary<string, double> GetInfosWheels
+        {
+            get => new Dictionary<string, double> { {"pressure", pressure}, { "pressure", pressure } };
         }
 
         public static void UpdateGeneralAdherence()
