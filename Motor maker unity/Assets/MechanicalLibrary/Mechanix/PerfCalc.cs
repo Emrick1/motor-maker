@@ -9,11 +9,12 @@ namespace Mechanix
     public class PerfCalc : MonoBehaviour
     {
         private Car car;
-        public Slider RpmSlider;
+        public Slider PressureSlider;
         private int gearSelected = 0;//gearSelected
         public TextMeshProUGUI ValueText;
         private static int RPMmax = 9000;
         private static double RPM = 0;
+        private static Wheels wheels = new Wheels(1, 1, 1, 1, 200, 300, 300, 3000);
 
 
         public PerfCalc(Car car)
@@ -21,23 +22,25 @@ namespace Mechanix
             this.car = car;
         }
 
-        public double getSpeed(double rpm)
+        public double getRPM()
+        {
+            return RPM;
+        }
+
+        public double getAcceleration()
         {
             return 0;
         }
 
-        public double getAcceleration(double input)
-        {
-            return 0;
-        }
 
         void Start()
         {
-            Wheels wheels = new Wheels(1, 1, 1, 1, 200, );
+            
         }
 
         void Update()
         {
+            wheels.Pressure = PressureSlider.value;
             if (Input.GetKey(KeyCode.W))
             {
                 if (RPM < RPMmax)
@@ -60,8 +63,8 @@ namespace Mechanix
 
             ValueText.text = "Stats :"
                 + "\nRPM:" + RPM.ToString()
-                + "\nSlider:" + RpmSlider.value.ToString();
-
+                + "\nSlider:" + PressureSlider.value.ToString()
+                + "\nPressure:" + wheels.Pressure.ToString();
         }
     }
 }
