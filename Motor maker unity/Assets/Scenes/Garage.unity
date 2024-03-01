@@ -554,8 +554,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 17.39
+  m_fontSizeBase: 17.39
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1744,10 +1744,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 79854119}
   m_HandleRect: {fileID: 1760629228}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 100
+  m_MinValue: 75
+  m_MaxValue: 140
   m_WholeNumbers: 1
-  m_Value: 0
+  m_Value: 75
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2162,10 +2162,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1551529224}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6e87c0149f9f434d856cf3efe7548e2, type: 3}
+  m_Script: {fileID: 11500000, guid: 9f01e5f265baceb4b94ddbd3fb548c23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RpmSlider: {fileID: 1113546401}
+  PressureSlider: {fileID: 1113546401}
   ValueText: {fileID: 172551456}
 --- !u!1 &1760629227
 GameObject:
