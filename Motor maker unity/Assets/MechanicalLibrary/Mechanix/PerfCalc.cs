@@ -1,9 +1,11 @@
-﻿using TMPro;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Windows;
 using Input = UnityEngine.Input;
 using static Mechanix.Wheels;
+using static Mechanix.Gearbox;
+using static Mechanix.Gear;
 using System.Collections.Generic;
 using System;
 
@@ -32,7 +34,13 @@ namespace Mechanix
         {
             return 0;
         }
-
+        /*
+        public double RPMOutput() {
+         double RpmOutPut;
+         RpmOutPut = RPM * calculateRatio(Gear 1, Gear 2, false);
+            return RpmOutPut;
+        }
+        */
 
         void Start()
         {
