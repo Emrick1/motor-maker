@@ -95,7 +95,17 @@ namespace Mechanix
 
         public static Dictionary<string, double> GetInfosWheels
         {
-            get => new Dictionary<string, double> { {"pressure", pressure}, { "pressure", pressure } };
+            get => new Dictionary<string, double> { 
+                { "Pressure", pressure },
+                { "Mass", mass },
+                { "Car Load", carLoad },
+                { "Contact Area", contactArea }, 
+                { "Radial Rigidity", radialRigidity },
+                { "RadialTyreDeflexion", radialTyreDeflexion },
+                { "Radius", radius },
+                { "Width", width }, 
+                { "Normal Force", normalForce },
+                { "Friction Force", frictionForce }};
         }
 
         public static void UpdateGeneralAdherence()
@@ -111,10 +121,10 @@ namespace Mechanix
 
         public static void CalculateTyreFriction()
         {
-            radialTyreDeflexion = (carLoad / 4) / radialRigidity;
-            contactArea = width * (1.4 * Math.Sqrt(radialTyreDeflexion * ((2 * radius) - radialTyreDeflexion)));
-            normalForce = pressure * contactArea;
-            frictionForce = normalForce * generalAdherence; // TODO : general adherance? mu
+            radialTyreDeflexion = ((carLoad / 4) / radialRigidity);
+            contactArea = (1 / Wheels.Pressure) * (width * (1.4 * Math.Sqrt(radialTyreDeflexion * ((2 * radius) - radialTyreDeflexion)))) / 10000;
+            normalForce = contactArea * (carLoad / 4);
+            frictionForce = normalForce * 0.7; // TODO : general adherance? mu
         }
 
         void Start()
@@ -124,7 +134,7 @@ namespace Mechanix
 
         private void Update()
         {
-            
+           
         }
     }
 }

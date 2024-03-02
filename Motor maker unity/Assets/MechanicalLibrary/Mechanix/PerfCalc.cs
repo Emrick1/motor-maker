@@ -4,6 +4,8 @@ using UnityEngine.UI;
 using UnityEngine.Windows;
 using Input = UnityEngine.Input;
 using static Mechanix.Wheels;
+using System.Collections.Generic;
+using System;
 
 namespace Mechanix
 {
@@ -34,12 +36,12 @@ namespace Mechanix
 
         void Start()
         {
-            Wheels.WheelsSetValues(1, 1, 1, 1, 200, 300, 300, 3000);
+            Wheels.WheelsSetValues(1, 1, 1, 1, 180, 300, 200, 3000);
         }
 
         void Update()
         {
-            Wheels.Pressure = PressureSlider.value;
+            
             if (Input.GetKey(KeyCode.W))
             {
                 if (RPM < RPMmax)
@@ -60,10 +62,23 @@ namespace Mechanix
                 RPM = 0;
             }
 
+            Wheels.Pressure = PressureSlider.value;
+            Wheels.CalculateTyreFriction();
+
             ValueText.text = "Stats :"
                 + "\nRPM:" + RPM.ToString()
                 + "\nSlider:" + PressureSlider.value.ToString()
-                + "\nPressure:" + Wheels.Pressure.ToString();
+                + DictionnaryToString(Wheels.GetInfosWheels); 
+        }
+
+        private string DictionnaryToString(Dictionary<string, double> dictionary)
+        {
+            string returnString = "\nWheels :";
+            foreach (KeyValuePair<string, double> pair in dictionary)
+            {
+                returnString += "\n" + pair.Key + " : " + pair.Value;
+            }
+            return returnString;
         }
     }
 }
