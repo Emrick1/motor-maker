@@ -18,7 +18,10 @@ namespace Mechanix
         private int gearSelected = 0;//gearSelected
         public TextMeshProUGUI ValueText;
         private static int RPMmax = 9000;
+        private static int RPMmin = 600;
         private static double RPM = 0;
+        private static float facteurAugmentation;
+        private static float t;
 
         public PerfCalc(Car car)
         {
@@ -49,25 +52,32 @@ namespace Mechanix
 
         void Update()
         {
-            
+
             if (Input.GetKey(KeyCode.W))
             {
                 if (RPM < RPMmax)
                 {
-                    RPM += 8;
+                    facteurAugmentation = (19 / (1 + (Mathf.Exp((-0.1f * t) + 5))) + 1);
+                    RPM += (int)facteurAugmentation;
+                    t += 0.05f;
+                }
+                else
+                {
+                    RPM = RPMmax;
                 }
             }
-            else if (RPM > 0)
+            else if (RPM > RPMmin)
             {
+                t = 0;
                 RPM -= 1;
                 if (Input.GetKey(KeyCode.S))
                 {
-                    RPM -= 8;
+                    RPM = (int)((RPM * 0.999) - 2);
                 }
             }
-            else if (RPM < 0)
+            else if (RPM < RPMmin)
             {
-                RPM = 0;
+                RPM = RPMmin;
             }
 
             Wheels.Pressure = PressureSlider.value;
