@@ -14,7 +14,6 @@ namespace Mechanix
     public class PerfCalc : MonoBehaviour
     {
         private Car car;
-        public Slider PressureSlider;
         private int gearSelected = 0;//gearSelected
         public TextMeshProUGUI ValueText;
         private static int RPMmax = 9000;
@@ -47,7 +46,7 @@ namespace Mechanix
 
         void Start()
         {
-            Wheels.WheelsSetValues(1, 1, 1, 1, 180, 300, 200, 3000);
+            
         }
 
         void Update()
@@ -80,16 +79,12 @@ namespace Mechanix
                 RPM = RPMmin;
             }
 
-            Wheels.Pressure = PressureSlider.value;
-            Wheels.CalculateTyreFriction();
-
             ValueText.text = "Stats :"
                 + "\nRPM:" + RPM.ToString()
-                + "\nSlider:" + PressureSlider.value.ToString()
                 + DictionnaryToString(Wheels.GetInfosWheels); 
         }
 
-        private string DictionnaryToString(Dictionary<string, double> dictionary)
+        public static string DictionnaryToString(Dictionary<string, double> dictionary)
         {
             string returnString = "\nWheels :";
             foreach (KeyValuePair<string, double> pair in dictionary)

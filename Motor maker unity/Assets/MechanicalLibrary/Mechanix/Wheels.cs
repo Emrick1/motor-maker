@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,7 +13,7 @@ namespace Mechanix
         private static double dirtAdherence; //coefficient entre 0 et 1
         private static double sandAdherence; //coefficient entre 0 et 1
         private static double generalAdherence; //coefficient entre 0 et 1
-        private static double pressure;
+        private static double pressure = 100;
         private static double contactArea;
         private static double radialRigidity;
         private static double radialTyreDeflexion;
@@ -21,7 +22,13 @@ namespace Mechanix
         private static double frictionForce;
         private static double normalForce;
         private static double carLoad;
-        public Slider RpmSlider;
+        public Slider PressureSlider;
+        public TextMeshProUGUI WheelsStats;
+        public Button WheelType1;
+        public Button WheelType2;
+        public Button WheelType3;
+        public Button WheelType4;
+        public Button WheelType5;
 
         public static void WheelsSetValues(double asphaltAdherenceSet,
                       double dirtAdherenceSet,
@@ -49,14 +56,14 @@ namespace Mechanix
         {
             get => mass;
             set => mass = value;
-            }
+        }
 
         public static double AsphaltAdherence
         {
             get => asphaltAdherence;
             set
             {
-                asphaltAdherence = value; 
+                asphaltAdherence = value;
                 UpdateGeneralAdherence();
             }
         }
@@ -66,7 +73,7 @@ namespace Mechanix
             get => dirtAdherence;
             set
             {
-                dirtAdherence = value; 
+                dirtAdherence = value;
                 UpdateGeneralAdherence();
             }
         }
@@ -95,15 +102,15 @@ namespace Mechanix
 
         public static Dictionary<string, double> GetInfosWheels
         {
-            get => new Dictionary<string, double> { 
+            get => new Dictionary<string, double> {
                 { "Pressure", pressure },
                 { "Mass", mass },
                 { "Car Load", carLoad },
-                { "Contact Area", contactArea }, 
+                { "Contact Area", contactArea },
                 { "Radial Rigidity", radialRigidity },
                 { "RadialTyreDeflexion", radialTyreDeflexion },
                 { "Radius", radius },
-                { "Width", width }, 
+                { "Width", width },
                 { "Normal Force", normalForce },
                 { "Friction Force", frictionForce }};
         }
@@ -113,7 +120,8 @@ namespace Mechanix
             if (asphaltAdherence != null && dirtAdherence != null && sandAdherence != null)
             {
                 generalAdherence = (asphaltAdherence + dirtAdherence + sandAdherence) / 3;
-            } else
+            }
+            else
             {
                 generalAdherence = 1;
             }
@@ -129,12 +137,20 @@ namespace Mechanix
 
         void Start()
         {
-            
+            Wheels.WheelsSetValues(1, 1, 1, 1, 180, 300, 200, 3000);
+
+            WheelType1.onClick.AddListener(delegate { Wheels.WheelsSetValues(1, 1, 1, 1, 180, 300, 200, 3000); });
+            WheelType2.onClick.AddListener(delegate { Wheels.WheelsSetValues(1, 1, 1, 1, 200, 310, 200, 3000 + 15); });
+            WheelType3.onClick.AddListener(delegate { Wheels.WheelsSetValues(1, 1, 1, 1, 250, 350, 220, 3000 + 30); });
+            WheelType4.onClick.AddListener(delegate { Wheels.WheelsSetValues(1, 1, 1, 1, 160, 250, 230, 3000 - 10); });
+            WheelType5.onClick.AddListener(delegate { Wheels.WheelsSetValues(1, 1, 1, 1, 150, 220, 250, 3000 - 20); });
         }
 
         private void Update()
         {
-           
+            Wheels.Pressure = PressureSlider.value;
+            Wheels.CalculateTyreFriction();
+            WheelsStats.text = PerfCalc.DictionnaryToString(Wheels.GetInfosWheels);
         }
     }
 }
