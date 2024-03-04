@@ -1158,7 +1158,7 @@ MonoBehaviour:
   m_Direction: 0
   m_MinValue: 70
   m_MaxValue: 140
-  m_WholeNumbers: 0
+  m_WholeNumbers: 1
   m_Value: 70
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1344,6 +1344,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PressureSlider: {fileID: 710473268}
   WheelsStats: {fileID: 1992030066}
+  WheelType1: {fileID: 1952724492}
+  WheelType2: {fileID: 986046652}
+  WheelType3: {fileID: 501498034}
+  WheelType4: {fileID: 620143108}
+  WheelType5: {fileID: 472658177}
 --- !u!1 &729240485
 GameObject:
   m_ObjectHideFlags: 0
@@ -2969,8 +2974,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 374.9702, y: 88.283325}
-  m_SizeDelta: {x: 1179.1996, y: 497.4333}
+  m_AnchoredPosition: {x: 373, y: 94.858}
+  m_SizeDelta: {x: 1179.1996, y: 535.72}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1992030066
 MonoBehaviour:
@@ -3019,8 +3024,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 34
+  m_fontSizeBase: 34
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

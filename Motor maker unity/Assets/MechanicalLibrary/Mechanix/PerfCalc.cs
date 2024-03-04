@@ -81,12 +81,14 @@ namespace Mechanix
 
             ValueText.text = "Stats :"
                 + "\nRPM:" + RPM.ToString()
-                + DictionnaryToString(Wheels.GetInfosWheels); 
+                + "\n\nWheels:"
+                + DictionnaryToString(Wheels.GetInfosWheels)
+                + Wheels.getAdherenceString();
         }
 
         public static string DictionnaryToString(Dictionary<string, double> dictionary)
         {
-            string returnString = "\nWheels :";
+            string returnString = "";
             foreach (KeyValuePair<string, double> pair in dictionary)
             {
                 returnString += "\n" + pair.Key + " : " + pair.Value;
