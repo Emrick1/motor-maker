@@ -15,11 +15,12 @@ namespace Mechanix
     {
         private Car car;
         public Slider PressureSlider;
-        private int gearSelected = 0;//gearSelected
+        public static Gear gearSelected;//gearSelected
         public TextMeshProUGUI ValueText;
         private static int RPMmax = 9000;
         private static int RPMmin = 600;
         private static double RPM = 0;
+        private static double RPMOut = 0;
         private static float facteurAugmentation;
         private static float t;
 
@@ -37,23 +38,19 @@ namespace Mechanix
         {
             return 0;
         }
-        /*
-        public double RPMOutput() {
-         double RpmOutPut;
-         RpmOutPut = RPM * calculateRatio(Gear 1, Gear 2, false);
-            return RpmOutPut;
-        }
-        */
 
         void Start()
         {
             Wheels.WheelsSetValues(1, 1, 1, 1, 180, 300, 200, 3000);
+            Gearbox.addGearToList();
+            List<Gear> gears = Gearbox.GearsList();
+            gearSelected = gears[1];
         }
 
         void Update()
         {
 
-            if (Input.GetKey(KeyCode.W))
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
             {
                 if (RPM < RPMmax)
                 {
@@ -70,7 +67,7 @@ namespace Mechanix
             {
                 t = 0;
                 RPM -= 1;
-                if (Input.GetKey(KeyCode.S))
+                if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
                 {
                     RPM = (int)((RPM * 0.999) - 2);
                 }
@@ -80,11 +77,36 @@ namespace Mechanix
                 RPM = RPMmin;
             }
 
+            
+            for (int i = 1; i <= Gearbox.GearsList().Count - 1; i++)
+            {
+                if (Input.GetKeyDown(KeyCode.Alpha0 + i))
+                {
+                    gearSelected = Gearbox.Gears(i);
+                }
+            }
+            if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                if (Input.GetKeyDown(KeyCode.LeftArrow) && gearSelected != Gearbox.Gears(1))
+                {
+                    gearSelected = Gearbox.Gears((Gearbox.GearsList().IndexOf(gearSelected)) - 1);
+                }
+                if (Input.GetKeyDown(KeyCode.RightArrow) && gearSelected != Gearbox.Gears(Gearbox.GearsList().Count - 2));
+                {
+                    gearSelected = Gearbox.Gears((Gearbox.GearsList().IndexOf(gearSelected)) + 1);
+                }
+            }
+
+            RPMOut = (int)(((double)RPM) * (calculateRatio(Gearbox.Gears(0), gearSelected, false)));
+            
+
             Wheels.Pressure = PressureSlider.value;
             Wheels.CalculateTyreFriction();
 
             ValueText.text = "Stats :"
                 + "\nRPM:" + RPM.ToString()
+                + "\nRPM Output:" + RPMOut.ToString()
+                + "\nGear:" + gearSelected.Name.ToString()
                 + "\nSlider:" + PressureSlider.value.ToString()
                 + DictionnaryToString(Wheels.GetInfosWheels); 
         }
