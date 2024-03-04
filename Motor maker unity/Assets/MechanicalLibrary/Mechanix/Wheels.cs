@@ -13,6 +13,7 @@ namespace Mechanix
         private static double dirtAdherence; //coefficient entre 0 et 1
         private static double waterAndSnowAdherence; //coefficient entre 0 et 1
         private static double pressure = 100;
+        private static double minPressure = 0;
         private static double contactArea;
         private static double radialRigidity;
         private static double radialTyreDeflexion;
@@ -62,6 +63,12 @@ namespace Mechanix
             set => pressure = value;
         }
 
+        public static double FrictionForce
+        {
+            get => frictionForce;
+            set => frictionForce = value;
+        }
+
         public static Dictionary<string, double> GetInfosWheels
         {
             get => new Dictionary<string, double> {
@@ -81,14 +88,15 @@ namespace Mechanix
         public static void CalculateTyreFriction()
         {
             radialTyreDeflexion = ((carLoad / 4) / radialRigidity);
-            contactArea = (1 / Wheels.Pressure) * (width * (1.4 * Math.Sqrt(radialTyreDeflexion * ((2 * radius) - radialTyreDeflexion)))) / 10000;
-            normalForce = contactArea * (carLoad / 4);
+            contactArea = ((1 / Wheels.Pressure) + (1 / minPressure)) * (width * (1.4 * Math.Sqrt(radialTyreDeflexion * ((2 * radius) - radialTyreDeflexion)))) / 100000;
+            normalForce = contactArea * carLoad;
             frictionForce = normalForce * roadAdherence; // TODO : general adherance? mu
         }
 
         void Start()
         {
-            Wheels.WheelsSetValues(0.65, 0.55, 0.5, 1, 140, 300, 200, 3000);
+            minPressure = PressureSlider.minValue - 1;
+            Wheels.WheelsSetValues(0.65, 0.55, 0.5, 1, 140, 300, 200, PerfCalc.Mass);
             selectedWheelType = 1;
 
             WheelType1.onClick.AddListener(delegate { 
