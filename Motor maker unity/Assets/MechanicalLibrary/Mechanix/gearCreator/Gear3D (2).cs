@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace GearFactory
@@ -50,7 +51,7 @@ namespace GearFactory
             C_MF.sharedMesh.uv = originalUVs;
             //convert to 3D and assign material
             C_MF.sharedMesh = Gear3DConversion.Convert(C_MF.sharedMesh, sides, thickness);
-            C_MR.material = DefaultMaterialProvider.GetDefaultMaterial3D(true);
+            //C_MR.material = DefaultMaterialProvider.GetDefaultMaterial3D(true);
         }
 
         public override int RemoveAllJoints()
