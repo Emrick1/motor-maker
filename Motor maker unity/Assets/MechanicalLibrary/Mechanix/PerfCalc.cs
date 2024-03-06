@@ -17,7 +17,7 @@ namespace Mechanix
         public static Gear gearSelected;//gearSelected
         public TextMeshProUGUI ValueText;
         private static double mass = 3000;
-        private static int RPMmax = 9000;
+        private static int RPMmax = 7100;
         private static int RPMmin = 600;
         private static double RPM = 0;
         private static double RPMOut = 0;
@@ -32,7 +32,11 @@ namespace Mechanix
         private static double frontCarArea = 2.5; //TODO CHANGER SELON CHAR
         private static double windDensity = 0;
         private static double ambientTemperature = 30; //TODO CHANGER SELON Hiver (-6) ou ete (30)
-        private static double engineForce = 1000;
+        private static double engineForce = 0;
+        private static double engineTorque = 0;
+        private static double torqueOut = 0;
+        private static double horsePower = 0;
+        private static double frictionBrakes =0;
 
         public PerfCalc(Car car)
         {
@@ -47,6 +51,20 @@ namespace Mechanix
         public double getAcceleration()
         {
             return 0;
+        }
+
+        public void getTorqueSelonMoteur()
+        {
+            //V6
+            if (RPM <= 4000)
+            {
+                engineTorque = (0.000016375 * (Math.Pow((RPM), 2))) + 173;
+            }
+            else
+            {
+                engineTorque = (-0.000065 * (Math.Pow(((RPM) - 5000), 2))) + 500;
+            }
+            horsePower = (engineTorque * RPM) / 5252;
         }
 
         void Start()
@@ -64,9 +82,11 @@ namespace Mechanix
         void Update()
         {
             CalculateSpeedAndForces();
+            getTorqueSelonMoteur();
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
             {
-                speed += acceleration / 80;
+                frictionBrakes = 1;
+                speed += acceleration / 20;
                 if (RPM < RPMmax)
                 {
                     facteurAugmentation = (19 / (1 + (Mathf.Exp((-0.1f * t) + 5))) + 1);
@@ -94,7 +114,8 @@ namespace Mechanix
 
             if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
             {
-                speed -= acceleration / 20;
+                frictionBrakes = -1.5;
+                speed += acceleration / 20;
                 if (speed < 0)
                 {
                     speed = 0;
@@ -103,7 +124,8 @@ namespace Mechanix
 
             if (!(Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) && !(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)))
             {
-                speed -= acceleration / 240;
+                frictionBrakes = -0.7;
+                speed += acceleration / 80;
                 if (speed < 0)
                 {
                     speed = 0;
@@ -117,19 +139,24 @@ namespace Mechanix
                     gearSelected = Gearbox.Gears(i);
                 }
             }
-            if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow))
+
+            int indexGearSelect = Gearbox.GearsList().IndexOf(gearSelected);
+            if (Input.GetKeyDown(KeyCode.LeftArrow) && gearSelected != Gearbox.Gears(1))
             {
-                if (Input.GetKeyDown(KeyCode.LeftArrow) && gearSelected != Gearbox.Gears(1))
-                {
-                    gearSelected = Gearbox.Gears((Gearbox.GearsList().IndexOf(gearSelected)) - 1);
-                }
-                if (Input.GetKeyDown(KeyCode.RightArrow) && gearSelected != Gearbox.Gears(Gearbox.GearsList().Count - 2));
-                {
-                    gearSelected = Gearbox.Gears((Gearbox.GearsList().IndexOf(gearSelected)) + 1);
-                }
+                indexGearSelect -= 1;
+                gearSelected = Gearbox.Gears(indexGearSelect);
             }
+            if (Input.GetKeyDown(KeyCode.RightArrow) && gearSelected != Gearbox.Gears(Gearbox.GearsList().Count - 2))
+            {
+                indexGearSelect += 1;
+                gearSelected = Gearbox.Gears(indexGearSelect);
+            }
+         
 
             RPMOut = (int)(((double)RPM) * (calculateRatio(Gearbox.Gears(0), gearSelected, false)));
+            torqueOut = (horsePower * 5252) / RPMOut;
+            engineForce = torqueOut * (Wheels.Radius / 100);
+            
 
             WriteStats();
         }
@@ -139,8 +166,12 @@ namespace Mechanix
             ValueText.text = "Stats: "
                + "\nRPM: " + RPM.ToString()
                + "\nRPM Output: " + RPMOut.ToString()
+               + "\nTorque Moteur: " + $"{engineTorque:F4}"
+               + "\nHorse Power: " + $"{horsePower:F4}"
+               + "\nTorque Output: " + $"{torqueOut:F4}"
+               + "\nEngine Force (N): " + $"{engineForce:F4}"
                + "\nGear: " + gearSelected.Name.ToString()
-               + "\nAcceleration (m^2/s): " + $"{acceleration:F4}"
+               + "\nAcceleration (m/s^2): " + $"{acceleration:F4}"
                + "\nSpeed (m/s): " + $"{speed:F3}" + " Speed (km/h): " + $"{(speed*3.6):F3}"
                + "\nFriction Force Wheels (N): " + $"{frictionForceWheels:F3}"
                + "\nFriction Force Wind (N): " + $"{frictionForceWind:F3}"
@@ -153,11 +184,8 @@ namespace Mechanix
         {
             windDensity = 101.3 / (8.395 * ambientTemperature);
             frictionForceWind = 0.5 * dragCoefficient * frontCarArea * windDensity * (speed * speed);
-            acceleration = ((frictionForceEngineReductionCoefficient * engineForce) - (frictionForceWheels + frictionForceWind) ) / (mass/4);
-            if (acceleration < 0)
-            {
-                acceleration = 0;
-            }
+            acceleration = frictionBrakes * ((frictionForceEngineReductionCoefficient * engineForce) - (frictionForceWheels + frictionForceWind)) / (mass);
+            
         }
 
         public static string DictionnaryToString(Dictionary<string, double> dictionary)
