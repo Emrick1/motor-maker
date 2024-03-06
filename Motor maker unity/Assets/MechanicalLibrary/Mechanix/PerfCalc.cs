@@ -54,6 +54,7 @@ namespace Mechanix
             Wheels.WheelsSetValues(0.65, 0.55, 0.5, 1, 140, 300, 200, PerfCalc.Mass);
             Wheels.SelectedWheelType = 1;
             Wheels.CalculateTyreFriction();
+            frictionForceWheels = Wheels.FrictionForce;
             Gearbox.addGearToList();
             List<Gear> gears = Gearbox.GearsList();
             gearSelected = gears[1];
@@ -99,9 +100,10 @@ namespace Mechanix
                     speed = 0;
                 }
             } 
-            else if (!(Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)&& !(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))))
+
+            if (!(Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) && !(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)))
             {
-                speed -= acceleration / 40;
+                speed -= acceleration / 240;
                 if (speed < 0)
                 {
                     speed = 0;
