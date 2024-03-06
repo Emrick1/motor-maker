@@ -79,16 +79,16 @@ namespace Mechanix
         {
             get => new Dictionary<string, double> {
                 { "Selected Wheel Type", (double) selectedWheelType},
-                { "Pressure", pressure },
-                { "Mass", mass },
-                { "Car Load", carLoad },
-                { "Contact Area", contactArea },
+                { "Pressure (psi)", pressure },
+                { "Mass (kg)", mass },
+                { "Car Load (N)", carLoad },
+                { "Contact Area (cm^2)", contactArea },
                 { "Radial Rigidity", radialRigidity },
-                { "RadialTyreDeflexion", radialTyreDeflexion },
-                { "Radius", radius },
-                { "Width", width },
-                { "Normal Force", normalForce },
-                { "Friction Force", frictionForce }};
+                { "RadialTyreDeflexion (mm)", radialTyreDeflexion },
+                { "Radius (mm)", radius },
+                { "Width (mm)", width },
+                { "Normal Force (N)", normalForce },
+                { "Friction Force (N)", frictionForce }};
         }
 
         public static void CalculateTyreFriction()

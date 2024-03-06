@@ -130,19 +130,23 @@ namespace Mechanix
             }
 
             RPMOut = (int)(((double)RPM) * (calculateRatio(Gearbox.Gears(0), gearSelected, false)));
-            
 
-            ValueText.text = "Stats :"
-                + "\nRPM:" + RPM.ToString()
-                + "\nRPM Output:" + RPMOut.ToString()
-                + "\nGear:" + gearSelected.Name.ToString()
-                + "\nAcceleration:" + acceleration
-                + "\nSpeed:" + speed
-                + "\nFriction Force Wheels:" + frictionForceWheels
-                + "\nFriction Force Wind:" + frictionForceWind
-                + "\n\nWheels:"
-                + DictionnaryToString(Wheels.GetInfosWheels)
-                + Wheels.getAdherenceString();
+            WriteStats();
+        }
+
+        private void WriteStats()
+        {
+            ValueText.text = "Stats: "
+               + "\nRPM: " + RPM.ToString()
+               + "\nRPM Output: " + RPMOut.ToString()
+               + "\nGear: " + gearSelected.Name.ToString()
+               + "\nAcceleration (m^2/s): " + $"{acceleration:F4}"
+               + "\nSpeed (m/s): " + $"{speed:F3}" + " Speed (km/h): " + $"{(speed*3.6):F3}"
+               + "\nFriction Force Wheels (N): " + $"{frictionForceWheels:F3}"
+               + "\nFriction Force Wind (N): " + $"{frictionForceWind:F3}"
+               + "\n\nWheels: "
+               + DictionnaryToString(Wheels.GetInfosWheels)
+               + Wheels.getAdherenceString();
         }
 
         private void CalculateSpeedAndForces()
@@ -161,7 +165,7 @@ namespace Mechanix
             string returnString = "";
             foreach (KeyValuePair<string, double> pair in dictionary)
             {
-                returnString += "\n" + pair.Key + " : " + pair.Value;
+                returnString += "\n" + pair.Key + " : " + $"{pair.Value:F3}";
             }
             return returnString;
         }
