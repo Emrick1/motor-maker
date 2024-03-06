@@ -21,7 +21,7 @@ namespace Mechanix
 
         public Car()
         {
-            engine = new ThermicEngine();
+            
             gearbox = new Gearbox(new List<Gear>());
             //wheels = new Wheels();
             skins = new Skins();
