@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Mechanix
 {
@@ -10,26 +11,37 @@ namespace Mechanix
         private int rpmMin; //Rotations Par Minutes(RPM) Minimum
         private double torque; //rotation de base à la sortie du moteur(vers la transmission)
         private double energyConsumption; //indice de consommation d'énergie(par seconde)
+        private string nameCylindre;
+        
+      
 
-        public Engine()
+        protected Engine(string name)
         {
-            mass = 0;
-            hp = 0;
-            rpmMax = 0;
-            rpmMin = 0;
-            torque = 0;
-            energyConsumption = 0;
-        }
-
-        protected Engine(double mass, double hp, int rpmMax, int rpmMin, double torque, double energyConsumption)
-        {
+            this.nameCylindre = name;
+            /*
             this.mass = mass;
             this.hp = hp;
             this.rpmMax = rpmMax;
             this.rpmMin = rpmMin;
             this.torque = torque;
             this.energyConsumption = energyConsumption;
+            */
         }
+        void start()
+        {
+
+        }
+
+        public static void addEngineToList()
+        {
+            enginesList.Add(gearMenante);
+            enginesList.Add(gear1);
+            enginesList.Add(gear2);
+            enginesList.Add(gear3);
+     
+
+        }
+
 
         public double Mass
         {
