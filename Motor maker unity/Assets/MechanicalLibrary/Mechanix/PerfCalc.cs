@@ -62,16 +62,16 @@ namespace Mechanix
 
         void Update()
         {
-
+            CalculateSpeedAndForces();
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
             {
+                speed += acceleration / 80;
                 if (RPM < RPMmax)
                 {
                     facteurAugmentation = (19 / (1 + (Mathf.Exp((-0.1f * t) + 5))) + 1);
                     RPM += (int)facteurAugmentation;
                     t += 0.05f;
-                    speed += acceleration/60;
-                }
+                } 
                 else
                 {
                     RPM = RPMmax;
@@ -84,7 +84,6 @@ namespace Mechanix
                 if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
                 {
                     RPM = (int)((RPM * 0.999) - 2);
-                    speed -= acceleration / 60;
                 }
             }
             else if (RPM < RPMmin)
@@ -92,7 +91,23 @@ namespace Mechanix
                 RPM = RPMmin;
             }
 
-            
+            if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+            {
+                speed -= acceleration / 20;
+                if (speed < 0)
+                {
+                    speed = 0;
+                }
+            } 
+            else if (!(Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)&& !(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))))
+            {
+                speed -= acceleration / 40;
+                if (speed < 0)
+                {
+                    speed = 0;
+                }
+            }
+
             for (int i = 1; i <= Gearbox.GearsList().Count - 1; i++)
             {
                 if (Input.GetKeyDown(KeyCode.Alpha0 + i))
@@ -114,7 +129,6 @@ namespace Mechanix
 
             RPMOut = (int)(((double)RPM) * (calculateRatio(Gearbox.Gears(0), gearSelected, false)));
             
-            CalculateSpeedAndForces();
 
             ValueText.text = "Stats :"
                 + "\nRPM:" + RPM.ToString()
@@ -133,7 +147,7 @@ namespace Mechanix
         {
             windDensity = 101.3 / (8.395 * ambientTemperature);
             frictionForceWind = 0.5 * dragCoefficient * frontCarArea * windDensity * (speed * speed);
-            acceleration = ((frictionForceEngineReductionCoefficient * engineForce) - (frictionForceWheels + frictionForceWind) ) / mass;
+            acceleration = ((frictionForceEngineReductionCoefficient * engineForce) - (frictionForceWheels + frictionForceWind) ) / (mass/4);
             if (acceleration < 0)
             {
                 acceleration = 0;
