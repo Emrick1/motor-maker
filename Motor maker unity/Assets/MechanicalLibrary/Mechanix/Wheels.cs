@@ -75,6 +75,12 @@ namespace Mechanix
             set => selectedWheelType = value;
         }
 
+        public static double Radius
+        {
+            get => radius;
+            set => radius = value;
+        }
+
         public static Dictionary<string, double> GetInfosWheels
         {
             get => new Dictionary<string, double> {
