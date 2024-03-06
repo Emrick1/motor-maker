@@ -16,7 +16,7 @@ namespace Mechanix
         private Car car;
         public Slider PressureSlider;
         public static Gear gearSelected;//gearSelected
-        private int gearSelected = 0;//gearSelected
+        
         public TextMeshProUGUI ValueText;
         private static double mass = 3000;
         private static int RPMmax = 9000;
@@ -50,13 +50,6 @@ namespace Mechanix
         {
             return 0;
         }
-        /*
-        public double RPMOutput() {
-         double RpmOutPut;
-         RpmOutPut = RPM * calculateRatio(Gear 1, Gear 2, false);
-            return RpmOutPut;
-        }
-        */
 
         void Start()
         {
@@ -129,7 +122,7 @@ namespace Mechanix
                 + "\nRPM Output:" + RPMOut.ToString()
                 + "\nGear:" + gearSelected.Name.ToString()
                 + "\nSlider:" + PressureSlider.value.ToString()
-                + DictionnaryToString(Wheels.GetInfosWheels); 
+                + DictionnaryToString(Wheels.GetInfosWheels)
                 + "\n\nWheels:"
                 + DictionnaryToString(Wheels.GetInfosWheels)
                 + Wheels.getAdherenceString();

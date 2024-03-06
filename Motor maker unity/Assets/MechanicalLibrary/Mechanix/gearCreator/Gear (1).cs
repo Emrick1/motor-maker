@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace GearFactory
@@ -126,7 +127,7 @@ namespace GearFactory
         {
             Mesh newMesh = Instantiate(C_MF.sharedMesh);
             C_MF.sharedMesh = Gear3DConversion.Convert(newMesh, sides, thickness);
-            C_MR.material = DefaultMaterialProvider.GetDefaultMaterial3D(true);
+            
         }
 
         #region Building the mesh
@@ -139,8 +140,7 @@ namespace GearFactory
                 //if material is null, replace it with default
                 if (meshMatt == null)
                 {
-                    //load default material for sprites
-                    meshMatt = DefaultMaterialProvider.GetDefaultMaterial(true);
+                  
                 }
 
                 _Mesh = new Mesh();
@@ -164,7 +164,7 @@ namespace GearFactory
             _Mesh.vertices = vertices.ToArray();
             _Mesh.triangles = triangles.ToArray();
             _Mesh.uv = uvs;
-            _Mesh.normals = GearHelper.AddGearNormals(vertices.Count);
+            //_Mesh.normals = GearHelper.AddGearNormals(vertices.Count);
             C_MF.mesh = _Mesh;
         }
 
@@ -290,7 +290,7 @@ namespace GearFactory
                 triangles.Add(2 * i + sides * 6 + 1);
                 triangles.Add(2 * i + sides * 6);
             }
-            uvs = GearHelper.UVUnwrap(vertices);
+           // uvs = GearHelper.UVUnwrap(vertices);
         }
 
         //assign necessary components

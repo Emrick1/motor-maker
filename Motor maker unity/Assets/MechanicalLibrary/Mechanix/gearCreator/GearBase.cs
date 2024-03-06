@@ -114,7 +114,7 @@ namespace GearFactory
         public void ReassignMaterial()
         {
             //todo czy to reassign jest potrzebne tylko w edytorze?
-            C_MR.sharedMaterial = DefaultMaterialProvider.GetDefaultMaterial3D(true);
+          //  C_MR.sharedMaterial = DefaultMaterialProvider.GetDefaultMaterial3D(true);
         }
 
         //get vertices transformed by {TransformPoint}
