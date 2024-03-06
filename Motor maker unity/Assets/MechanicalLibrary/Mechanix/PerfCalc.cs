@@ -36,7 +36,6 @@ namespace Mechanix
         private static double engineTorque = 0;
         private static double torqueOut = 0;
         private static double horsePower = 0;
-        private static double frictionBrakes =0;
 
         public PerfCalc(Car car)
         {
@@ -62,15 +61,18 @@ namespace Mechanix
             }
             else
             {
-                engineTorque = (-0.000065 * (Math.Pow(((RPM) - 5000), 2))) + 500;
+                engineTorque = (-0.000001625 * (Math.Pow(((RPM) - 6000), 2))) + 500;
             }
             horsePower = (engineTorque * RPM) / 5252;
         }
 
         void Start()
         {
-            Wheels.WheelsSetValues(0.65, 0.55, 0.5, 1, 140, 300, 200, PerfCalc.Mass);
-            Wheels.SelectedWheelType = 1;
+            if (Wheels.SelectedWheelType == 0) 
+            {
+                Wheels.WheelsSetValues(0.65, 0.55, 0.5, 1, 140, 300, 200, PerfCalc.Mass);
+                Wheels.SelectedWheelType = 1;
+            };
             Wheels.CalculateTyreFriction();
             frictionForceWheels = Wheels.FrictionForce;
             Gearbox.addGearToList();
@@ -85,7 +87,7 @@ namespace Mechanix
             getTorqueSelonMoteur();
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
             {
-                frictionBrakes = 1;
+                
                 speed += acceleration / 20;
                 if (RPM < RPMmax)
                 {
@@ -104,7 +106,7 @@ namespace Mechanix
                 RPM -= 1;
                 if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
                 {
-                    RPM = (int)((RPM * 0.999) - 2);
+                    RPM = (int)((RPM * 0.999) - 1);
                 }
             }
             else if (RPM < RPMmin)
@@ -114,8 +116,8 @@ namespace Mechanix
 
             if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
             {
-                frictionBrakes = -1.5;
-                speed += acceleration / 20;
+                acceleration = -2;
+                speed += acceleration / 60;
                 if (speed < 0)
                 {
                     speed = 0;
@@ -124,8 +126,8 @@ namespace Mechanix
 
             if (!(Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) && !(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)))
             {
-                frictionBrakes = -0.7;
-                speed += acceleration / 80;
+                acceleration = -0.5;
+                speed += acceleration / 60;
                 if (speed < 0)
                 {
                     speed = 0;
@@ -156,8 +158,8 @@ namespace Mechanix
             RPMOut = (int)(((double)RPM) * (calculateRatio(Gearbox.Gears(0), gearSelected, false)));
             torqueOut = (horsePower * 5252) / RPMOut;
             engineForce = torqueOut * (Wheels.Radius / 100);
-            
 
+            Wheels.CalculateTyreFriction();
             WriteStats();
         }
 
@@ -184,7 +186,7 @@ namespace Mechanix
         {
             windDensity = 101.3 / (8.395 * ambientTemperature);
             frictionForceWind = 0.5 * dragCoefficient * frontCarArea * windDensity * (speed * speed);
-            acceleration = frictionBrakes * ((frictionForceEngineReductionCoefficient * engineForce) - (frictionForceWheels + frictionForceWind)) / (mass);
+            acceleration = ((frictionForceEngineReductionCoefficient * engineForce) - (frictionForceWheels + frictionForceWind)) / (mass);
             
         }
 

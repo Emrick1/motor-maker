@@ -22,7 +22,7 @@ namespace Mechanix
         private static double frictionForce;
         private static double normalForce;
         private static double carLoad;
-        private static int selectedWheelType;
+        private static int selectedWheelType = 0;
         public Slider PressureSlider;
         public TextMeshProUGUI WheelsStats;
         public Button WheelType1;
@@ -107,9 +107,12 @@ namespace Mechanix
 
         void Start()
         {
-            minPressure = PressureSlider.minValue - 1;
-            Wheels.WheelsSetValues(0.65, 0.55, 0.5, 1, 140, 300, 200, PerfCalc.Mass);
-            selectedWheelType = 1;
+            if (selectedWheelType == 0) 
+            {
+                minPressure = PressureSlider.minValue - 1;
+                Wheels.WheelsSetValues(0.65, 0.55, 0.5, 1, 140, 300, 200, PerfCalc.Mass);
+                selectedWheelType = 1;
+            }
 
             WheelType1.onClick.AddListener(delegate { 
                 Wheels.WheelsSetValues(0.65, 0.55, 0.5, 1, 140, 300, 200, 3000);
