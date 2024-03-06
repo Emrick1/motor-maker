@@ -12,8 +12,8 @@ namespace Mechanix
         private static double roadAdherence; //coefficient entre 0 et 1
         private static double dirtAdherence; //coefficient entre 0 et 1
         private static double waterAndSnowAdherence; //coefficient entre 0 et 1
-        private static double pressure = 100;
-        private static double minPressure = 0;
+        private static double pressure = 70;
+        private static double minPressure = 69;
         private static double contactArea;
         private static double radialRigidity;
         private static double radialTyreDeflexion;
@@ -67,6 +67,12 @@ namespace Mechanix
         {
             get => frictionForce;
             set => frictionForce = value;
+        }
+
+        public static int SelectedWheelType
+        {
+            get => selectedWheelType;
+            set => selectedWheelType = value;
         }
 
         public static Dictionary<string, double> GetInfosWheels
@@ -132,7 +138,8 @@ namespace Mechanix
 
         public static string getAdherenceString()
         {
-            return "\nAdherence: Road " + roadAdherence + " Dirt " + dirtAdherence + " Wet Road/Snow " + waterAndSnowAdherence;
+            string adherance = "\nAdherence: Road " + roadAdherence + " Dirt " + dirtAdherence + " Wet Road/Snow " + waterAndSnowAdherence;
+            return adherance;
         }
     }
 }

@@ -14,9 +14,7 @@ namespace Mechanix
     public class PerfCalc : MonoBehaviour
     {
         private Car car;
-        public Slider PressureSlider;
         public static Gear gearSelected;//gearSelected
-        
         public TextMeshProUGUI ValueText;
         private static double mass = 3000;
         private static int RPMmax = 9000;
@@ -34,7 +32,7 @@ namespace Mechanix
         private static double frontCarArea = 2.5; //TODO CHANGER SELON CHAR
         private static double windDensity = 0;
         private static double ambientTemperature = 30; //TODO CHANGER SELON Hiver (-6) ou ete (30)
-        private static double engineForce = 0;
+        private static double engineForce = 1000;
 
         public PerfCalc(Car car)
         {
@@ -53,7 +51,9 @@ namespace Mechanix
 
         void Start()
         {
-            Wheels.WheelsSetValues(1, 1, 1, 1, 180, 300, 200, 3000);
+            Wheels.WheelsSetValues(0.65, 0.55, 0.5, 1, 140, 300, 200, PerfCalc.Mass);
+            Wheels.SelectedWheelType = 1;
+            Wheels.CalculateTyreFriction();
             Gearbox.addGearToList();
             List<Gear> gears = Gearbox.GearsList();
             gearSelected = gears[1];
@@ -70,6 +70,7 @@ namespace Mechanix
                     facteurAugmentation = (19 / (1 + (Mathf.Exp((-0.1f * t) + 5))) + 1);
                     RPM += (int)facteurAugmentation;
                     t += 0.05f;
+                    speed += acceleration/60;
                 }
                 else
                 {
@@ -83,6 +84,7 @@ namespace Mechanix
                 if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
                 {
                     RPM = (int)((RPM * 0.999) - 2);
+                    speed -= acceleration / 60;
                 }
             }
             else if (RPM < RPMmin)
@@ -112,17 +114,16 @@ namespace Mechanix
 
             RPMOut = (int)(((double)RPM) * (calculateRatio(Gearbox.Gears(0), gearSelected, false)));
             
-
-            Wheels.Pressure = PressureSlider.value;
-            Wheels.CalculateTyreFriction();
             CalculateSpeedAndForces();
 
             ValueText.text = "Stats :"
                 + "\nRPM:" + RPM.ToString()
                 + "\nRPM Output:" + RPMOut.ToString()
                 + "\nGear:" + gearSelected.Name.ToString()
-                + "\nSlider:" + PressureSlider.value.ToString()
-                + DictionnaryToString(Wheels.GetInfosWheels)
+                + "\nAcceleration:" + acceleration
+                + "\nSpeed:" + speed
+                + "\nFriction Force Wheels:" + frictionForceWheels
+                + "\nFriction Force Wind:" + frictionForceWind
                 + "\n\nWheels:"
                 + DictionnaryToString(Wheels.GetInfosWheels)
                 + Wheels.getAdherenceString();
@@ -132,7 +133,11 @@ namespace Mechanix
         {
             windDensity = 101.3 / (8.395 * ambientTemperature);
             frictionForceWind = 0.5 * dragCoefficient * frontCarArea * windDensity * (speed * speed);
-            acceleration = (engineForce - (frictionForceWheels + frictionForceWind) ) / mass;
+            acceleration = ((frictionForceEngineReductionCoefficient * engineForce) - (frictionForceWheels + frictionForceWind) ) / mass;
+            if (acceleration < 0)
+            {
+                acceleration = 0;
+            }
         }
 
         public static string DictionnaryToString(Dictionary<string, double> dictionary)
