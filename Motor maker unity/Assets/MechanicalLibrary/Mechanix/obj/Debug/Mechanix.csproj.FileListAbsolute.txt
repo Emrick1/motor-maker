@@ -1,0 +1,2 @@
+U:\H24\motor-maker\Motor maker unity\Assets\MechanicalLibrary\Mechanix\obj\Debug\Mechanix.csproj.AssemblyReference.cache
+U:\H24\motor-maker\Motor maker unity\Assets\MechanicalLibrary\Mechanix\obj\Debug\Mechanix.csproj.CoreCompileInputs.cache
