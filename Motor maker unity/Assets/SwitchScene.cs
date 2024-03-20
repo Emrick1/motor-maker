@@ -8,4 +8,9 @@ public class SwitchScene : MonoBehaviour
    {
       SceneManager.LoadSceneAsync(sceneIndex);
    }
+
+    public void Quitter()
+    {
+        Application.Quit();
+    }
 }
