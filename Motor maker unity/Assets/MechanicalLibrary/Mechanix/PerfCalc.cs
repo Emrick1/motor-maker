@@ -165,7 +165,9 @@ namespace Mechanix
 
         private void WriteStats()
         {
-            ValueText.text = "Stats: "
+            if (ValueText != null)
+            {
+                ValueText.text = "Stats: "
                + "\nRPM: " + RPM.ToString()
                + "\nRPM Output: " + RPMOut.ToString()
                + "\nTorque Moteur: " + $"{engineTorque:F4}"
@@ -180,6 +182,7 @@ namespace Mechanix
                + "\n\nWheels: "
                + DictionnaryToString(Wheels.GetInfosWheels)
                + Wheels.getAdherenceString();
+            }
         }
 
         private void CalculateSpeedAndForces()
@@ -203,6 +206,11 @@ namespace Mechanix
         {
             get => mass;
             set => mass = value;
+        }
+        public static double Speed
+        {
+            get => speed;
+            set => speed = value;
         }
     }
 }
