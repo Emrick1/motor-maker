@@ -41,7 +41,10 @@ namespace Mechanix
             buttonGear2.onClick.AddListener(delegate { SwitchGearTo(2); });
             buttonGear3.onClick.AddListener(delegate { SwitchGearTo(3); });
             buttonGear4.onClick.AddListener(delegate { SwitchGearTo(4); });
-            dentsSlider.onValueChanged.AddListener(delegate { setTextDents(); });
+
+                dentsSlider.onValueChanged.AddListener(delegate { setTextDents(); });
+            
+
             addGearToList();
         }
 
@@ -66,7 +69,11 @@ namespace Mechanix
 
         public void setTextDents()
         {
-            gears.Find((x) => x.Name == currentGear.Name).NbDents = (int)dentsSlider.value;
+
+            if (currentGear != null)
+            {
+                gears.Find((x) => x.Name == currentGear.Name).NbDents = (int)dentsSlider.value;
+            }
         }
 
         public void removeGear(int index)
@@ -108,12 +115,21 @@ namespace Mechanix
 
         public void initialiserSlider(Gear current)
         {
-            dentsSlider.SetValueWithoutNotify(current.NbDents);
+           
+                dentsSlider.SetValueWithoutNotify(current.NbDents);
+            
+        }
+        void start()
+        {
+            
         }
 
         void Update()
         {
-            TextDents.text = currentGear.NbDents.ToString();
+            if (currentGear != null)
+            {
+                TextDents.text = currentGear.NbDents.ToString();
+            }
         }
     }
 }
