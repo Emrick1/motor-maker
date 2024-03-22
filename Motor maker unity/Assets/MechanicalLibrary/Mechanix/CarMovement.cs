@@ -32,37 +32,48 @@ namespace Mechanix
 
         void Update()
         {
-            Quaternion deltaRotationLeft = Quaternion.Euler(new Vector3(0, 20, 0) * Time.fixedDeltaTime);
-            Quaternion deltaRotationRight = Quaternion.Euler(new Vector3(0, -20, 0) * Time.fixedDeltaTime);
-
+            Quaternion deltaRotationLeft = Quaternion.Euler(new Vector3(0, 2, 0) * Time.fixedDeltaTime);
+            Quaternion deltaRotationRight = Quaternion.Euler(new Vector3(0, -2, 0) * Time.fixedDeltaTime);
+            setRbVector();
             
-            var vel = rbVector * (float) PerfCalc.Speed;
+            var vel = rbVector * (int) PerfCalc.Speed;
             vel.y = _rb.velocity.y;
             _rb.velocity = vel;
             int axis = 0;
-            if (Input.GetKey(KeyCode.A))
+            if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
             {
-                _rb.MoveRotation(_rb.rotation * deltaRotationRight);
-                carCollider.transform.rotation = _rb.rotation * deltaRotationLeft;
+                if (PerfCalc.Speed >= 1)
+                {
+                    _rb.MoveRotation(_rb.rotation * deltaRotationRight);
+                }
                 axis = -1;
-                rbVector.y += 0.05f;
             } else if (Input.GetKey(KeyCode.D))
             {
-                _rb.MoveRotation(_rb.rotation * deltaRotationLeft);
-                carCollider.transform.rotation = _rb.rotation * deltaRotationRight;
+                if (PerfCalc.Speed >= 1)
+                {
+                    _rb.MoveRotation(_rb.rotation * deltaRotationLeft);
+                }
                 axis = 1;
-                rbVector.y -= 0.05f;
             }
 
             frontLeft.steerAngle = 15f * axis;
             frontRight.steerAngle = 15f * axis;
 
-
-
             UpdateWheel(frontLeft, frontLeftTransform);
             UpdateWheel(frontRight, frontRightTransform);
             UpdateWheel(rearLeft, rearLeftTransform);
             UpdateWheel(rearRight, rearRightTransform);
+        }
+
+        private void setRbVector()
+        {
+            Vector3 position;
+            Quaternion rotation;
+            frontLeft.GetWorldPose(out position, out rotation);
+            Vector3 position2;
+            Quaternion rotation2;
+            rearLeft.GetWorldPose(out position2, out rotation2);
+            rbVector = position - position2;
         }
 
         private void UpdateWheel(WheelCollider col, Transform trans)

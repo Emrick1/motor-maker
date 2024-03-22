@@ -116,7 +116,7 @@ namespace Mechanix
 
             if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
             {
-                acceleration = -2;
+                acceleration = (speed/-15) - 3;
                 speed += acceleration / 60;
                 if (speed < 0)
                 {
@@ -126,7 +126,7 @@ namespace Mechanix
 
             if (!(Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) && !(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)))
             {
-                acceleration = -0.5;
+                acceleration = (speed / -115) - 0.5;
                 speed += acceleration / 60;
                 if (speed < 0)
                 {
