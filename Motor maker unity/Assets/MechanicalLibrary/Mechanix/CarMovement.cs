@@ -42,14 +42,14 @@ namespace Mechanix
             int axis = 0;
             if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
             {
-                if (PerfCalc.Speed >= 1)
+                if (PerfCalc.Speed > 0)
                 {
                     _rb.MoveRotation(_rb.rotation * deltaRotationRight);
                 }
                 axis = -1;
             } else if (Input.GetKey(KeyCode.D))
             {
-                if (PerfCalc.Speed >= 1)
+                if (PerfCalc.Speed > 0)
                 {
                     _rb.MoveRotation(_rb.rotation * deltaRotationLeft);
                 }
@@ -73,7 +73,7 @@ namespace Mechanix
             Vector3 position2;
             Quaternion rotation2;
             rearLeft.GetWorldPose(out position2, out rotation2);
-            rbVector = position - position2;
+            rbVector = position - position2 - new Vector3(0,0.5f,0);
         }
 
         private void UpdateWheel(WheelCollider col, Transform trans)
