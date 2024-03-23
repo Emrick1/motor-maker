@@ -960,6 +960,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Skyline_R32
       objectReference: {fileID: 0}
+    - target: {fileID: 3615449878971091806, guid: 0a3ad23a5a176eb41914fbcbb34ce9be, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 3055996272150503839, guid: 0a3ad23a5a176eb41914fbcbb34ce9be, type: 3}
+    - target: {fileID: 3699295531117829134, guid: 0a3ad23a5a176eb41914fbcbb34ce9be, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 3449881766957978537, guid: 0a3ad23a5a176eb41914fbcbb34ce9be, type: 3}
     m_RemovedComponents: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0a3ad23a5a176eb41914fbcbb34ce9be, type: 3}
