@@ -30,6 +30,9 @@ namespace Mechanix
         public Button WheelType3;
         public Button WheelType4;
         public Button WheelType5;
+        public GameObject PneuSport;
+        public GameObject PneuToutTerrain;
+        public GameObject PneuEte;
 
         public static void WheelsSetValues(double roadAdherenceSet,
                       double dirtAdherenceSet,
@@ -105,6 +108,13 @@ namespace Mechanix
             frictionForce = normalForce * roadAdherence; // TODO : general adherance? mu
         }
 
+        public void desactiverModelPneus()
+        {
+            PneuSport.SetActive(false);
+            PneuToutTerrain.SetActive(false);
+            PneuEte.SetActive(false);
+        }
+
         void Start()
         {
             if (selectedWheelType == 0) 
@@ -117,14 +127,20 @@ namespace Mechanix
             WheelType1.onClick.AddListener(delegate { 
                 Wheels.WheelsSetValues(0.65, 0.55, 0.5, 1, 140, 300, 200, 3000);
                 selectedWheelType = 1;
+                desactiverModelPneus();
+                PneuEte.SetActive(true);
             });
             WheelType2.onClick.AddListener(delegate { 
                 Wheels.WheelsSetValues(0.7, 0.6, 0.5, 1, 100, 310, 200, 3000 + 15);
                 selectedWheelType = 2;
+                desactiverModelPneus();
+                PneuSport.SetActive(true);
             });
             WheelType3.onClick.AddListener(delegate { 
                 Wheels.WheelsSetValues(0.8, 0.7, 0.6, 1, 80, 350, 220, 3000 + 30);
                 selectedWheelType = 3;
+                desactiverModelPneus();
+                PneuToutTerrain.SetActive(true);
             });
             WheelType4.onClick.AddListener(delegate { 
                 Wheels.WheelsSetValues(0.6, 0.5, 0.4, 1, 165, 250, 230, 3000 - 10);
@@ -143,11 +159,19 @@ namespace Mechanix
             WheelsStats.text = "Wheels' Stats:" +
                 PerfCalc.DictionnaryToString(Wheels.GetInfosWheels)
                 + getAdherenceString();
+
+            foreach(GameObject pneu in FindObjectsOfType<GameObject>())
+            {
+                if (pneu != null && pneu.name.Substring(0,4).Equals("Pneu") && pneu.activeSelf == true)
+                {
+                    pneu.transform.Rotate(new Vector3(0.25f, 1, 0.5f), 100 * Time.deltaTime);
+                }
+            }
         }
 
         public static string getAdherenceString()
         {
-            string adherance = "\nAdherence: Road " + roadAdherence + " Dirt " + dirtAdherence + " Wet Road/Snow " + waterAndSnowAdherence;
+            string adherance = "\nAdherence: Road " + roadAdherence + " Dirt " + dirtAdherence + " \nWet Road/Snow " + waterAndSnowAdherence;
             return adherance;
         }
     }
