@@ -14,7 +14,8 @@ namespace Mechanix
         private static Gear currentGear;
         public TextMeshProUGUI gearSelected;
         public TextMeshProUGUI TextDents;
-        private static Gear gearMenante = new Gear(5, 1, "Menante");
+        private static Gear gearReculons = new Gear(10, 1, "Reculons");
+        private static Gear gearMenante = new Gear(10, 1, "Menante");
         private static Gear gear1 = new Gear(10, 1, "Gear1");
         private static Gear gear2 = new Gear(14, 1, "Gear2");
         private static Gear gear3 = new Gear(18, 1, "Gear3");
@@ -22,6 +23,7 @@ namespace Mechanix
         private static Gear gear5 = new Gear(26, 1, "Gear5");
         private static Gear gear6 = new Gear(30, 1, "Gear6");
         private static Gear gearLimitante = new Gear(5, 1, "Limitante");
+        public Button buttonReculons;
         public Button buttonGearMenante;
         public Button buttonGear1;
         public Button buttonGear2;
@@ -59,13 +61,15 @@ namespace Mechanix
 
 
         }
+
         void Start()
         {
-            buttonGearMenante.onClick.AddListener(delegate { SwitchGearTo(0); });
-            buttonGear1.onClick.AddListener(delegate { SwitchGearTo(1); });
-            buttonGear2.onClick.AddListener(delegate { SwitchGearTo(2); });
-            buttonGear3.onClick.AddListener(delegate { SwitchGearTo(3); });
-            buttonGear4.onClick.AddListener(delegate { SwitchGearTo(4); });
+            buttonReculons.onClick.AddListener(delegate { SwitchGearTo(0); setActiveGear();});
+            buttonGearMenante.onClick.AddListener(delegate { SwitchGearTo(1); setActiveGear();});
+            buttonGear1.onClick.AddListener(delegate { SwitchGearTo(2); setActiveGear(); });
+            buttonGear2.onClick.AddListener(delegate { SwitchGearTo(3); setActiveGear(); });
+            buttonGear3.onClick.AddListener(delegate { SwitchGearTo(4); setActiveGear(); });
+            buttonGear4.onClick.AddListener(delegate { SwitchGearTo(5); setActiveGear(); });
 
             dentsSlider.onValueChanged.AddListener(delegate { setTextDents(); setActiveGear(); });
             initiationAffichageGears();
@@ -74,6 +78,7 @@ namespace Mechanix
 
         private void initiationAffichageGears()
         {
+            affichageGears.Clear();
             for (int i = 10; i <= 30; i++)
             {
                 string fieldName = "gear" + i;
@@ -84,6 +89,7 @@ namespace Mechanix
 
         public static void addGearToList()
         {
+            gears.Add(gearReculons);
             gears.Add(gearMenante);
             gears.Add(gear1);
             gears.Add(gear2);
@@ -98,7 +104,7 @@ namespace Mechanix
         {
 
             foreach (GameObject g in affichageGears) {
-                if(int.Parse(g.name.Substring(4)) == currentGear.NbDents)
+                if(currentGear != null && int.Parse(g.name.Substring(4)) == currentGear.NbDents)
                 {
                     g.SetActive(true);
                 } else
@@ -177,7 +183,10 @@ namespace Mechanix
                 TextDents.text = currentGear.NbDents.ToString();
                 foreach (GameObject g in affichageGears)
                 {
-                    g.transform.Rotate(new Vector3(0.25f,1,0.5f), 100 * Time.deltaTime);
+                    if (g != null)
+                    {
+                        g.transform.Rotate(new Vector3(0.25f, 1, 0.5f), 100 * Time.deltaTime);
+                    }
                 }
             }
         }
