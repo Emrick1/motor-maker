@@ -33,6 +33,7 @@ namespace Mechanix
         public GameObject PneuSport;
         public GameObject PneuToutTerrain;
         public GameObject PneuEte;
+       // public GameObject PneuCourse;
 
         public static void WheelsSetValues(double roadAdherenceSet,
                       double dirtAdherenceSet,
@@ -113,6 +114,7 @@ namespace Mechanix
             PneuSport.SetActive(false);
             PneuToutTerrain.SetActive(false);
             PneuEte.SetActive(false);
+           // PneuCourse.SetActive(false);
         }
 
         void Start()
@@ -149,6 +151,8 @@ namespace Mechanix
             WheelType5.onClick.AddListener(delegate { 
                 Wheels.WheelsSetValues(0.5, 0.4, 0.3, 1, 180, 220, 250, 3000 - 20);
                 selectedWheelType = 5;
+                desactiverModelPneus();
+              //  PneuCourse.SetActive(true);
             });
         }
 
@@ -160,11 +164,11 @@ namespace Mechanix
                 PerfCalc.DictionnaryToString(Wheels.GetInfosWheels)
                 + getAdherenceString();
 
-            foreach(GameObject pneu in FindObjectsOfType<GameObject>())
+           foreach(GameObject pneu in FindObjectsOfType<GameObject>())
             {
                 if (pneu != null && pneu.name.Substring(0,4).Equals("Pneu") && pneu.activeSelf == true)
                 {
-                    pneu.transform.Rotate(new Vector3(0.25f, 1, 0.5f), 100 * Time.deltaTime);
+                   pneu.transform.Rotate(new Vector3(0.25f, 1, 0.5f), 100 * Time.deltaTime);
                 }
             }
         }
