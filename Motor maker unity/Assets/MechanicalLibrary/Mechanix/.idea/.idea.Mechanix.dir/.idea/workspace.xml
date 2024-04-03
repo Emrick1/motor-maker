@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="58e02fb7-d511-4d3d-86b7-98c654f5ab19" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../.vs/MechanicalLibrary/FileContentIndex/5d9a167e-9334-4f8c-8c45-b4b23d7b0d31.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.vs/MechanicalLibrary/FileContentIndex/b6378ead-50b0-4659-b3fd-4f46e77be6f4.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.vs/MechanicalLibrary/FileContentIndex/d18d695b-17c3-4180-b4d1-6074f2cffba0.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.vs/MechanicalLibrary/v17/.suo" beforeDir="false" afterPath="$PROJECT_DIR$/../.vs/MechanicalLibrary/v17/.suo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MechanicalLibrary.sln.meta" beforeDir="false" afterPath="$PROJECT_DIR$/../MechanicalLibrary.sln.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Car.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Car.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ElectricEngine.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ElectricEngine.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engine.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Engine.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Enregistreur.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Enregistreur.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Gearbox/Gear.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Gearbox/Gear.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Gearbox/Gearbox.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Gearbox/Gearbox.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mechanix.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Mechanix.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mechanix.csproj.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Mechanix.csproj.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PerfCalc.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PerfCalc.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Skins.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Skins.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThermicEngine.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ThermicEngine.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThermicEngine.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/ThermicEngine.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Transmission.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Transmission.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Wheels.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Wheels.cs" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ProjectId" id="2eLBo0EDU1zEybeSyFtLQcbbLxH" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RunManager">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+      <option name="allowRunningInParallel" value="false" />
+      <option name="listenPortForConnections" value="false" />
+      <option name="pid" />
+      <option name="projectPathOnTarget" />
+      <option name="selectedOptions">
+        <list />
+      </option>
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="58e02fb7-d511-4d3d-86b7-98c654f5ab19" name="Changes" comment="" />
+      <created>1711674151147</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1711674151147</updated>
+      <workItem from="1711674152260" duration="112000" />
+      <workItem from="1711674393704" duration="23000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+</project>
