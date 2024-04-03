@@ -1,6 +1,7 @@
 using Mechanix;
 using System;
 using System.Numerics;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.UIElements;
@@ -14,6 +15,10 @@ namespace Mechanix
     {
 
         [SerializeField] private Rigidbody _rb;
+        [SerializeField] public TextMeshProUGUI flippedText;
+        [SerializeField] public TextMeshProUGUI speedText;
+        [SerializeField] public GameObject flippedpanel;
+        [SerializeField] public GameObject SpeedometerArrow;
         [SerializeField] private Vector3 m_EulerAngleVelocity;
         [SerializeField] private WheelCollider frontRight;
         [SerializeField] private WheelCollider frontLeft;
@@ -27,7 +32,8 @@ namespace Mechanix
         [SerializeField] private Vector3 rbVector = new Vector3(0, 0, 1);
         void Start()
         {
-            
+            flippedText.enabled = false;
+            flippedpanel.SetActive(false);
         }
 
         void Update()
@@ -55,6 +61,20 @@ namespace Mechanix
                 }
                 axis = 1;
             }
+            if (_rb.rotation.z * 360 >= 120 || _rb.rotation.z * 360 <= -120 || _rb.rotation.x * 360 >= 120 || _rb.rotation.x * 360 <= -120)
+            {
+                flippedText.enabled = true;
+                flippedpanel.SetActive(true);
+                if (Input.GetKey(KeyCode.Space))
+                {
+                _rb.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+                _rb.angularVelocity = new Vector3(0, 0, 0);
+                }
+            } else
+            {
+                flippedText.enabled = false;
+                flippedpanel.SetActive(false);
+            }
 
             frontLeft.steerAngle = 15f * axis;
             frontRight.steerAngle = 15f * axis;
@@ -63,6 +83,14 @@ namespace Mechanix
             UpdateWheel(frontRight, frontRightTransform);
             UpdateWheel(rearLeft, rearLeftTransform);
             UpdateWheel(rearRight, rearRightTransform);
+
+            UpdateSpeedometer();
+        }
+
+        private void UpdateSpeedometer()
+        {
+            SpeedometerArrow.transform.rotation = Quaternion.Euler(new Vector3(0, 0, ((float) (PerfCalc.Speed * -2.8) + 8)));
+            speedText.text = ((int) PerfCalc.Speed * 3.6).ToString();
         }
 
         private void setRbVector()

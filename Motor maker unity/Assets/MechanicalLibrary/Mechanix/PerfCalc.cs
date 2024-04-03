@@ -27,7 +27,7 @@ namespace Mechanix
         private static float t;
         private static double frictionForceWheels = 0;
         private static double frictionForceWind = 0;
-        private static double frictionForceEngineReductionCoefficient = 0.85;
+        private static double frictionForceEngineReductionCoefficient = 0.7;
         private static double dragCoefficient = 0.3; //TODO CHANGER SELON CHAR
         private static double frontCarArea = 2.5; //TODO CHANGER SELON CHAR
         private static double windDensity = 0;
@@ -126,7 +126,7 @@ namespace Mechanix
 
             if (!(Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) && !(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)))
             {
-                acceleration = (speed / -115) - 0.5;
+                acceleration = (speed / -55) - 0.5;
                 speed += acceleration / 60;
                 if (speed < 0)
                 {
@@ -155,7 +155,7 @@ namespace Mechanix
             }
          
 
-            RPMOut = (int)(((double)RPM) * (calculateRatio(Gearbox.Gears(0), gearSelected, false)));
+            RPMOut = (int)(((double)RPM) * (calculateRatio(Gearbox.Gears(1), gearSelected, false)));
             torqueOut = (horsePower * 5252) / RPMOut;
             engineForce = torqueOut * (Wheels.Radius / 100);
 
@@ -189,9 +189,8 @@ namespace Mechanix
         {
             windDensity = 101.3 / (8.395 * ambientTemperature);
             frictionForceWind = 0.5 * dragCoefficient * frontCarArea * windDensity * (speed * speed);
-            acceleration = ((frictionForceEngineReductionCoefficient * engineForce) - (frictionForceWheels + frictionForceWind)) / (mass);
-            
-        }
+            acceleration = ((frictionForceEngineReductionCoefficient * engineForce) - (frictionForceWheels + (6.5 * frictionForceWind))) / (mass);
+        } 
 
         public static string DictionnaryToString(Dictionary<string, double> dictionary)
         {
