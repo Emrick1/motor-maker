@@ -16,11 +16,11 @@ namespace Mechanix
         public TextMeshProUGUI TextDents;
         private static Gear gearReculons = new Gear(10, 1, "Reculons");
         private static Gear gearMenante = new Gear(10, 1, "Menante");
-        private static Gear gear1 = new Gear(10, 1, "Gear1");
-        private static Gear gear2 = new Gear(14, 1, "Gear2");
-        private static Gear gear3 = new Gear(18, 1, "Gear3");
-        private static Gear gear4 = new Gear(22, 1, "Gear4");
-        private static Gear gear5 = new Gear(26, 1, "Gear5");
+        private static Gear gear1 = new Gear(10, 1, "Engrenage1");
+        private static Gear gear2 = new Gear(14, 1, "Engrenage2");
+        private static Gear gear3 = new Gear(18, 1, "Engrenage3");
+        private static Gear gear4 = new Gear(22, 1, "Engrenage4");
+        private static Gear gear5 = new Gear(26, 1, "Engrenage5");
         private static Gear gear6 = new Gear(30, 1, "Gear6");
         private static Gear gearLimitante = new Gear(5, 1, "Limitante");
         public Button buttonReculons;
@@ -180,7 +180,7 @@ namespace Mechanix
         {
             if (currentGear != null)
             {
-                TextDents.text = currentGear.NbDents.ToString();
+                TextDents.text = currentGear.NbDents.ToString() + " dents";
                 foreach (GameObject g in affichageGears)
                 {
                     if (g != null)
