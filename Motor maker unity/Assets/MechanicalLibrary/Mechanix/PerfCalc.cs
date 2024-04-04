@@ -8,6 +8,7 @@ using static Mechanix.Gearbox;
 using static Mechanix.Gear;
 using System.Collections.Generic;
 using System;
+using System.Reflection;
 
 namespace Mechanix
 {
@@ -36,6 +37,43 @@ namespace Mechanix
         private static double engineTorque = 0;
         private static double torqueOut = 0;
         private static double horsePower = 0;
+
+        public GameObject gear10;
+        public GameObject gear11;
+        public GameObject gear12;
+        public GameObject gear13;
+        public GameObject gear14;
+        public GameObject gear15;
+        public GameObject gear16;
+        public GameObject gear17;
+        public GameObject gear18;
+        public GameObject gear19;
+        public GameObject gear20;
+        public GameObject gear21;
+        public GameObject gear22;
+        public GameObject gear23;
+        public GameObject gear24;
+        public GameObject gear25;
+        public GameObject gear26;
+        public GameObject gear27;
+        public GameObject gear28;
+        public GameObject gear29;
+        public GameObject gear30;
+
+        public GameObject posMenant;
+        public GameObject posMenantRetour;
+        public GameObject posGear1;
+        public GameObject posGear1Retour;
+        public GameObject posGear2;
+        public GameObject posGear2Retour;
+        public GameObject posGear3;
+        public GameObject posGear3Retour;
+        public GameObject posGear4;
+        public GameObject posGear4Retour;
+        public GameObject posGear5;
+        public GameObject posGear5Retour;
+        public GameObject posReculon;
+        public GameObject posReculonRetour;
 
         public PerfCalc(Car car)
         {
@@ -66,6 +104,40 @@ namespace Mechanix
             horsePower = (engineTorque * RPM) / 5252;
         }
 
+        public void chargerGears(Gear g)
+        {
+            string fieldName = "gear" + g.NbDents;
+            FieldInfo field = GetType().GetField(fieldName);
+            GameObject gearDuplique = Instantiate((GameObject)field.GetValue(this));
+
+            string fieldNameRetour = "gear" + (40 - g.NbDents);
+            FieldInfo fieldRetour = GetType().GetField(fieldNameRetour);
+            GameObject gearDupliqueRetour = Instantiate((GameObject)fieldRetour.GetValue(this));
+
+
+            if (g.Name.StartsWith("M")) {
+                gearDuplique.transform.SetParent(posMenant.transform, false);
+                gearDupliqueRetour.transform.SetParent(posMenantRetour.transform, false);
+            } 
+            else if (g.Name.StartsWith("R")) {
+                gearDuplique.transform.SetParent(posReculon.transform, false);
+                gearDupliqueRetour.transform.SetParent(posReculonRetour.transform, false);
+            }
+            else {
+                string fieldNameGear = "posGear" + g.Name.Substring(9);
+                FieldInfo fieldGear = GetType().GetField(fieldNameGear);
+
+                string fieldNameGearRetour = fieldNameGear + "Retour";
+                FieldInfo fieldGearRetour = GetType().GetField(fieldNameGearRetour);
+
+                gearDuplique.transform.SetParent(((GameObject)fieldGear.GetValue(this)).transform, false);
+                gearDupliqueRetour.transform.SetParent(((GameObject)fieldGearRetour.GetValue(this)).transform, false);
+            }
+
+            gearDuplique.transform.localPosition = Vector3.zero; gearDuplique.transform.localRotation = Quaternion.identity; gearDuplique.transform.localScale = Vector3.one;
+            gearDupliqueRetour.transform.localPosition = Vector3.zero; gearDupliqueRetour.transform.localRotation = Quaternion.identity; gearDupliqueRetour.transform.localScale = Vector3.one;
+        }
+
         void Start()
         {
             if (Wheels.SelectedWheelType == 0) 
@@ -78,6 +150,11 @@ namespace Mechanix
             Gearbox.addGearToList();
             List<Gear> gears = Gearbox.GearsList();
             gearSelected = gears[1];
+
+            foreach (Gear gear in gears)
+            {
+                chargerGears(gear);
+            }
             
         }
 
@@ -169,17 +246,17 @@ namespace Mechanix
             {
                 ValueText.text = "Stats: "
                + "\nRPM: " + RPM.ToString()
-               + "\nRPM Output: " + RPMOut.ToString()
+               + "\nRPM Sortie: " + RPMOut.ToString()
                + "\nTorque Moteur: " + $"{engineTorque:F4}"
-               + "\nHorse Power: " + $"{horsePower:F4}"
+               + "\nPuissance (Hp): " + $"{horsePower:F4}"
                + "\nTorque Output: " + $"{torqueOut:F4}"
-               + "\nEngine Force (N): " + $"{engineForce:F4}"
-               + "\nGear: " + gearSelected.Name.ToString()
+               + "\nForce du moteur (N): " + $"{engineForce:F4}"
+               + "\nEngrenage: " + gearSelected.Name.ToString()
                + "\nAcceleration (m/s^2): " + $"{acceleration:F4}"
-               + "\nSpeed (m/s): " + $"{speed:F3}" + " Speed (km/h): " + $"{(speed*3.6):F3}"
-               + "\nFriction Force Wheels (N): " + $"{frictionForceWheels:F3}"
-               + "\nFriction Force Wind (N): " + $"{frictionForceWind:F3}"
-               + "\n\nWheels: "
+               + "\nVitesse (m/s): " + $"{speed:F3}" + " Vitesse (km/h): " + $"{(speed*3.6):F3}"
+               + "\nForce de friction pneus (N): " + $"{frictionForceWheels:F3}"
+               + "\nForce de friction vent (N): " + $"{frictionForceWind:F3}"
+               + "\n\nPneus: "
                + DictionnaryToString(Wheels.GetInfosWheels)
                + Wheels.getAdherenceString();
             }
