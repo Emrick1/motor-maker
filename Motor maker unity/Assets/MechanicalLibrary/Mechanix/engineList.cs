@@ -40,7 +40,6 @@ using static Mechanix.Engine;
         buttonEngine3.onClick.AddListener(delegate { SwitchEngineTo(2); });
         buttonEngine4.onClick.AddListener(delegate { SwitchEngineTo(3); });
         addEngineToList();
-        // allo philippe
     }
 
 

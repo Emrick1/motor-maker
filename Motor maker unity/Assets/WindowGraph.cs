@@ -1,25 +1,29 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class WindowGraph : MonoBehaviour
 {
     [SerializeField] private Sprite circleSprite;
-    private RectTransform graphContainer;
+    public RectTransform graphContainer;
     public Button boutonV6;
     public Button boutonV8;
     public Button boutonV10;
     public Button boutonV12;
+    private List<RectTransform> listCircleVisible;
+    public GameObject cloneBackground;
+
 
     void Start()
     {
-        graphContainer = transform.Find("GraphContainer").GetComponent<RectTransform>();
+        listCircleVisible = new List<RectTransform>();
         boutonV6.onClick.AddListener(delegate { ShowV6(); }) ;
-        //boutonV8.onClick.AddListener(null);
-        //boutonV10.onClick.AddListener(null);
-        //boutonV12.onClick.AddListener(null);
+        boutonV8.onClick.AddListener(null);
+        boutonV10.onClick.AddListener(null);
+        boutonV12.onClick.AddListener(null);
     }
 
 
@@ -33,11 +37,14 @@ public class WindowGraph : MonoBehaviour
         GameObject gameObject = new GameObject("circle", typeof(Image));
         gameObject.transform.SetParent(graphContainer, false);
         gameObject.GetComponent<Image>().sprite = circleSprite;
+        gameObject.tag = "Circle";
         RectTransform rectTransform = gameObject.GetComponent<RectTransform>();
         rectTransform.anchoredPosition = anchoredPosition;
         rectTransform.sizeDelta = new Vector2(11, 11);
         rectTransform.anchorMin = new Vector2(0, 0);
         rectTransform.anchorMax = new Vector2(0, 0);
+        rectTransform.tag = "Circle";
+        listCircleVisible.Add(rectTransform);
     }
 
     public void ShowGraph(List<float> values)
@@ -72,6 +79,35 @@ public class WindowGraph : MonoBehaviour
 
     public void ShowV6()
     {
+        ClearGraph();
         ShowGraph(EquationV6());
+    }
+
+    public void ClearGraph()
+    {
+        foreach (Transform child in graphContainer) 
+        { 
+                Destroy(child.gameObject);
+            }
+        GameObject background = CloneBackGround();
+        background.transform.SetParent(graphContainer.transform);
+    }
+
+    public GameObject CloneBackGround()
+    {
+        GameObject background = new GameObject();
+        int indexChild = cloneBackground.transform.childCount;
+
+        for (int i = 0; i < indexChild; i++)
+        {
+            GameObject childToClone = cloneBackground.transform.GetChild(i).gameObject;
+            GameObject clonedChild = Instantiate(childToClone);
+            clonedChild.transform.SetParent(cloneBackground.transform);
+            clonedChild.transform.localPosition = childToClone.transform.localPosition;
+            clonedChild.transform.localRotation = childToClone.transform.localRotation;
+            clonedChild.name = "Cloned Child";
+        }
+
+        return background;
     }
 }
