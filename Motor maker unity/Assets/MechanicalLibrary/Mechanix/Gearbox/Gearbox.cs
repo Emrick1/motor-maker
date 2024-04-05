@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace Mechanix
 {
-    public class Gearbox : MonoBehaviour, IMechanicalPiece
+    public class Gearbox : MonoBehaviour
     {
         private static List<Gear> gears = new List<Gear>();
         private static Gear currentGear;
@@ -96,7 +96,6 @@ namespace Mechanix
             gears.Add(gear3);
             gears.Add(gear4);
             gears.Add(gear5);
-            gears.Add(gear6);
             gears.Add(gearLimitante);
 
         }

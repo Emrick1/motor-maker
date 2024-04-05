@@ -134,8 +134,13 @@ namespace Mechanix
                 gearDupliqueRetour.transform.SetParent(((GameObject)fieldGearRetour.GetValue(this)).transform, false);
             }
 
-            gearDuplique.transform.localPosition = Vector3.zero; gearDuplique.transform.localRotation = Quaternion.identity; gearDuplique.transform.localScale = Vector3.one;
-            gearDupliqueRetour.transform.localPosition = Vector3.zero; gearDupliqueRetour.transform.localRotation = Quaternion.identity; gearDupliqueRetour.transform.localScale = Vector3.one;
+            gearDuplique.transform.localPosition = Vector3.zero;
+            gearDuplique.transform.localRotation = Quaternion.identity;
+            gearDuplique.transform.localScale = Vector3.one;
+
+            gearDupliqueRetour.transform.localPosition = Vector3.zero; 
+            gearDupliqueRetour.transform.localRotation = Quaternion.identity;
+            gearDupliqueRetour.transform.localScale = Vector3.one;
         }
 
         void Start()
@@ -149,7 +154,7 @@ namespace Mechanix
             frictionForceWheels = Wheels.FrictionForce;
             Gearbox.addGearToList();
             List<Gear> gears = Gearbox.GearsList();
-            gearSelected = gears[1];
+            gearSelected = gears[2];
 
             foreach (Gear gear in gears)
             {
@@ -194,20 +199,27 @@ namespace Mechanix
             if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
             {
                 acceleration = (speed/-15) - 3;
-                speed += acceleration / 60;
-                if (speed < 0)
+                
+                if (speed >= 0)
                 {
-                    speed = 0;
+                    speed += acceleration / 60;
+                }
+                else if(speed < 0)
+                {
+                    speed -= acceleration / 60;
                 }
             } 
 
             if (!(Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) && !(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)))
             {
                 acceleration = (speed / -55) - 0.5;
-                speed += acceleration / 60;
-                if (speed < 0)
+                if (speed >= 0)
                 {
-                    speed = 0;
+                    speed += acceleration / 60;
+                }
+                else if (speed < 0)
+                {
+                    speed -= acceleration / 60;
                 }
             }
 
@@ -220,19 +232,32 @@ namespace Mechanix
             }
 
             int indexGearSelect = Gearbox.GearsList().IndexOf(gearSelected);
-            if (Input.GetKeyDown(KeyCode.LeftArrow) && gearSelected != Gearbox.Gears(1))
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                indexGearSelect -= 1;
+                if (gearSelected != Gearbox.Gears(2))
+                {
+                    indexGearSelect -= 1;
+                } 
+                else {
+                    indexGearSelect = 0;
+                }
                 gearSelected = Gearbox.Gears(indexGearSelect);
             }
             if (Input.GetKeyDown(KeyCode.RightArrow) && gearSelected != Gearbox.Gears(Gearbox.GearsList().Count - 2))
             {
-                indexGearSelect += 1;
+                if (gearSelected != Gearbox.Gears(0))
+                {
+                    indexGearSelect += 1;
+                }
+                else
+                {
+                    indexGearSelect = 2;
+                }
                 gearSelected = Gearbox.Gears(indexGearSelect);
             }
          
 
-            RPMOut = (int)(((double)RPM) * (calculateRatio(Gearbox.Gears(1), gearSelected, false)));
+            RPMOut = (int)(((double)RPM) * (calculateRatio(Gearbox.Gears(1), gearSelected, (gearSelected == Gears(0)))));
             torqueOut = (horsePower * 5252) / RPMOut;
             engineForce = torqueOut * (Wheels.Radius / 100);
 
@@ -266,8 +291,15 @@ namespace Mechanix
         {
             windDensity = 101.3 / (8.395 * ambientTemperature);
             frictionForceWind = 0.5 * dragCoefficient * frontCarArea * windDensity * (speed * speed);
-            acceleration = ((frictionForceEngineReductionCoefficient * engineForce) - (frictionForceWheels + (6.5 * frictionForceWind))) / (mass);
-        } 
+            if (acceleration >= 0)
+            {
+                acceleration = ((frictionForceEngineReductionCoefficient * engineForce) - (frictionForceWheels + (6.5 * frictionForceWind))) / (mass);
+            }
+            else
+            {
+                acceleration = ((frictionForceEngineReductionCoefficient * engineForce) + (frictionForceWheels + (6.5 * frictionForceWind))) / (mass);
+            }
+        }
 
         public static string DictionnaryToString(Dictionary<string, double> dictionary)
         {
