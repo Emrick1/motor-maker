@@ -67,8 +67,8 @@ namespace Mechanix
                 flippedpanel.SetActive(true);
                 if (Input.GetKey(KeyCode.Space))
                 {
-                _rb.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
-                _rb.angularVelocity = new Vector3(0, 0, 0);
+                    _rb.rotation = Quaternion.Euler(new Vector3(0, _rb.rotation.y * 360, 0));                    
+                    _rb.angularVelocity = new Vector3(0, 0, 0);
                 }
             } else
             {
