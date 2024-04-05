@@ -42,7 +42,7 @@ namespace Mechanix
             Quaternion deltaRotationRight = Quaternion.Euler(new Vector3(0, -2, 0) * Time.fixedDeltaTime);
             setRbVector();
             
-            var vel = rbVector * (int) PerfCalc.Speed;
+            var vel = rbVector * (float) PerfCalc.Speed;
             vel.y = _rb.velocity.y;
             _rb.velocity = vel;
             int axis = 0;
@@ -67,8 +67,8 @@ namespace Mechanix
                 flippedpanel.SetActive(true);
                 if (Input.GetKey(KeyCode.Space))
                 {
-                _rb.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
-                _rb.angularVelocity = new Vector3(0, 0, 0);
+                    _rb.rotation = Quaternion.Euler(new Vector3(0, _rb.rotation.y * 360, 0));                    
+                    _rb.angularVelocity = new Vector3(0, 0, 0);
                 }
             } else
             {
@@ -90,7 +90,8 @@ namespace Mechanix
         private void UpdateSpeedometer()
         {
             SpeedometerArrow.transform.rotation = Quaternion.Euler(new Vector3(0, 0, ((float) (PerfCalc.Speed * -2.8) + 8)));
-            speedText.text = ((int) PerfCalc.Speed * 3.6).ToString();
+            double speed = (PerfCalc.Speed * 3.6);
+            speedText.text = $"{speed:F2}";
         }
 
         private void setRbVector()
