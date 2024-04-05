@@ -41,25 +41,9 @@ using static Mechanix.Engine;
         buttonEngine4.onClick.AddListener(delegate { SwitchEngineTo(3); });
         addEngineToList();
     }
-    public void dessinerEnginGraph(int rpmMin, int rpmMax, int torqueMin, int torqueMax, int benchmarkDescente, double a1, double a2 )
-    {
-        int nbPoints = (rpmMax - rpmMin)/100;
-        graphs.positionCount = nbPoints;
 
-        for (int i = rpmMin; i < rpmMax; i++)
-        {
-            float x = i / (float)(nbPoints - 1);
-            if (i <= benchmarkDescente)
-            {
-                float y = 0f;
-            } 
-            else
-            {
-                float y = 0f;
-            }
-        }
 
-    }
+   
     public void SwitchEngineTo(int engineIndex)
     {
         currentEngine = enginesList[engineIndex];

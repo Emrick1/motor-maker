@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace Mechanix
 {
-    public class Wheels : MonoBehaviour, IMechanicalPiece
+    public class Wheels : MonoBehaviour
     {
         private static double mass;
         private static double roadAdherence; //coefficient entre 0 et 1
