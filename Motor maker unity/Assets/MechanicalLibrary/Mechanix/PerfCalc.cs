@@ -171,7 +171,7 @@ namespace Mechanix
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
             {
                 
-                speed += acceleration / 20;
+                speed += acceleration / 30;
                 if (RPM < RPMmax)
                 {
                     facteurAugmentation = (19 / (1 + (Mathf.Exp((-0.1f * t) + 5))) + 1);
@@ -199,27 +199,21 @@ namespace Mechanix
 
             if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
             {
-                acceleration = -(frictionForceWheels / mass);
-                if (speed >= 0)
+                acceleration = (speed / -75) - 0.5;
+                speed += acceleration / 60;
+                if (speed < 0)
                 {
-                    speed += acceleration / 60;
+                    speed = 0;
                 }
-                else if(speed < 0)
-                {
-                    speed -= acceleration / 60;
-                }
-            } 
+            }
 
             if (!(Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) && !(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)))
             {
-                acceleration = (speed / -95) - 0.5;
-                if (speed >= 0)
+                acceleration = (speed / -180) - 0.1;
+                speed += acceleration / 60;
+                if (speed < 0)
                 {
-                    speed += acceleration / 60;
-                }
-                else if (speed < 0)
-                {
-                    speed -= acceleration / 60;
+                    speed = 0;
                 }
             }
 
@@ -291,14 +285,7 @@ namespace Mechanix
         {
             windDensity = 101.3 / (8.395 * ambientTemperature);
             frictionForceWind = 0.5 * dragCoefficient * frontCarArea * windDensity * (speed * speed);
-            if (acceleration >= 0)
-            {
-                acceleration = ((frictionForceEngineReductionCoefficient * engineForce) - (frictionForceWheels + (6.5 * frictionForceWind))) / (mass);
-            }
-            else
-            {
-                acceleration = ((frictionForceEngineReductionCoefficient * engineForce) + (frictionForceWheels + (6.5 * frictionForceWind))) / (mass);
-            }
+            acceleration = ((frictionForceEngineReductionCoefficient * engineForce) - (frictionForceWheels + (6.5 * frictionForceWind))) / (mass);
         }
 
         public static string DictionnaryToString(Dictionary<string, double> dictionary)
