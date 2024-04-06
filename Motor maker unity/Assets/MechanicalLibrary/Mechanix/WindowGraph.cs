@@ -20,8 +20,8 @@ public class WindowGraph : MonoBehaviour
     void Start()
     {
         listCircleVisible = new List<RectTransform>();
-        boutonV6.onClick.AddListener(delegate { ClearGraph(); EquationV6(); }) ;
-        boutonV8.onClick.AddListener(delegate { ClearGraph(); EquationV8(); });
+        boutonV6.onClick.AddListener(delegate { ClearGraph(); ShowGraph(EquationV6());}) ;
+        boutonV8.onClick.AddListener(delegate { ClearGraph(); ShowGraph(EquationV8()); });
         boutonV10.onClick.AddListener(null);
         boutonV12.onClick.AddListener(null);
     }
