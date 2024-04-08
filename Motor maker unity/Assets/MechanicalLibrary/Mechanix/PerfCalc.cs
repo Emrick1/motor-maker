@@ -39,6 +39,8 @@ namespace Mechanix
         private static double torqueOut = 0;
         private static double horsePower = 0;
 
+        private static float echelleTemporelle;
+
         public GameObject gear10;
         public GameObject gear11;
         public GameObject gear12;
@@ -77,7 +79,6 @@ namespace Mechanix
         public GameObject posReculonRetour;
 
         public Slider sliderEchelleTemporelle;
-        public float facteurTemporel;
 
         public PerfCalc(Car car)
         {
@@ -107,39 +108,45 @@ namespace Mechanix
         {
             string fieldName = "gear" + g.NbDents;
             FieldInfo field = GetType().GetField(fieldName);
-            GameObject gearDuplique = Instantiate((GameObject)field.GetValue(this));
-
             string fieldNameRetour = "gear" + (40 - g.NbDents);
             FieldInfo fieldRetour = GetType().GetField(fieldNameRetour);
-            GameObject gearDupliqueRetour = Instantiate((GameObject)fieldRetour.GetValue(this));
+            if (field != null && g.NbDents <= 30)
+            {
+                GameObject gearDuplique = Instantiate((GameObject)field.GetValue(this));
+                GameObject gearDupliqueRetour = Instantiate((GameObject)fieldRetour.GetValue(this));
 
 
-            if (g.Name.StartsWith("M")) {
-                gearDuplique.transform.SetParent(posMenant.transform, false);
-                gearDupliqueRetour.transform.SetParent(posMenantRetour.transform, false);
-            } 
-            else if (g.Name.StartsWith("R")) {
-                gearDuplique.transform.SetParent(posReculon.transform, false);
-                gearDupliqueRetour.transform.SetParent(posReculonRetour.transform, false);
+                if (g.Name.StartsWith("M"))
+                {
+                    gearDuplique.transform.SetParent(posMenant.transform, false);
+                    gearDupliqueRetour.transform.SetParent(posMenantRetour.transform, false);
+                }
+                else if (g.Name.StartsWith("R"))
+                {
+                    gearDuplique.transform.SetParent(posReculon.transform, false);
+                    gearDupliqueRetour.transform.SetParent(posReculonRetour.transform, false);
+                }
+                else
+                {
+                    string fieldNameGear = "posGear" + g.Name.Substring(9);
+                    FieldInfo fieldGear = GetType().GetField(fieldNameGear);
+
+                    string fieldNameGearRetour = fieldNameGear + "Retour";
+                    FieldInfo fieldGearRetour = GetType().GetField(fieldNameGearRetour);
+
+                    gearDuplique.transform.SetParent(((GameObject)fieldGear.GetValue(this)).transform, false);
+                    gearDupliqueRetour.transform.SetParent(((GameObject)fieldGearRetour.GetValue(this)).transform, false);
+                }
+
+                gearDuplique.transform.localPosition = Vector3.zero;
+                gearDuplique.transform.localRotation = Quaternion.identity;
+                gearDuplique.transform.localScale = Vector3.one;
+
+                gearDupliqueRetour.transform.localPosition = Vector3.zero;
+                gearDupliqueRetour.transform.localRotation = Quaternion.identity;
+                gearDupliqueRetour.transform.localScale = Vector3.one;
             }
-            else {
-                string fieldNameGear = "posGear" + g.Name.Substring(9);
-                FieldInfo fieldGear = GetType().GetField(fieldNameGear);
-
-                string fieldNameGearRetour = fieldNameGear + "Retour";
-                FieldInfo fieldGearRetour = GetType().GetField(fieldNameGearRetour);
-
-                gearDuplique.transform.SetParent(((GameObject)fieldGear.GetValue(this)).transform, false);
-                gearDupliqueRetour.transform.SetParent(((GameObject)fieldGearRetour.GetValue(this)).transform, false);
-            }
-
-            gearDuplique.transform.localPosition = Vector3.zero;
-            gearDuplique.transform.localRotation = Quaternion.identity;
-            gearDuplique.transform.localScale = Vector3.one;
-
-            gearDupliqueRetour.transform.localPosition = Vector3.zero; 
-            gearDupliqueRetour.transform.localRotation = Quaternion.identity;
-            gearDupliqueRetour.transform.localScale = Vector3.one;
+           
         }
 
         void Start()
@@ -161,7 +168,7 @@ namespace Mechanix
                 chargerGears(gear);
             }
 
-            sliderEchelleTemporelle.onValueChanged.AddListener(delegate { facteurTemporel = sliderEchelleTemporelle.value; });
+            sliderEchelleTemporelle.onValueChanged.AddListener(delegate { echelleTemporelle = sliderEchelleTemporelle.value; });
 
         }
 
@@ -290,6 +297,7 @@ namespace Mechanix
         private void rotateComponents()
         {
             double angleRotation = 0;
+
             foreach (GameObject pos in FindObjectsOfType<GameObject>())
             {
                 if (pos != null && pos.name.Substring(0, 3).Equals("Pos"))
@@ -300,16 +308,18 @@ namespace Mechanix
                         {
                             if (pos.name[4..].Equals(Gearbox.Gears(i).Name))
                             {
-                                angleRotation = (calculateRatio(Gearbox.Gears(1), Gearbox.Gears(i), false) * RPM * 360) / (60 * Time.deltaTime);// * facteurTemporel;
+                                angleRotation = (calculateRatio(Gearbox.Gears(1), Gearbox.Gears(i), false) * RPM * 360) / (60);
                             }
                         }
                     } 
                     else
                     {
-                        angleRotation = (calculateRatio(Gearbox.Gears(1), new Gear(40 - Gearbox.Gears(1).NbDents, 1, "Retour"), true) * RPM * 360) / (60 * Time.deltaTime);// * facteurTemporel;
+                        angleRotation = (calculateRatio(Gearbox.Gears(1), new Gear(40 - Gearbox.Gears(1).NbDents, 1, "Retour"), false) * RPM * 360) / (-60);
                     }
 
-                    pos.transform.Rotate(Vector3.forward, (float)angleRotation);
+                    Debug.Log("echelle " + echelleTemporelle);
+
+                    pos.transform.Rotate(Vector3.forward, (float)angleRotation * Time.deltaTime * echelleTemporelle);
                 }
             }
         }
