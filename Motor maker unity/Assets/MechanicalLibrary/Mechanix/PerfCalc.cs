@@ -88,11 +88,6 @@ namespace Mechanix
             return RPM;
         }
 
-        public double getAcceleration()
-        {
-            return 0;
-        }
-
         public void getTorqueSelonMoteur()
         {
             //V6
@@ -340,6 +335,11 @@ namespace Mechanix
         {
             get => speed;
             set => speed = value;
+        }
+        public static double Acceleration
+        {
+            get => acceleration;
+            set => acceleration = value;
         }
     }
 }

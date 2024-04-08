@@ -70,7 +70,7 @@ public class WindowGraph : MonoBehaviour
             values.Add(value);
             
         }
-        for (int i = 4000; i < 7500; i += 200) {
+        for (int i = 4000; i < 7100; i += 200) {
             float value = (float)((-0.00005 * Math.Pow(i - 6000, 2)) + 500);
             values.Add(value);
         }
@@ -93,6 +93,27 @@ public class WindowGraph : MonoBehaviour
             values.Add(value);
         }
         return values;
+    }
+    public List<float> EquationElectrique()
+                //Tesla Model S
+    {
+        List<float> values = new List<float>();
+        for (int i = 0; i < 12000; i += 200)
+        {
+            float value = (float)(i+ 1000);
+            values.Add(value);
+
+        }
+        for (int i = 12000; i < 15000; i += 200)
+        {
+            float value = (float)((-0.000065 * i + 12000));
+            values.Add(value);
+        }
+        return values;
+    }
+    public void ShowGraphDecal()
+    {
+
     }
 
     public void ClearGraph()
