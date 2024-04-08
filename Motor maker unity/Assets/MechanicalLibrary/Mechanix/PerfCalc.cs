@@ -9,6 +9,7 @@ using static Mechanix.Gear;
 using System.Collections.Generic;
 using System;
 using System.Reflection;
+using UnityEngine.SceneManagement;
 
 namespace Mechanix
 {
@@ -255,7 +256,10 @@ namespace Mechanix
             torqueOut = (horsePower * 5252) / RPMOut;
             engineForce = torqueOut * (Wheels.Radius / 100);
 
-            rotateComponents();
+            if (SceneManager.GetActiveScene().buildIndex == 1)
+            {
+                rotateComponents();
+            }
 
             Wheels.CalculateTyreFriction();
             WriteStats();

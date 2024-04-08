@@ -32,13 +32,17 @@ namespace Mechanix
         public Button WheelType5;
         public Slider FrictionSlider;
         public Slider AccelerationSlider;
+        public Slider VitesseMaxSlider;
         public TextMeshProUGUI FrictionStats;
         public TextMeshProUGUI AccelStats;
+        public TextMeshProUGUI VitesseMaxStats;
         public GameObject PneuSport;
         public GameObject PneuToutTerrain;
         public GameObject PneuEte;
+        public GameObject PneuCourse;
+        public GameObject PneuProffessionnel;
         private GameObject PneuChoisi;
-       // public GameObject PneuCourse;
+
 
         public static void WheelsSetValues(double roadAdherenceSet,
                       double dirtAdherenceSet,
@@ -119,7 +123,8 @@ namespace Mechanix
             PneuSport.SetActive(false);
             PneuToutTerrain.SetActive(false);
             PneuEte.SetActive(false);
-           // PneuCourse.SetActive(false);
+            PneuCourse.SetActive(false);
+            PneuProffessionnel.SetActive(false);
         }
 
         void Start()
@@ -142,10 +147,10 @@ namespace Mechanix
                     PneuChoisi = PneuToutTerrain;
                     break;
                 case 4:
-                    PneuChoisi = PneuSport;
+                    PneuChoisi = PneuCourse;
                     break;
                 case 5:
-                    PneuChoisi = PneuSport;
+                    PneuChoisi = PneuProffessionnel;
                     break;
             }
 
@@ -178,15 +183,15 @@ namespace Mechanix
                 Wheels.WheelsSetValues(0.6, 0.5, 0.4, 1, 165, 250, 230, 3000 - 10);
                 selectedWheelType = 4;
                 desactiverModelPneus();
-                PneuChoisi = PneuSport;
-                PneuSport.SetActive(true); //todo changer type pneu
+                PneuChoisi = PneuCourse;
+                PneuCourse.SetActive(true); //todo changer type pneu
             });
             WheelType5.onClick.AddListener(delegate { 
                 Wheels.WheelsSetValues(0.5, 0.4, 0.3, 1, 180, 220, 250, 3000 - 20);
                 selectedWheelType = 5;
                 desactiverModelPneus();
-                PneuChoisi = PneuSport;
-                PneuSport.SetActive(true);
+                PneuChoisi = PneuProffessionnel;
+                PneuProffessionnel.SetActive(true);
             });
             
         }
@@ -201,7 +206,7 @@ namespace Mechanix
 
             foreach (GameObject pneu in FindObjectsOfType<GameObject>())
             {
-                if (pneu != null && pneu.name.Substring(0,4).Equals("Pneu") && pneu.activeSelf == true)
+                if (pneu != null && pneu.name.Length > 4 && pneu.name.Substring(0,4).Equals("Pneu") && pneu.activeSelf == true)
                 {
                    pneu.transform.Rotate(new Vector3(0.25f, 1, 0.5f), 100 * Time.deltaTime);
                 }
@@ -213,8 +218,10 @@ namespace Mechanix
         {
             FrictionSlider.value = (float) (frictionForce);
             AccelerationSlider.value = (float) (frictionForce * 2);
+            VitesseMaxSlider.value = (float) (350 - (frictionForce / 2));  //todo
             FrictionStats.text = $"{frictionForce:F3}" + " (N)";
             AccelStats.text = $"{((frictionForce * 120) / mass):F3}" + " (m/s^2)";
+            VitesseMaxStats.text = $"{(350 - (frictionForce / 2)):F3}" + " (m/s)";
 
         }
 
