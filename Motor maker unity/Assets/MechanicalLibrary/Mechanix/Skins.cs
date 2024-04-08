@@ -2,7 +2,7 @@
 
 namespace Mechanix
 {
-    public class Skins : MonoBehaviour, IMechanicalPiece
+    public class Skins : MonoBehaviour
     {
         private Color color;
         public Skins()

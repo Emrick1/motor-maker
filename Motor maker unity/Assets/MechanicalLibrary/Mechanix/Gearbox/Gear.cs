@@ -1,6 +1,6 @@
 ﻿namespace Mechanix
 {
-    public class Gear : IMechanicalPiece
+    public class Gear 
     {
         private int nbDents;
         private double rayon;

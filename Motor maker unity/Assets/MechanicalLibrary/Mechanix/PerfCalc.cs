@@ -75,6 +75,9 @@ namespace Mechanix
         public GameObject posReculon;
         public GameObject posReculonRetour;
 
+        public Slider sliderEchelleTemporelle;
+        public float facteurTemporel;
+
         public PerfCalc(Car car)
         {
             this.car = car;
@@ -83,11 +86,6 @@ namespace Mechanix
         public double getRPM()
         {
             return RPM;
-        }
-
-        public double getAcceleration()
-        {
-            return 0;
         }
 
         public void getTorqueSelonMoteur()
@@ -134,8 +132,13 @@ namespace Mechanix
                 gearDupliqueRetour.transform.SetParent(((GameObject)fieldGearRetour.GetValue(this)).transform, false);
             }
 
-            gearDuplique.transform.localPosition = Vector3.zero; gearDuplique.transform.localRotation = Quaternion.identity; gearDuplique.transform.localScale = Vector3.one;
-            gearDupliqueRetour.transform.localPosition = Vector3.zero; gearDupliqueRetour.transform.localRotation = Quaternion.identity; gearDupliqueRetour.transform.localScale = Vector3.one;
+            gearDuplique.transform.localPosition = Vector3.zero;
+            gearDuplique.transform.localRotation = Quaternion.identity;
+            gearDuplique.transform.localScale = Vector3.one;
+
+            gearDupliqueRetour.transform.localPosition = Vector3.zero; 
+            gearDupliqueRetour.transform.localRotation = Quaternion.identity;
+            gearDupliqueRetour.transform.localScale = Vector3.one;
         }
 
         void Start()
@@ -145,17 +148,20 @@ namespace Mechanix
                 Wheels.WheelsSetValues(0.65, 0.55, 0.5, 1, 140, 300, 200, PerfCalc.Mass);
                 Wheels.SelectedWheelType = 1;
             };
+            mass = Wheels.Mass;
             Wheels.CalculateTyreFriction();
             frictionForceWheels = Wheels.FrictionForce;
             Gearbox.addGearToList();
             List<Gear> gears = Gearbox.GearsList();
-            gearSelected = gears[1];
+            gearSelected = gears[2];
 
             foreach (Gear gear in gears)
             {
                 chargerGears(gear);
             }
-            
+
+            sliderEchelleTemporelle.onValueChanged.AddListener(delegate { facteurTemporel = sliderEchelleTemporelle.value; });
+
         }
 
         void Update()
@@ -165,7 +171,7 @@ namespace Mechanix
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
             {
                 
-                speed += acceleration / 20;
+                speed += acceleration / 30;
                 if (RPM < RPMmax)
                 {
                     facteurAugmentation = (19 / (1 + (Mathf.Exp((-0.1f * t) + 5))) + 1);
@@ -193,17 +199,17 @@ namespace Mechanix
 
             if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
             {
-                acceleration = (speed/-15) - 3;
+                acceleration = (speed / -75) - 0.5;
                 speed += acceleration / 60;
                 if (speed < 0)
                 {
                     speed = 0;
                 }
-            } 
+            }
 
             if (!(Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) && !(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)))
             {
-                acceleration = (speed / -55) - 0.5;
+                acceleration = (speed / -180) - 0.1;
                 speed += acceleration / 60;
                 if (speed < 0)
                 {
@@ -220,21 +226,36 @@ namespace Mechanix
             }
 
             int indexGearSelect = Gearbox.GearsList().IndexOf(gearSelected);
-            if (Input.GetKeyDown(KeyCode.LeftArrow) && gearSelected != Gearbox.Gears(1))
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                indexGearSelect -= 1;
+                if (gearSelected != Gearbox.Gears(2))
+                {
+                    indexGearSelect -= 1;
+                } 
+                else {
+                    indexGearSelect = 0;
+                }
                 gearSelected = Gearbox.Gears(indexGearSelect);
             }
             if (Input.GetKeyDown(KeyCode.RightArrow) && gearSelected != Gearbox.Gears(Gearbox.GearsList().Count - 2))
             {
-                indexGearSelect += 1;
+                if (gearSelected != Gearbox.Gears(0))
+                {
+                    indexGearSelect += 1;
+                }
+                else
+                {
+                    indexGearSelect = 2;
+                }
                 gearSelected = Gearbox.Gears(indexGearSelect);
             }
          
 
-            RPMOut = (int)(((double)RPM) * (calculateRatio(Gearbox.Gears(1), gearSelected, false)));
+            RPMOut = (int)(((double)RPM) * (calculateRatio(Gearbox.Gears(1), gearSelected, (gearSelected == Gears(0)))));
             torqueOut = (horsePower * 5252) / RPMOut;
             engineForce = torqueOut * (Wheels.Radius / 100);
+
+            rotateComponents();
 
             Wheels.CalculateTyreFriction();
             WriteStats();
@@ -262,12 +283,39 @@ namespace Mechanix
             }
         }
 
+        private void rotateComponents()
+        {
+            double angleRotation = 0;
+            foreach (GameObject pos in FindObjectsOfType<GameObject>())
+            {
+                if (pos != null && pos.name.Substring(0, 3).Equals("Pos"))
+                {
+                    if (!pos.name.EndsWith("Retour"))
+                    {
+                        for (int i = 0; i < Gearbox.GearsList().Count; i++)
+                        {
+                            if (pos.name[4..].Equals(Gearbox.Gears(i).Name))
+                            {
+                                angleRotation = (calculateRatio(Gearbox.Gears(1), Gearbox.Gears(i), false) * RPM * 360) / (60 * Time.deltaTime);// * facteurTemporel;
+                            }
+                        }
+                    } 
+                    else
+                    {
+                        angleRotation = (calculateRatio(Gearbox.Gears(1), new Gear(40 - Gearbox.Gears(1).NbDents, 1, "Retour"), true) * RPM * 360) / (60 * Time.deltaTime);// * facteurTemporel;
+                    }
+
+                    pos.transform.Rotate(Vector3.forward, (float)angleRotation);
+                }
+            }
+        }
+
         private void CalculateSpeedAndForces()
         {
             windDensity = 101.3 / (8.395 * ambientTemperature);
             frictionForceWind = 0.5 * dragCoefficient * frontCarArea * windDensity * (speed * speed);
             acceleration = ((frictionForceEngineReductionCoefficient * engineForce) - (frictionForceWheels + (6.5 * frictionForceWind))) / (mass);
-        } 
+        }
 
         public static string DictionnaryToString(Dictionary<string, double> dictionary)
         {
@@ -287,6 +335,11 @@ namespace Mechanix
         {
             get => speed;
             set => speed = value;
+        }
+        public static double Acceleration
+        {
+            get => acceleration;
+            set => acceleration = value;
         }
     }
 }
