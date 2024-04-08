@@ -14,16 +14,20 @@ public class WindowGraph : MonoBehaviour
     public Button boutonV10;
     public Button boutonV12;
     private List<RectTransform> listCircleVisible;
+    public GameObject imageV6;
+    public GameObject imageV8;
+    public GameObject imageV10;
+    public GameObject imageElectrique;
     
 
 
     void Start()
     {
         listCircleVisible = new List<RectTransform>();
-        boutonV6.onClick.AddListener(delegate { ClearGraph(); ShowGraph(EquationV6());}) ;
-        boutonV8.onClick.AddListener(delegate { ClearGraph(); ShowGraph(EquationV8()); });
+        boutonV6.onClick.AddListener(delegate { ClearGraph(); ShowGraph(EquationV6());showGraphDecalV6(); }) ;
+        boutonV8.onClick.AddListener(delegate { ClearGraph(); ShowGraph(EquationV8()); showGraphDecalV8(); });
         boutonV10.onClick.AddListener(null);
-        boutonV12.onClick.AddListener(null);
+        boutonV12.onClick.AddListener(delegate { ClearGraph(); ShowGraph(EquationElectrique()); showGraphDecalElectric(); });
     }
 
 
@@ -111,8 +115,24 @@ public class WindowGraph : MonoBehaviour
         }
         return values;
     }
-    public void ShowGraphDecal()
+    public void showGraphDecalV6()
     {
+        imageV6.SetActive(true);
+
+    }
+    public void showGraphDecalV8()
+    {
+        imageV8.SetActive(true);
+
+    }
+    public void ShowGraphDecalV10()
+    {
+        imageV10.SetActive(true);
+
+    }
+    public void showGraphDecalElectric()
+    {
+        imageElectrique.SetActive(true);
 
     }
 
