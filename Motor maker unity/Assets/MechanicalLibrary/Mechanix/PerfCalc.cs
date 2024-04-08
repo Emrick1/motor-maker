@@ -296,13 +296,13 @@ namespace Mechanix
                         {
                             if (pos.name[4..].Equals(Gearbox.Gears(i).Name))
                             {
-                                angleRotation = (calculateRatio(Gearbox.Gears(1), Gearbox.Gears(i), false) * RPM * 360) / (60 * Time.deltaTime)// * facteurTemporel;
+                                angleRotation = (calculateRatio(Gearbox.Gears(1), Gearbox.Gears(i), false) * RPM * 360) / (60 * Time.deltaTime);// * facteurTemporel;
                             }
                         }
                     } 
                     else
                     {
-                        angleRotation = (calculateRatio(Gearbox.Gears(1), new Gear(40 - Gearbox.Gears(1).NbDents , 1, "Retour"), true) * RPM * 360) / (60 * Time.deltaTime)// * facteurTemporel;
+                        angleRotation = (calculateRatio(Gearbox.Gears(1), new Gear(40 - Gearbox.Gears(1).NbDents, 1, "Retour"), true) * RPM * 360) / (60 * Time.deltaTime);// * facteurTemporel;
                     }
 
                     pos.transform.Rotate(Vector3.forward, (float)angleRotation);
