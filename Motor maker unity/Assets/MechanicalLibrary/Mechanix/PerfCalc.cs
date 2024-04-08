@@ -75,6 +75,9 @@ namespace Mechanix
         public GameObject posReculon;
         public GameObject posReculonRetour;
 
+        public Slider sliderEchelleTemporelle;
+        public float facteurTemporel;
+
         public PerfCalc(Car car)
         {
             this.car = car;
@@ -161,7 +164,9 @@ namespace Mechanix
             {
                 chargerGears(gear);
             }
-            
+
+            sliderEchelleTemporelle.onValueChanged.AddListener(delegate { facteurTemporel = sliderEchelleTemporelle.value; });
+
         }
 
         void Update()
@@ -255,6 +260,8 @@ namespace Mechanix
             torqueOut = (horsePower * 5252) / RPMOut;
             engineForce = torqueOut * (Wheels.Radius / 100);
 
+            rotateComponents();
+
             Wheels.CalculateTyreFriction();
             WriteStats();
         }
@@ -278,6 +285,33 @@ namespace Mechanix
                + "\n\nPneus: "
                + DictionnaryToString(Wheels.GetInfosWheels)
                + Wheels.getAdherenceString();
+            }
+        }
+
+        private void rotateComponents()
+        {
+            double angleRotation = 0;
+            foreach (GameObject pos in FindObjectsOfType<GameObject>())
+            {
+                if (pos != null && pos.name.Substring(0, 3).Equals("Pos"))
+                {
+                    if (!pos.name.EndsWith("Retour"))
+                    {
+                        for (int i = 0; i < Gearbox.GearsList().Count; i++)
+                        {
+                            if (pos.name[4..].Equals(Gearbox.Gears(i).Name))
+                            {
+                                angleRotation = (calculateRatio(Gearbox.Gears(1), Gearbox.Gears(i), false) * RPM * 360) / (60 * Time.deltaTime)// * facteurTemporel;
+                            }
+                        }
+                    } 
+                    else
+                    {
+                        angleRotation = (calculateRatio(Gearbox.Gears(1), new Gear(40 - Gearbox.Gears(1).NbDents , 1, "Retour"), true) * RPM * 360) / (60 * Time.deltaTime)// * facteurTemporel;
+                    }
+
+                    pos.transform.Rotate(Vector3.forward, (float)angleRotation);
+                }
             }
         }
 
