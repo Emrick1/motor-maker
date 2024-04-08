@@ -30,9 +30,14 @@ namespace Mechanix
         public Button WheelType3;
         public Button WheelType4;
         public Button WheelType5;
+        public Slider FrictionSlider;
+        public Slider AccelerationSlider;
+        public TextMeshProUGUI FrictionStats;
+        public TextMeshProUGUI AccelStats;
         public GameObject PneuSport;
         public GameObject PneuToutTerrain;
         public GameObject PneuEte;
+        private GameObject PneuChoisi;
        // public GameObject PneuCourse;
 
         public static void WheelsSetValues(double roadAdherenceSet,
@@ -119,41 +124,71 @@ namespace Mechanix
 
         void Start()
         {
-            if (selectedWheelType == 0) 
+            switch (selectedWheelType)
             {
-                minPressure = PressureSlider.minValue - 1;
-                Wheels.WheelsSetValues(0.65, 0.55, 0.5, 1, 140, 300, 200, PerfCalc.Mass);
-                selectedWheelType = 1;
+                case 0:
+                    minPressure = PressureSlider.minValue - 1;
+                    Wheels.WheelsSetValues(0.65, 0.55, 0.5, 1, 140, 300, 200, PerfCalc.Mass);
+                    selectedWheelType = 1;
+                    PneuChoisi = PneuEte;
+                    break;
+                case 1:
+                    PneuChoisi = PneuEte;
+                    break;
+                case 2:
+                    PneuChoisi = PneuSport;
+                    break;
+                case 3:
+                    PneuChoisi = PneuToutTerrain;
+                    break;
+                case 4:
+                    PneuChoisi = PneuSport;
+                    break;
+                case 5:
+                    PneuChoisi = PneuSport;
+                    break;
             }
+
+            desactiverModelPneus();
+            PneuChoisi.SetActive(true);
+            PressureSlider.value = (float) pressure;
 
             WheelType1.onClick.AddListener(delegate { 
                 Wheels.WheelsSetValues(0.65, 0.55, 0.5, 1, 140, 300, 200, 3000);
                 selectedWheelType = 1;
                 desactiverModelPneus();
+                PneuChoisi = PneuEte;
                 PneuEte.SetActive(true);
             });
             WheelType2.onClick.AddListener(delegate { 
                 Wheels.WheelsSetValues(0.7, 0.6, 0.5, 1, 100, 310, 200, 3000 + 15);
                 selectedWheelType = 2;
                 desactiverModelPneus();
+                PneuChoisi = PneuSport;
                 PneuSport.SetActive(true);
             });
             WheelType3.onClick.AddListener(delegate { 
                 Wheels.WheelsSetValues(0.8, 0.7, 0.6, 1, 80, 350, 220, 3000 + 30);
                 selectedWheelType = 3;
                 desactiverModelPneus();
+                PneuChoisi = PneuToutTerrain;
                 PneuToutTerrain.SetActive(true);
             });
             WheelType4.onClick.AddListener(delegate { 
                 Wheels.WheelsSetValues(0.6, 0.5, 0.4, 1, 165, 250, 230, 3000 - 10);
                 selectedWheelType = 4;
+                desactiverModelPneus();
+                PneuChoisi = PneuSport;
+                PneuSport.SetActive(true); //todo changer type pneu
             });
             WheelType5.onClick.AddListener(delegate { 
                 Wheels.WheelsSetValues(0.5, 0.4, 0.3, 1, 180, 220, 250, 3000 - 20);
                 selectedWheelType = 5;
                 desactiverModelPneus();
-              //  PneuCourse.SetActive(true);
+                PneuChoisi = PneuSport;
+                PneuSport.SetActive(true);
             });
+            
         }
 
         private void Update()
@@ -164,13 +199,23 @@ namespace Mechanix
                 PerfCalc.DictionnaryToString(Wheels.GetInfosWheels)
                 + getAdherenceString();
 
-           foreach(GameObject pneu in FindObjectsOfType<GameObject>())
+            foreach (GameObject pneu in FindObjectsOfType<GameObject>())
             {
                 if (pneu != null && pneu.name.Substring(0,4).Equals("Pneu") && pneu.activeSelf == true)
                 {
                    pneu.transform.Rotate(new Vector3(0.25f, 1, 0.5f), 100 * Time.deltaTime);
                 }
             }
+            updateStatSliders();
+        }
+
+        private void updateStatSliders()
+        {
+            FrictionSlider.value = (float) (frictionForce);
+            AccelerationSlider.value = (float) (frictionForce * 2);
+            FrictionStats.text = $"{frictionForce:F3}" + " (N)";
+            AccelStats.text = $"{((frictionForce * 120) / mass):F3}" + " (m/s^2)";
+
         }
 
         public static string getAdherenceString()
