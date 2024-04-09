@@ -13,73 +13,257 @@ using UnityEngine.SceneManagement;
 
 namespace Mechanix
 {
+    /// <summary>
+    /// <c>Classe servant à calculer les performances d'une voiture.</c>
+    /// </summary>
     public class PerfCalc : MonoBehaviour
     {
+        /// <summary>
+        /// Instance de la voiture utilisée par la classe.
+        /// </summary>
         private Car car;
+        /// <summary>
+        /// Engrenage selectionné.
+        /// </summary>
         public static Gear gearSelected;//gearSelected
+        /// <summary>
+        /// Zone de texte utilisée pour afficher les informations relatives au performances.
+        /// </summary>
         public TextMeshProUGUI ValueText;
+        /// <summary>
+        /// Masse de la voiture actuelle.
+        /// </summary>
         private static double mass = 3000;
+        /// <summary>
+        /// Rotations par minute (RPM) maximales du moteur actuelle.
+        /// </summary>
         private static int RPMmax = 7100;
+        /// <summary>
+        /// Rotations par minute (RPM) minimales du moteur actuelle.
+        /// </summary>
         private static int RPMmin = 600;
+        /// <summary>
+        /// Rotations par minute (RPM) actuelles.
+        /// </summary>
         private static double RPM = 0;
+        /// <summary>
+        /// Rotations par minutes (RPM) à la sortie du moteur.
+        /// </summary>
         private static double RPMOut = 0;
+        /// <summary>
+        /// Vélocité de la voiture actuelle.
+        /// </summary>
         private static double speed = 0;
+        /// <summary>
+        /// Accélération de la voiture actuelle.
+        /// </summary>
         private static double acceleration = 0;
+        /// <summary>
+        /// Facteur d'augmentation.
+        /// </summary>
         private static float facteurAugmentation;
+        /// <summary>
+        /// Variable de temps utilisée pour les calculs.
+        /// </summary>
         private static float t;
+        /// <summary>
+        /// Friction produite sur les roues.
+        /// </summary>
         private static double frictionForceWheels = 0;
+        /// <summary>
+        /// Friction produite par le vent.
+        /// </summary>
         private static double frictionForceWind = 0;
+        /// <summary>
+        /// Coefficent de réduction de frottement du moteur.
+        /// </summary>
         private static double frictionForceEngineReductionCoefficient = 0.7;
+        /// <summary>
+        /// Coefficient de le trainée de la voiture.
+        /// </summary>
         private static double dragCoefficient = 0.3; //TODO CHANGER SELON CHAR
+        /// <summary>
+        /// Aire du devant de la voiture.
+        /// </summary>
         private static double frontCarArea = 2.5; //TODO CHANGER SELON CHAR
+        /// <summary>
+        /// Densité du vent.
+        /// </summary>
         private static double windDensity = 0;
+        /// <summary>
+        /// Température ambiante.
+        /// </summary>
         private static double ambientTemperature = 30; //TODO CHANGER SELON Hiver (-6) ou ete (30)
+        /// <summary>
+        /// Force du moteur.
+        /// </summary>
         private static double engineForce = 0;
+        /// <summary>
+        /// Torque du moteur.
+        /// </summary>
         private static double engineTorque = 0;
+        /// <summary>
+        /// Torque produit par le moteur.
+        /// </summary>
         private static double torqueOut = 0;
+        /// <summary>
+        /// Puissance du moteur en chevaux-vapeur (HP).
+        /// </summary>
         private static double horsePower = 0;
-
+        /// <summary>
+        /// Échelle temporelle utilisée par les calculs de performances.
+        /// </summary>
         private static float echelleTemporelle;
 
+        /// <summary>
+        /// GameObject pour un engrenage de 10 dents.
+        /// </summary>
         public GameObject gear10;
+        /// <summary>
+        /// GameObject pour un engrenage de 11 dents.
+        /// </summary>
         public GameObject gear11;
+        /// <summary>
+        /// GameObject pour un engrenage de 12 dents.
+        /// </summary>
         public GameObject gear12;
+        /// <summary>
+        /// GameObject pour un engrenage de 13 dents.
+        /// </summary>
         public GameObject gear13;
+        /// <summary>
+        /// GameObject pour un engrenage de 14 dents.
+        /// </summary>
         public GameObject gear14;
+        /// <summary>
+        /// GameObject pour un engrenage de 15 dents.
+        /// </summary>
         public GameObject gear15;
+        /// <summary>
+        /// GameObject pour un engrenage de 16 dents.
+        /// </summary>
         public GameObject gear16;
+        /// <summary>
+        /// GameObject pour un engrenage de 17 dents.
+        /// </summary>
         public GameObject gear17;
+        /// <summary>
+        /// GameObject pour un engrenage de 18 dents.
+        /// </summary>
         public GameObject gear18;
+        /// <summary>
+        /// GameObject pour un engrenage de 19 dents.
+        /// </summary>
         public GameObject gear19;
+        /// <summary>
+        /// GameObject pour un engrenage de 20 dents.
+        /// </summary>
         public GameObject gear20;
+        /// <summary>
+        /// GameObject pour un engrenage de 21 dents.
+        /// </summary>
         public GameObject gear21;
+        /// <summary>
+        /// GameObject pour un engrenage de 22 dents.
+        /// </summary>
         public GameObject gear22;
+        /// <summary>
+        /// GameObject pour un engrenage de 23 dents.
+        /// </summary>
         public GameObject gear23;
+        /// <summary>
+        /// GameObject pour un engrenage de 24 dents.
+        /// </summary>
         public GameObject gear24;
+        /// <summary>
+        /// GameObject pour un engrenage de 25 dents.
+        /// </summary>
         public GameObject gear25;
+        </// <summary>
+        /// GameObject pour un engrenage de 26 dents.
+        /// </summary>
         public GameObject gear26;
+        /// <summary>
+        /// GameObject pour un engrenage de 27 dents.
+        /// </summary>
         public GameObject gear27;
+        /// <summary>
+        /// GameObject pour un engrenage de 28 dents.
+        /// </summary>
         public GameObject gear28;
+        /// <summary>
+        /// GameObject pour un engrenage de 29 dents.
+        /// </summary>
         public GameObject gear29;
+        /// <summary>
+        /// GameObject pour un engrenage de 30 dents.
+        /// </summary>
         public GameObject gear30;
-
+        /// <summary>
+        /// GameObject de l'engrenage menant dans la scène actuelle.
+        /// </summary>
         public GameObject posMenant;
+        /// <summary>
+        /// GameObject de l'engrenage menant dans les autres scène.
+        /// </summary>
         public GameObject posMenantRetour;
+        /// <summary>
+        /// GameObject de l'engrenage numéro 1 dans la scène actuelle.
+        /// </summary>
         public GameObject posGear1;
+        /// <summary>
+        /// GameObject de l'engrenage numéro 1 dans les autres scène.
+        /// </summary>
         public GameObject posGear1Retour;
+        /// <summary>
+        /// GameObject de l'engrenage numéro 2 dans la scène actuelle.
+        /// </summary>
         public GameObject posGear2;
+        /// <summary>
+        /// GameObject de l'engrenage numéro 2 dans les autres scène.
+        /// </summary>
         public GameObject posGear2Retour;
+        /// <summary>
+        /// GameObject de l'engrenage numéro 3 dans la scène actuelle.
+        /// </summary>
         public GameObject posGear3;
+        /// <summary>
+        /// GameObject de l'engrenage numéro 3 dans les autres scène.
+        /// </summary>
         public GameObject posGear3Retour;
+        /// <summary>
+        /// GameObject de l'engrenage numéro 4 dans la scène actuelle.
+        /// </summary>
         public GameObject posGear4;
+        /// <summary>
+        /// GameObject de l'engrenage numéro 4 dans les autres scène.
+        /// </summary>
         public GameObject posGear4Retour;
+        /// <summary>
+        /// GameObject de l'engrenage numéro 5 dans la scène actuelle.
+        /// </summary>
         public GameObject posGear5;
+        /// <summary>
+        /// GameObject de l'engrenage numéro 5 dans les autres scène.
+        /// </summary>
         public GameObject posGear5Retour;
+        /// <summary>
+        /// GameObject de l'engrenage pour le reculons dans la scène actuelle.
+        /// </summary>
         public GameObject posReculon;
+        /// <summary>
+        /// GameObject de l'engrenage pour le reculons dans les autres scène.
+        /// </summary>
         public GameObject posReculonRetour;
-
+        /// <summary>
+        /// Échelle temporelle de la rotation de la boîte de vitesse.
+        /// </summary>
         public Slider sliderEchelleTemporelle;
 
+        /// <summary>
+        /// Construit une instance du calculateur de performance.
+        /// </summary>
+        /// <param name="car">Instance de voiture voulue.</param>
         public PerfCalc(Car car)
         {
             this.car = car;
@@ -90,6 +274,9 @@ namespace Mechanix
             return RPM;
         }
 
+        /// <summary>
+        /// Calcule la torque produit par un moteur.
+        /// </summary>
         public void getTorqueSelonMoteur()
         {
             //V6
@@ -104,6 +291,10 @@ namespace Mechanix
             horsePower = (engineTorque * RPM) / 5252;
         }
 
+        /// <summary>
+        /// Charge un engrenage dans l'affichage du moteur graphique.
+        /// </summary>
+        /// <param name="g">Engrenage voulu.</param>
         public void chargerGears(Gear g)
         {
             string fieldName = "gear" + g.NbDents;
@@ -272,6 +463,9 @@ namespace Mechanix
             WriteStats();
         }
 
+    /// <summary>
+    /// Gère l'affichage de test des diférentes données calculées.
+    /// </summary>
         private void WriteStats()
         {
             if (ValueText != null)
@@ -294,6 +488,9 @@ namespace Mechanix
             }
         }
 
+        /// <summary>
+        /// Gère la rotation visuelle des composants mécaniques dans le menu.
+        /// </summary>
         private void rotateComponents()
         {
             double angleRotation = 0;
@@ -324,6 +521,9 @@ namespace Mechanix
             }
         }
 
+        /// <summary>
+        /// Fait le calcul de vitesse et de force selon les pièces choisies.
+        /// </summary>
         private void CalculateSpeedAndForces()
         {
             windDensity = 101.3 / (8.395 * ambientTemperature);
@@ -331,6 +531,11 @@ namespace Mechanix
             acceleration = ((frictionForceEngineReductionCoefficient * engineForce) - (frictionForceWheels + (6.5 * frictionForceWind))) / (mass);
         }
 
+        /// <summary>
+        /// Transfère le contenu d'un dictionary (Map) en chaîne de caratère (String).
+        /// </summary>
+        /// <param name="dictionary"></param>
+        /// <returns>Chaîne de caratère du contenu du dictionary.</returns>
         public static string DictionnaryToString(Dictionary<string, double> dictionary)
         {
             string returnString = "";
