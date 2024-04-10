@@ -3,7 +3,7 @@
 namespace Mechanix
 {
     /// <summary>
-    /// <c>Classe spécifiant la couleur d,une voiture.</c>
+    /// <c>Classe spécifiant la couleur d'une voiture.</c>
     /// </summary>
     public class Skins : MonoBehaviour
     {
