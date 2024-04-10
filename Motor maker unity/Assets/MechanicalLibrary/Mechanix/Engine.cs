@@ -3,20 +3,20 @@ using UnityEngine;
 
 namespace Mechanix
 {
+    /// <summary>
+    /// <c>Classe contenant les paramètres d'un moteur.</c>
+    /// </summary>
     public class Engine : MonoBehaviour
     {
-        /*  private double mass; //masse du moteur (kg)
-          private double hp; //puissance du moteur (cheval vapeur)
-          private int rpmMax; //Rotations Par Minutes(RPM) Maximum
-          private int rpmMin; //Rotations Par Minutes(RPM) Minimum
-          private double torque; //rotation de base à la sortie du moteur(vers la transmission)
-          private double energyConsumption; //indice de consommation d'énergie(par seconde)
-        */
+        /// <summary>
+        /// Nom du moteur.
+        /// </summary>
         private string name;
         
-        
-      
-
+        /// <summary>
+        /// Construit une instance de moteur avec un nom.
+        /// </summary>
+        /// <param name="name">Nom du moteur.</param>
         public Engine(string name)
         {
             this.name = name;
