@@ -168,13 +168,13 @@ public class WindowGraph : MonoBehaviour
         List<float> values = new List<float>();
         for (int i = 0; i < 12000; i += 200)
         {
-            float value = (float)(i+ 1000);
+            float value = (float)(800);
             values.Add(value);
 
         }
         for (int i = 12000; i < 15000; i += 200)
         {
-            float value = (float)((-0.000065 * i + 12000));
+            float value = (float)((0.000042 * Math.Pow(i - 15000, 2) + 400));
             values.Add(value);
         }
         return values;
