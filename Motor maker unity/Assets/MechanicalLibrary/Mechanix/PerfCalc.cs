@@ -30,6 +30,8 @@ namespace Mechanix
         /// Zone de texte utilisée pour afficher les informations relatives au performances.
         /// </summary>
         public TextMeshProUGUI ValueText;
+
+        public TextMeshProUGUI echelleTText;
         /// <summary>
         /// Masse de la voiture actuelle.
         /// </summary>
@@ -113,7 +115,7 @@ namespace Mechanix
         /// <summary>
         /// Échelle temporelle utilisée par les calculs de performances.
         /// </summary>
-        private static float echelleTemporelle;
+        private static float echelleTemporelle = 0.1f;
 
         /// <summary>
         /// GameObject pour un engrenage de 10 dents.
@@ -450,7 +452,7 @@ namespace Mechanix
             }
          
 
-            RPMOut = (int)(((double)RPM) * (calculateRatio(Gearbox.Gears(1), gearSelected, (gearSelected == Gears(0)))));
+            RPMOut = (int)(((double)RPM) * (calculateRatio(gearSelected, Gearbox.Gears(1), (gearSelected == Gears(0)))));
             torqueOut = (horsePower * 5252) / RPMOut;
             engineForce = torqueOut * (Wheels.Radius / 100);
 
@@ -486,6 +488,10 @@ namespace Mechanix
                + DictionnaryToString(Wheels.GetInfosWheels)
                + Wheels.getAdherenceString();
             }
+            if (echelleTText != null)
+            {
+                echelleTText.text = echelleTemporelle.ToString().Substring(0,3);
+            }
         }
 
         /// <summary>
@@ -511,7 +517,7 @@ namespace Mechanix
                     } 
                     else
                     {
-                        angleRotation = (calculateRatio(Gearbox.Gears(1), new Gear(40 - Gearbox.Gears(1).NbDents, 1, "Retour"), false) * RPM * 360) / (-60);
+                        angleRotation = (calculateRatio(Gearbox.Gears(1), new Gear(40 - Gearbox.Gears(1).NbDents, 1, "Retour"), false) * RPM * 360) / (60);
                     }
 
                     Debug.Log("echelle " + echelleTemporelle);
@@ -528,7 +534,7 @@ namespace Mechanix
         {
             windDensity = 101.3 / (8.395 * ambientTemperature);
             frictionForceWind = 0.5 * dragCoefficient * frontCarArea * windDensity * (speed * speed);
-            acceleration = ((frictionForceEngineReductionCoefficient * engineForce) - (frictionForceWheels + (6.5 * frictionForceWind))) / (mass);
+            acceleration = ((frictionForceEngineReductionCoefficient * engineForce) - (frictionForceWheels + (2 * frictionForceWind))) / (mass);
         }
 
         /// <summary>
