@@ -63,7 +63,6 @@ public class WindowGraph : MonoBehaviour
         descativer();       
         boutonV6.onClick.AddListener(delegate { ClearGraph(); ShowGraph(EquationV6()); descativer(); showGraphDecalV6(); }) ;
         boutonV8.onClick.AddListener(delegate { ClearGraph(); ShowGraph(EquationV8()); descativer(); showGraphDecalV8(); });
-        boutonV10.onClick.AddListener(null);
         boutonV12.onClick.AddListener(delegate { ClearGraph(); ShowGraph(EquationElectrique()); descativer(); showGraphDecalElectric(); });
     }
 
@@ -72,7 +71,6 @@ public class WindowGraph : MonoBehaviour
         imageV6.SetActive(false);
         imageElectrique.SetActive(false);
         imageV8.SetActive(false);
-        imageV10.SetActive(false);
     }
     void Update()
     {
