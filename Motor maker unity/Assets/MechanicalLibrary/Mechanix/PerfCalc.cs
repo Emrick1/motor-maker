@@ -447,7 +447,7 @@ namespace Mechanix
             }
          
 
-            RPMOut = (int)(((double)RPM) * (calculateRatio(gearSelected, Gearbox.Gears(1), (gearSelected == Gears(0)))));
+            RPMOut = (int)(((double)RPM) * (calculateRatio(Gearbox.Gears(1), gearSelected, (gearSelected == Gears(0)))));
             torqueOut = (horsePower * 5252) / RPMOut;
             engineForce = torqueOut * (Wheels.Radius / 100);
 
@@ -529,7 +529,7 @@ namespace Mechanix
         {
             windDensity = 101.3 / (8.395 * ambientTemperature);
             frictionForceWind = 0.5 * dragCoefficient * frontCarArea * windDensity * (speed * speed);
-            acceleration = ((frictionForceEngineReductionCoefficient * engineForce) - (frictionForceWheels + (2 * frictionForceWind))) / (mass);
+            acceleration = ((frictionForceEngineReductionCoefficient * engineForce) - (frictionForceWheels + (6.5 * frictionForceWind))) / (mass);
         }
 
         /// <summary>
