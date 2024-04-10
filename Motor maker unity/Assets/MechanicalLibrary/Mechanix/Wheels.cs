@@ -7,7 +7,7 @@ using UnityEngine.UI;
 namespace Mechanix
 {
     /// <summary>
-    /// 
+    /// <c>Classe représentant des paramètres de pneu.</c>
     /// </summary>
     public class Wheels : MonoBehaviour
     {
