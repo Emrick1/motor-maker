@@ -269,11 +269,6 @@ namespace Mechanix
             this.car = car;
         }
 
-        public double getRPM()
-        {
-            return RPM;
-        }
-
         /// <summary>
         /// Calcule la torque produit par un moteur.
         /// </summary>
@@ -559,6 +554,11 @@ namespace Mechanix
         {
             get => acceleration;
             set => acceleration = value;
+        }
+        public static double GetRPM
+        {
+            get => RPM;
+            set => RPM = value;
         }
     }
 }

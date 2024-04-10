@@ -17,8 +17,10 @@ namespace Mechanix
         [SerializeField] private Rigidbody _rb;
         [SerializeField] public TextMeshProUGUI flippedText;
         [SerializeField] public TextMeshProUGUI speedText;
+        [SerializeField] public TextMeshProUGUI RPMText;
         [SerializeField] public GameObject flippedpanel;
         [SerializeField] public GameObject SpeedometerArrow;
+        [SerializeField] public GameObject RPMArrow;
         [SerializeField] private Vector3 m_EulerAngleVelocity;
         [SerializeField] private WheelCollider frontRight;
         [SerializeField] private WheelCollider frontLeft;
@@ -91,7 +93,10 @@ namespace Mechanix
         {
             SpeedometerArrow.transform.rotation = Quaternion.Euler(new Vector3(0, 0, ((float) (PerfCalc.Speed * -2.8) + 8)));
             double speed = (PerfCalc.Speed * 3.6);
-            speedText.text = $"{speed:F2}";
+            speedText.text = "Vitesse" + $"\n{speed:F2}";
+            RPMArrow.transform.rotation = Quaternion.Euler(new Vector3(0, 0, ((float)(PerfCalc.GetRPM / -62) + 8)));
+            double RPM = PerfCalc.GetRPM;
+            RPMText.text = "RPM x1000" + $"\n{RPM:F0}";
         }
 
         private void setRbVector()
