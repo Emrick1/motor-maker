@@ -179,7 +179,7 @@ namespace Mechanix
         /// GameObject pour un engrenage de 25 dents.
         /// </summary>
         public GameObject gear25;
-        </// <summary>
+        /// <summary>
         /// GameObject pour un engrenage de 26 dents.
         /// </summary>
         public GameObject gear26;
