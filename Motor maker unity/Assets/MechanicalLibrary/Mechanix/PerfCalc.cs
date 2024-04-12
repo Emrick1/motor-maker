@@ -298,6 +298,9 @@ namespace Mechanix
             FieldInfo field = GetType().GetField(fieldName);
             string fieldNameRetour = "gear" + (40 - g.NbDents);
             FieldInfo fieldRetour = GetType().GetField(fieldNameRetour);
+
+            Material gearMat = new Material(gear10.GetComponent<Renderer>().sharedMaterial);
+
             if (field != null && g.NbDents <= 30)
             {
                 GameObject gearDuplique = Instantiate((GameObject)field.GetValue(this));
@@ -308,6 +311,8 @@ namespace Mechanix
                 {
                     gearDuplique.transform.SetParent(posMenant.transform, false);
                     gearDupliqueRetour.transform.SetParent(posMenantRetour.transform, false);
+
+                    gearMat.color = Color.gray;
                 }
                 else if (g.Name.StartsWith("R"))
                 {
@@ -322,6 +327,8 @@ namespace Mechanix
                     string fieldNameGearRetour = fieldNameGear + "Retour";
                     FieldInfo fieldGearRetour = GetType().GetField(fieldNameGearRetour);
 
+                    gearMat.color = Color.HSVToRGB((float.Parse(g.Name.Substring(9))-1f)/5f, 1, 0.5f + (((float)g.NbDents)-10f)*(1f-0.5f)/(30f-10f));
+
                     gearDuplique.transform.SetParent(((GameObject)fieldGear.GetValue(this)).transform, false);
                     gearDupliqueRetour.transform.SetParent(((GameObject)fieldGearRetour.GetValue(this)).transform, false);
                 }
@@ -329,6 +336,7 @@ namespace Mechanix
                 gearDuplique.transform.localPosition = Vector3.zero;
                 gearDuplique.transform.localRotation = Quaternion.identity;
                 gearDuplique.transform.localScale = Vector3.one;
+                gearDuplique.GetComponent<Renderer>().material = gearMat;
 
                 gearDupliqueRetour.transform.localPosition = Vector3.zero;
                 gearDupliqueRetour.transform.localRotation = Quaternion.identity;
