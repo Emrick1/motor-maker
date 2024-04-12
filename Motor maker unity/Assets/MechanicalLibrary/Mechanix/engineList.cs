@@ -37,13 +37,9 @@ using static Mechanix.Engine;
     /// </summary>
         private static Engine engine2 = new Engine("v8");
     /// <summary>
-    /// Instance d'un moteur V10.
+    /// Instance d'un moteur électrique.
     /// </summary>
-        private static Engine engine3 = new Engine("v10");
-    /// <summary>
-    /// Instance d'un moteur V12.
-    /// </summary>
-        private static Engine engine4 = new Engine("v12");
+        private static Engine engineElectrique = new Engine("Électrique");
     /// <summary>
     /// Boutton pour la sélection du moteur V6.
     /// </summary>
@@ -52,12 +48,9 @@ using static Mechanix.Engine;
     /// Boutton pour la sélection du moteur V8.
     /// </summary>
     public Button buttonEngine2;
+  
     /// <summary>
-    /// Boutton pour la sélection du moteur V10.
-    /// </summary>
-    public Button buttonEngine3;
-    /// <summary>
-    /// Boutton pour la sélection du moteur V12.
+    /// Boutton pour la sélection du moteur électrique.
     /// </summary>
     public Button buttonEngine4;
     /// <summary>
@@ -69,22 +62,17 @@ using static Mechanix.Engine;
     /// </summary>
     public GameObject V8;
     /// <summary>
-    /// GameObject du moteur V10 dans le moteur graphique.
-    /// </summary>
-    public GameObject V10;
-    /// <summary>
     /// GameObject du moteur V12 dans le moteur graphique.
     /// </summary>
-    public GameObject V12;
+    public GameObject electrique;
 
 
     private void Start()
     {
-
-        buttonEngine1.onClick.AddListener(delegate { SwitchEngineTo(0); });
-        buttonEngine2.onClick.AddListener(delegate { SwitchEngineTo(1); });
-        buttonEngine3.onClick.AddListener(delegate { SwitchEngineTo(2); });
-        buttonEngine4.onClick.AddListener(delegate { SwitchEngineTo(3); });
+        hideEngine();
+        buttonEngine1.onClick.AddListener(delegate { SwitchEngineTo(0);hideEngine(); showEngineV6(); });
+        buttonEngine2.onClick.AddListener(delegate { SwitchEngineTo(1); hideEngine(); showEngineV8(); });
+        buttonEngine4.onClick.AddListener(delegate { SwitchEngineTo(2); hideEngine(); showEngineElectirque(); });
         addEngineToList();
     }
 
@@ -105,8 +93,25 @@ using static Mechanix.Engine;
     {
         enginesList.Add(engine1);
         enginesList.Add(engine2);
-        enginesList.Add(engine3);
-        enginesList.Add(engine4);
+        enginesList.Add(engineElectrique);
+    }
+    public void showEngineV6()
+    {   
+        V6.SetActive(true);
+    }
+    public void showEngineV8()
+    {
+        V8.SetActive(true);
+    }
+    public void showEngineElectirque()
+    {
+        electrique.SetActive(true);
+    }
+    public void hideEngine()
+    {
+        V6.SetActive(false);
+        V8.SetActive(false);
+        electrique.SetActive(false);
     }
 }
 

@@ -28,6 +28,13 @@ namespace Mechanix
         /// </summary>
         [SerializeField] public TextMeshProUGUI speedText;
         [SerializeField] public TextMeshProUGUI RPMText;
+
+        /// <summary>
+        /// Texte pour les controles du jeu
+        /// </summary>
+        [SerializeField] public TextMeshProUGUI wasdText;
+        [SerializeField] public TextMeshProUGUI arrowkeysText;
+        [SerializeField] public TextMeshProUGUI arrowkeysText2;
         /// <summary>
         /// Zone de texte affich� pour retourner la voiture.
         /// </summary>
@@ -113,6 +120,13 @@ namespace Mechanix
                 }
                 axis = 1;
             }
+
+            if (Input.GetKey(KeyCode.Tab))
+            {
+                AfficherControles(true);
+            }
+            else AfficherControles(false);
+
             if (_rb.rotation.z * 360 >= 120 || _rb.rotation.z * 360 <= -120 || _rb.rotation.x * 360 >= 120 || _rb.rotation.x * 360 <= -120)
             {
                 flippedText.enabled = true;
@@ -124,12 +138,15 @@ namespace Mechanix
                 }
             } else
             {
-                flippedText.enabled = false;
-                flippedpanel.SetActive(false);
+                if (!Input.GetKey(KeyCode.Tab))
+                {
+                    flippedText.enabled = false;
+                    flippedpanel.SetActive(false);
+                }
             }
 
-            frontLeft.steerAngle = 15f * axis;
-            frontRight.steerAngle = 15f * axis;
+            frontLeft.steerAngle = 5f * axis;
+            frontRight.steerAngle = 5f * axis;
 
             UpdateWheel(frontLeft, frontLeftTransform);
             UpdateWheel(frontRight, frontRightTransform);
@@ -150,6 +167,17 @@ namespace Mechanix
             RPMArrow.transform.rotation = Quaternion.Euler(new Vector3(0, 0, ((float)(PerfCalc.GetRPM / -62) + 8)));
             double RPM = PerfCalc.GetRPM;
             RPMText.text = "RPM x1000" + $"\n{RPM:F0}";
+        }
+
+        /// <summary>
+        /// Actualise le compteur de vitesse de la voiture.
+        /// </summary>
+        private void AfficherControles(bool afficher)
+        {
+            wasdText.enabled = afficher;
+            arrowkeysText.enabled = afficher;
+            arrowkeysText2.enabled = afficher;
+            flippedpanel.SetActive(afficher);
         }
 
         /// <summary>
