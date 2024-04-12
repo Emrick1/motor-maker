@@ -90,8 +90,8 @@ namespace Mechanix
 
         void Update()
         {
-            Quaternion deltaRotationLeft = Quaternion.Euler(new Vector3(0, 2, 0) * Time.fixedDeltaTime);
-            Quaternion deltaRotationRight = Quaternion.Euler(new Vector3(0, -2, 0) * Time.fixedDeltaTime);
+            Quaternion deltaRotationLeft = Quaternion.Euler(new Vector3(0, 2.5f, 0) * Time.fixedDeltaTime);
+            Quaternion deltaRotationRight = Quaternion.Euler(new Vector3(0, -0.5f, 0) * Time.fixedDeltaTime);
             setRbVector();
             
             var vel = rbVector * (float) PerfCalc.Speed;
