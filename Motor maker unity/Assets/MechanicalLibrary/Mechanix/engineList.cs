@@ -13,42 +13,42 @@ using static Mechanix.Engine;
 /// <summary>
 /// <c>Classe contenant les configurations possibles de moteur et faisant la gestion visuelle de ceux-ci dans le moteur graphique.</c>
 /// </summary>
-    public class engineList : MonoBehaviour
-    {
+public class engineList : MonoBehaviour
+{
 
     /// <summary>
     /// Liste contenat les instances de moteur possibles à utiliser.
     /// </summary>
-        private static List<Engine> enginesList = new List<Engine>();
+    private static List<Engine> enginesList = new List<Engine>();
     /// <summary>
     /// Instance du moteur présentement affichée.
     /// </summary>
-        private static Engine currentEngine;
+    private static Engine currentEngine;
     /// <summary>
     /// Instance du moteur présentement selectionné.
     /// </summary>
-        public TextMeshProUGUI engineSelected;
+    public TextMeshProUGUI engineSelected;
     /// <summary>
     /// Instance d'un moteur V6.
     /// </summary>
-        private static Engine engine1 = new Engine("v6");
+    private static Engine engine1 = new Engine("v6");
     /// <summary>
     /// Instance d'un moteur V8.
     /// </summary>
-        private static Engine engine2 = new Engine("v8");
+    private static Engine engine2 = new Engine("v8");
     /// <summary>
     /// Instance d'un moteur électrique.
     /// </summary>
-        private static Engine engineElectrique = new Engine("Électrique");
+    private static Engine engineElectrique = new Engine("Électrique");
     /// <summary>
     /// Boutton pour la sélection du moteur V6.
     /// </summary>
-        public Button buttonEngine1;
+    public Button buttonEngine1;
     /// <summary>
     /// Boutton pour la sélection du moteur V8.
     /// </summary>
     public Button buttonEngine2;
-  
+
     /// <summary>
     /// Boutton pour la sélection du moteur électrique.
     /// </summary>
@@ -56,7 +56,7 @@ using static Mechanix.Engine;
     /// <summary>
     /// GameObject du moteur V6 dans le moteur graphique.
     /// </summary>
-        public GameObject V6;
+    public GameObject V6;
     /// <summary>
     /// GameObject du moteur V8 dans le moteur graphique.
     /// </summary>
@@ -66,13 +66,45 @@ using static Mechanix.Engine;
     /// </summary>
     public GameObject electrique;
 
+    public GameObject moteurChoisie;
+
+    private int moteurSelected;
 
     private void Start()
     {
+        switch (moteurSelected)
+        {
+            case 0:
+
+                moteurSelected = 0;
+                moteurChoisie = V6;
+                break;
+            case 1:
+                moteurChoisie = V8;
+                break;
+            case 2:
+                moteurChoisie = electrique;
+                break;
+
+        }
+        moteurChoisie.SetActive(true);
+
         hideEngine();
-        buttonEngine1.onClick.AddListener(delegate { SwitchEngineTo(0);hideEngine(); showEngineV6(); });
-        buttonEngine2.onClick.AddListener(delegate { SwitchEngineTo(1); hideEngine(); showEngineV8(); });
-        buttonEngine4.onClick.AddListener(delegate { SwitchEngineTo(2); hideEngine(); showEngineElectirque(); });
+        buttonEngine1.onClick.AddListener(delegate {
+            SwitchEngineTo(); hideEngine(); showEngineV6();
+            moteurSelected = 0;
+            moteurChoisie = V6;
+        });
+        buttonEngine2.onClick.AddListener(delegate {
+            SwitchEngineTo(); hideEngine(); showEngineV8();
+            moteurSelected = 1;
+            moteurChoisie = V8;
+        });
+        buttonEngine4.onClick.AddListener(delegate {
+            SwitchEngineTo(); hideEngine(); showEngineElectirque();
+            moteurSelected = 2;
+            moteurChoisie = electrique;
+        });
         addEngineToList();
     }
 
@@ -80,10 +112,10 @@ using static Mechanix.Engine;
     /// Choisi le moteur à afficher.
     /// </summary>
     /// <param name="engineIndex">Indice du moteur voulu dans engineList.</param>
-    public void SwitchEngineTo(int engineIndex)
+    public void SwitchEngineTo()
     {
-        currentEngine = enginesList[engineIndex];
-        engineSelected.text = enginesList[engineIndex].Name;
+        currentEngine = enginesList[moteurSelected];
+        engineSelected.text = enginesList[moteurSelected].Name;
     }
 
     /// <summary>
@@ -91,12 +123,13 @@ using static Mechanix.Engine;
     /// </summary>
     public static void addEngineToList()
     {
+        // ajoute les moteurs a la liste
         enginesList.Add(engine1);
         enginesList.Add(engine2);
         enginesList.Add(engineElectrique);
     }
     public void showEngineV6()
-    {   
+    {
         V6.SetActive(true);
     }
     public void showEngineV8()
