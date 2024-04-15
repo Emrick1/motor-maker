@@ -2449,10 +2449,22 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -3.75
       objectReference: {fileID: 0}
+    - target: {fileID: -1439730007547781893, guid: b46a6e82e4165eb4d825a367a23706c9, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 427158ec4b88e274399758569465f670, type: 2}
     - target: {fileID: 919132149155446097, guid: b46a6e82e4165eb4d825a367a23706c9, type: 3}
       propertyPath: m_Name
       value: transmi
       objectReference: {fileID: 0}
+    - target: {fileID: 7071182760956848314, guid: b46a6e82e4165eb4d825a367a23706c9, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 427158ec4b88e274399758569465f670, type: 2}
+    - target: {fileID: 7202271454713460447, guid: b46a6e82e4165eb4d825a367a23706c9, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 427158ec4b88e274399758569465f670, type: 2}
     - target: {fileID: 8513859187771203891, guid: b46a6e82e4165eb4d825a367a23706c9, type: 3}
       propertyPath: m_Name
       value: CylChoisi
@@ -4495,6 +4507,9 @@ MonoBehaviour:
   posGear5Retour: {fileID: 22317684}
   posReculon: {fileID: 1031049292}
   posReculonRetour: {fileID: 464578099}
+  cylMenant: {fileID: 2490194675049980857}
+  cylRetour: {fileID: 3655000510149167791}
+  cylChoisi: {fileID: 8513859187281192348}
   sliderEchelleTemporelle: {fileID: 740084215}
 --- !u!1 &1709735069
 GameObject:
@@ -5743,4 +5758,19 @@ PrefabInstance:
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 82f8cf7371535ff42a64fd03a747fff2, type: 3}
   m_PrefabInstance: {fileID: 2069314086}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2490194675049980857 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -6733177361254619370, guid: b46a6e82e4165eb4d825a367a23706c9, type: 3}
+  m_PrefabInstance: {fileID: 660276399}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3655000510149167791 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -5568371526223589888, guid: b46a6e82e4165eb4d825a367a23706c9, type: 3}
+  m_PrefabInstance: {fileID: 660276399}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8513859187281192348 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8513859187771203891, guid: b46a6e82e4165eb4d825a367a23706c9, type: 3}
+  m_PrefabInstance: {fileID: 660276399}
   m_PrefabAsset: {fileID: 0}

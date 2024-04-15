@@ -257,6 +257,10 @@ namespace Mechanix
         /// GameObject de l'engrenage pour le reculons dans les autres scène.
         /// </summary>
         public GameObject posReculonRetour;
+
+        public GameObject cylMenant;
+        public GameObject cylRetour;
+        public GameObject cylChoisi;
         /// <summary>
         /// Échelle temporelle de la rotation de la boîte de vitesse.
         /// </summary>
@@ -497,6 +501,22 @@ namespace Mechanix
             }
         }
 
+        private void updateCylinders(string cylName, double angleRotation)
+        {
+            string fieldName = "cyl" + cylName;
+            FieldInfo field = GetType().GetField(fieldName);
+            GameObject cyl = (GameObject)field.GetValue(this);
+
+            if (cylName.Equals("Choisi"))
+            {
+                Material cylMat = new Material(gear10.GetComponent<Renderer>().sharedMaterial);
+                cylMat.color = Color.HSVToRGB((float.Parse(gearSelected.Name.Substring(9)) - 1f) / 5f, 1, 0.5f + (((float)gearSelected.NbDents) - 10f) * (1f - 0.5f) / (30f - 10f));
+                cyl.GetComponent<Renderer>().material = cylMat;
+            }
+
+            cyl.transform.Rotate(Vector3.forward, (float)angleRotation * Time.deltaTime * echelleTemporelle);
+        }
+
         /// <summary>
         /// Gère la rotation visuelle des composants mécaniques dans le menu.
         /// </summary>
@@ -521,9 +541,18 @@ namespace Mechanix
                     else
                     {
                         angleRotation = (calculateRatio(Gearbox.Gears(1), new Gear(40 - Gearbox.Gears(1).NbDents, 1, "Retour"), false) * RPM * 360) / (60);
+                        updateCylinders("Retour", angleRotation);
                     }
 
-                    Debug.Log("echelle " + echelleTemporelle);
+                    if (pos.name[7..].Equals(gearSelected.Name[9..]))
+                    {
+                        updateCylinders("Choisi", angleRotation);
+                    }
+                    
+                    if (pos.name[3..].Equals("Menant"))
+                    {
+                        updateCylinders("Menant", angleRotation);
+                    }
 
                     pos.transform.Rotate(Vector3.forward, (float)angleRotation * Time.deltaTime * echelleTemporelle);
                 }
