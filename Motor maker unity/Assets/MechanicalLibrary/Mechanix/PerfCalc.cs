@@ -115,7 +115,7 @@ namespace Mechanix
         /// <summary>
         /// Échelle temporelle utilisée par les calculs de performances.
         /// </summary>
-        private static float echelleTemporelle = 0.1f;
+        private static float echelleTemporelle = 0.101f;
 
         /// <summary>
         /// GameObject pour un engrenage de 10 dents.
@@ -497,7 +497,7 @@ namespace Mechanix
             }
             if (echelleTText != null)
             {
-                echelleTText.text = echelleTemporelle.ToString().Substring(0,3);
+                echelleTText.text = echelleTemporelle.ToString()[..4];
             }
         }
 
