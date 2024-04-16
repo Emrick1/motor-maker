@@ -10,26 +10,85 @@ using Vector3 = UnityEngine.Vector3;
 
 namespace Mechanix
 {
-
+    /// <summary>
+    /// <c>Classe qui d�crit le mouvement d'une voiture dans le moteur graphique</c>
+    /// </summary>
      public class CarMovement : MonoBehaviour
     {
-
+        /// <summary>
+        /// Sp�cifie la pr�sence physique de la voiture simul�e.
+        /// </summary>
         [SerializeField] private Rigidbody _rb;
+        /// <summary>
+        /// Texte affich� pour retourner la voiture.
+        /// </summary>
         [SerializeField] public TextMeshProUGUI flippedText;
+        /// <summary>
+        /// Zone de texte affichant la vitesse.
+        /// </summary>
         [SerializeField] public TextMeshProUGUI speedText;
+        [SerializeField] public TextMeshProUGUI RPMText;
+
+        /// <summary>
+        /// Texte pour les controles du jeu
+        /// </summary>
+        [SerializeField] public TextMeshProUGUI wasdText;
+        [SerializeField] public TextMeshProUGUI arrowkeysText;
+        [SerializeField] public TextMeshProUGUI arrowkeysText2;
+        /// <summary>
+        /// Zone de texte affich� pour retourner la voiture.
+        /// </summary>
         [SerializeField] public GameObject flippedpanel;
+        /// <summary>
+        /// Compteur de vitesse de la voiture.
+        /// </summary>
         [SerializeField] public GameObject SpeedometerArrow;
+        [SerializeField] public GameObject RPMArrow;
+        /// <summary>
+        /// Vecteur de v�locit� angulaire.
+        /// </summary>
         [SerializeField] private Vector3 m_EulerAngleVelocity;
+        /// <summary>
+        /// Collider de la roue avant droite.
+        /// </summary>
         [SerializeField] private WheelCollider frontRight;
+        /// <summary>
+        /// Collider de la rouye avant gauche.
+        /// </summary>
         [SerializeField] private WheelCollider frontLeft;
+        /// <summary>
+        /// Collider de la roue arri�re droite.
+        /// </summary>
         [SerializeField] private WheelCollider rearRight;
+        /// <summary>
+        /// Collider de la roue arri�re gauche.
+        /// </summary>
         [SerializeField] private WheelCollider rearLeft;
+        /// <summary>
+        /// Collider de la voiture.
+        /// </summary>
         [SerializeField] private BoxCollider carCollider;
+        /// <summary>
+        /// �tat de la rotation de la roue avant droite.
+        /// </summary>
         [SerializeField] private Transform frontRightTransform;
+        /// <summary>
+        /// �tat de la rotation de la roue avant gauche.
+        /// </summary>
         [SerializeField] private Transform frontLeftTransform;
+        /// <summary>
+        /// �tat de la roation de la roue arri�re droite.
+        /// </summary>
         [SerializeField] private Transform rearRightTransform;
+        /// <summary>
+        /// �tat de la rotation de la roue arri�wre gauche.
+        /// </summary>
         [SerializeField] private Transform rearLeftTransform;
+        /// <summary>
+        /// Vecteur utilis�e dans l'actualisationde la voiture.
+        /// </summary>
         [SerializeField] private Vector3 rbVector = new Vector3(0, 0, 1);
+
         void Start()
         {
             flippedText.enabled = false;
@@ -61,6 +120,13 @@ namespace Mechanix
                 }
                 axis = 1;
             }
+
+            if (Input.GetKey(KeyCode.Tab))
+            {
+                AfficherControles(true);
+            }
+            else AfficherControles(false);
+
             if (_rb.rotation.z * 360 >= 120 || _rb.rotation.z * 360 <= -120 || _rb.rotation.x * 360 >= 120 || _rb.rotation.x * 360 <= -120)
             {
                 flippedText.enabled = true;
@@ -72,12 +138,15 @@ namespace Mechanix
                 }
             } else
             {
-                flippedText.enabled = false;
-                flippedpanel.SetActive(false);
+                if (!Input.GetKey(KeyCode.Tab))
+                {
+                    flippedText.enabled = false;
+                    flippedpanel.SetActive(false);
+                }
             }
 
-            frontLeft.steerAngle = 15f * axis;
-            frontRight.steerAngle = 15f * axis;
+            frontLeft.steerAngle = 5f * axis;
+            frontRight.steerAngle = 5f * axis;
 
             UpdateWheel(frontLeft, frontLeftTransform);
             UpdateWheel(frontRight, frontRightTransform);
@@ -87,13 +156,33 @@ namespace Mechanix
             UpdateSpeedometer();
         }
 
+        /// <summary>
+        /// Actualise le compteur de vitesse de la voiture.
+        /// </summary>
         private void UpdateSpeedometer()
         {
             SpeedometerArrow.transform.rotation = Quaternion.Euler(new Vector3(0, 0, ((float) (PerfCalc.Speed * -2.8) + 8)));
             double speed = (PerfCalc.Speed * 3.6);
-            speedText.text = $"{speed:F2}";
+            speedText.text = "Vitesse" + $"\n{speed:F2}";
+            RPMArrow.transform.rotation = Quaternion.Euler(new Vector3(0, 0, ((float)(PerfCalc.GetRPM / -62) + 8)));
+            double RPM = PerfCalc.GetRPM;
+            RPMText.text = "RPM x1000" + $"\n{RPM:F0}";
         }
 
+        /// <summary>
+        /// Actualise le compteur de vitesse de la voiture.
+        /// </summary>
+        private void AfficherControles(bool afficher)
+        {
+            wasdText.enabled = afficher;
+            arrowkeysText.enabled = afficher;
+            arrowkeysText2.enabled = afficher;
+            flippedpanel.SetActive(afficher);
+        }
+
+        /// <summary>
+        /// Ajuste le vecteur de d�placement de la voiture.
+        /// </summary>
         private void setRbVector()
         {
             Vector3 position;
@@ -105,6 +194,11 @@ namespace Mechanix
             rbVector = position - position2 - new Vector3(0,0.5f,0);
         }
 
+        /// <summary>
+        /// Actualise la rotation des roues de la voiture.
+        /// </summary>
+        /// <param name="col">Collider � utiliser.</param>
+        /// <param name="trans">Transformateur � utiliser.</param>
         private void UpdateWheel(WheelCollider col, Transform trans)
         {
             Vector3 position;

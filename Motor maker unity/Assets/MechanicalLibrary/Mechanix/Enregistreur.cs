@@ -7,83 +7,18 @@ using UnityEngine;
 
 namespace Mechanix
 {
+    /// <summary>
+    /// <c>Classe permettant la sauvegarde d'une voiture.</c>
+    /// </summary>
     public class Enregistreur : MonoBehaviour
     {
-        /*
-        private void LoadSettingsV1()
-        {
-            ArrayList _settings = new ArrayList();
-            string line;
-            Dictionary<string, double> settingsEngine = new Dictionary<string, double>();
-            Dictionary<string, double> settingsGearbox = new Dictionary<string, double>();
-            ArrayList _gearsList = new ArrayList();
-            Dictionary<string, double> settingsSkins = new Dictionary<string, double>();
-            Dictionary<string, double> settingsTransmission = new Dictionary<string, double>();
-            Dictionary<string, double> settingsWheels = new Dictionary<string, double>();
-            _settings.Add(settingsEngine);
-            _settings.Add(settingsGearbox);
-            _settings.Add(settingsTransmission);
-            _settings.Add(settingsSkins);
-            _settings.Add(settingsWheels);
-            try
-            {
-                StreamReader sr = new StreamReader("Mechanix/Settings.txt");
-                line = sr.ReadLine();
-                if (line == "Engine")
-                {
-                    while (line != "Gears")
-                {
-                    line = sr.ReadLine();
-                    string[] tabSetting = line.Split('=');
-                    settingsEngine.Add(tabSetting[0], Convert.ToDouble(tabSetting[1]));
-                }
 
-                    sr.ReadLine();
-                    while (line != "Gearbox")
-                    {
-                        line = sr.ReadLine();
-                        ArrayList GearList = new ArrayList {line.Split(',')};
-                        _settings.Add(GearList);
-                    }
-                    while (line != "Transmission")
-                    {
-                        line = sr.ReadLine();
-                        string[] tabSetting = line.Split('=');
-                        settingsEngine.Add(tabSetting[0], Convert.ToDouble(tabSetting[1]));
-                    }
-                    sr.ReadLine();
-                    while (line != "Wheels")
-                    {
-                        line = sr.ReadLine();
-                        string[] tabSetting = line.Split('=');
-                        settingsEngine.Add(tabSetting[0], Convert.ToDouble(tabSetting[1]));
-                    }
-                    sr.ReadLine();
-                    while (line != "Skins")
-                    {
-                        line = sr.ReadLine();
-                        string[] tabSetting = line.Split('=');
-                        settingsEngine.Add(tabSetting[0], Convert.ToDouble(tabSetting[1]));
-                    }
-                    sr.ReadLine();
-                    while (line != null)
-                    {
-                        line = sr.ReadLine();
-                        string[] tabSetting = line.Split('=');
-                        settingsEngine.Add(tabSetting[0], Convert.ToDouble(tabSetting[1]));
-                    }
-                }
-                
-                sr.Close();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Exception: " + e.Message);
-            }
-        }
-        */
-
-        public static Car LoadSettingsV2(string path)
+        /// <summary>
+        /// Charge l'instance d'une voiture sauvegardée dans un fichier.
+        /// </summary>
+        /// <param name="path">Nom du fichier à utiliser.</param>
+        /// <returns>L'instance de la voiture sauvegardée.</returns>
+        public static Car LoadSettings(string path)
         {
             BinaryFormatter formatter = new BinaryFormatter();
             Car car = new Car();
@@ -103,6 +38,11 @@ namespace Mechanix
             return car;
         }
 
+        /// <summary>
+        /// Sauvegarde une instance de voiture dans un fichier.
+        /// </summary>
+        /// <param name="path">Nom du fichier à utiliser.</param>
+        /// <param name="car">Instance de voiture à sauvegarder.</param>
         public static void SaveCar(string path, Car car)
         {
             BinaryFormatter formatter = new BinaryFormatter();
