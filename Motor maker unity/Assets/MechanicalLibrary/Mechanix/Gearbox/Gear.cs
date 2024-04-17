@@ -1,5 +1,8 @@
-﻿namespace Mechanix
+﻿using System;
+
+namespace Mechanix
 {
+    [Serializable]
     public class Gear 
     {
         private int nbDents;

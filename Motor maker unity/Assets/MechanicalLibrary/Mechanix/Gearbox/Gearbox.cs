@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO.IsolatedStorage;
 using System.Reflection;
@@ -12,6 +12,7 @@ namespace Mechanix
     {
         private static List<Gear> gears = new List<Gear>();
         private static Gear currentGear;
+        private static int currentIndex;
         public TextMeshProUGUI gearSelected;
         public TextMeshProUGUI TextDents;
         private static Gear gearReculons = new Gear(30, 1, "Reculons");
@@ -29,6 +30,8 @@ namespace Mechanix
         public Button buttonGear3;
         public Button buttonGear4;
         public Button buttonGearLimitante;
+        public Button charger;
+        public Button sauvegarder;
         public Slider dentsSlider;
         public GameObject gear10;
         public GameObject gear11;
@@ -70,7 +73,8 @@ namespace Mechanix
             buttonGear2.onClick.AddListener(delegate { initialSet = 4; SwitchGearTo(3); setActiveGear(); });
             buttonGear3.onClick.AddListener(delegate { initialSet = 5; SwitchGearTo(4); setActiveGear(); });
             buttonGear4.onClick.AddListener(delegate { initialSet = 6; SwitchGearTo(5); setActiveGear(); });
-
+            charger.onClick.AddListener(delegate { LoadSettings(); });
+            sauvegarder.onClick.AddListener(delegate { SaveSettings(); });
             dentsSlider.onValueChanged.AddListener(delegate { setTextDents(); setActiveGear(); });
             initiationAffichageGears();
             addGearToList();
@@ -152,6 +156,7 @@ namespace Mechanix
         public void SwitchGearTo(int gearIndex)
         {
             currentGear = gears[gearIndex];
+            currentIndex = gearIndex;
             gearSelected.text = gears[gearIndex].Name;
             initialiserSlider(currentGear);
         }
@@ -234,11 +239,12 @@ namespace Mechanix
 
         public void LoadSettings()
         {
-            Dictionary<string, object> settings = (Dictionary<string, object>)Enregistreur.Load("GearBox.txt");
-            gears = (List<Gear>)settings["gears"];
+            Dictionary<string, object> settings = (Dictionary<string, object>) Enregistreur.Load("GearBox.txt");
+            gears = (List<Gear>) settings["gears"];
             initiationAffichageGears();
-            currentGear = gears[initialSet];
+            currentGear = gears[currentIndex];
             setActiveGear();
+            initialiserSlider(currentGear);
         }
 
         public void SaveSettings()
