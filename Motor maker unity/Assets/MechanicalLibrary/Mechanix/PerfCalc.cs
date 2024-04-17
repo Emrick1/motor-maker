@@ -374,21 +374,29 @@ namespace Mechanix
 
         void Update()
         {
+            LogitechGSDK.DIJOYSTATE2ENGINES rec;
+            rec = LogitechGSDK.LogiGetStateUnity(0);
+            float y = 32767;
+            float z = 32767;
+            z = rec.lRz;
+            y = rec.lY;
             CalculateSpeedAndForces();
             getTorqueSelonMoteur();
-            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow) || (y != 0 && y <= 32761))
             {
                 
                 speed += acceleration / 30;
-                if (RPM < RPMmax)
+                if (RPM < (((y - 32767) / 32767) * -0.5) * RPMmax)
                 {
-                    facteurAugmentation = (19 / (1 + (Mathf.Exp((-0.1f * t) + 5))) + 1);
-                    RPM += (int)facteurAugmentation;
-                    t += 0.05f;
+                    //facteurAugmentation = (19 / (1 + (Mathf.Exp((-0.1f * t) + 5))) + 1);
+                    RPM += (((y - 32767) / 32767) * -0.5); 
+                    //t += 0.05f;
                 } 
                 else
                 {
-                    RPM = RPMmax;
+                    RPM -= (((y - 60000) / 32767) * -0.5);
+                    //RPM = (int)facteurAugmentation * (((y - 32767) / 32767) * -0.5) * RPMmax;
+                    //t -= 0.05f;
                 }
             }
             else if (RPM > RPMmin)
@@ -405,9 +413,9 @@ namespace Mechanix
                 RPM = RPMmin;
             }
 
-            if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+            if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow) || (z != 0 && z <= 32761))
             {
-                acceleration = (speed / -75) - 0.5;
+                acceleration = ((speed / -75) * (((z - 32767) / 32767) * -0.5)) - 0.5;
                 speed += acceleration / 60;
                 if (speed < 0)
                 {
@@ -415,8 +423,9 @@ namespace Mechanix
                 }
             }
 
-            if (!(Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) && !(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)))
+            if (!(Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) && !(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) && !(z != 0 && z <= 32761) && !(y != 0 && y <= 32761))
             {
+
                 acceleration = (speed / -180) - 0.1;
                 speed += acceleration / 60;
                 if (speed < 0)
@@ -457,7 +466,6 @@ namespace Mechanix
                 }
                 gearSelected = Gearbox.Gears(indexGearSelect);
             }
-         
 
             RPMOut = (int)(((double)RPM) * (calculateRatio(Gearbox.Gears(1), gearSelected, (gearSelected == Gears(0)))));
             torqueOut = (horsePower * 5252) / RPMOut;

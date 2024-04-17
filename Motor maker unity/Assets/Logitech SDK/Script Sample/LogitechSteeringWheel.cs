@@ -153,7 +153,7 @@ public class LogitechSteeringWheel : MonoBehaviour
 
             // FORCES AND EFFECTS 
             activeForces = "Active forces and effects :\n";
-
+            /*
             //Spring Force -> S
             if (Input.GetKeyUp(KeyCode.S))
             {
@@ -168,10 +168,12 @@ public class LogitechSteeringWheel : MonoBehaviour
                     activeForceAndEffect[0] = "Spring Force\n ";
                 }
             }
-
+            
             //Constant Force -> C
             if (Input.GetKeyUp(KeyCode.C))
             {
+
+                
                 if (LogitechGSDK.LogiIsPlaying(0, LogitechGSDK.LOGI_FORCE_CONSTANT))
                 {
                     LogitechGSDK.LogiStopConstantForce(0);
@@ -179,10 +181,11 @@ public class LogitechSteeringWheel : MonoBehaviour
                 }
                 else
                 {
-                    LogitechGSDK.LogiPlayConstantForce(0, 50);
+                    LogitechGSDK.LogiPlayConstantForce(0,50);
                     activeForceAndEffect[1] = "Constant Force\n ";
                 }
             }
+            
 
             //Damper Force -> D
             if (Input.GetKeyUp(KeyCode.D))
@@ -203,7 +206,7 @@ public class LogitechSteeringWheel : MonoBehaviour
             if (Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow))
             {
                 LogitechGSDK.LogiPlaySideCollisionForce(0, 60);
-            }
+            } 
 
             //Front Collision Force -> up arrow
             if (Input.GetKeyUp(KeyCode.UpArrow))
@@ -302,9 +305,9 @@ public class LogitechSteeringWheel : MonoBehaviour
                     activeForceAndEffect[8] = "Soft Stop Force\n";
                 }
             }
-
+            */
             //Set preferred controller properties -> PageUp
-            if (Input.GetKeyUp(KeyCode.PageUp))
+            if (Input.GetKeyUp(KeyCode.K))
             {
                 //Setting example values
                 properties.wheelRange = 90;
