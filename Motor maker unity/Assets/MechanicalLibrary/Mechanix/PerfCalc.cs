@@ -19,10 +19,6 @@ namespace Mechanix
     public class PerfCalc : MonoBehaviour
     {
         /// <summary>
-        /// Instance de la voiture utilisée par la classe.
-        /// </summary>
-        private Car car;
-        /// <summary>
         /// Engrenage selectionné.
         /// </summary>
         public static Gear gearSelected;//gearSelected
@@ -265,15 +261,6 @@ namespace Mechanix
         /// Échelle temporelle de la rotation de la boîte de vitesse.
         /// </summary>
         public Slider sliderEchelleTemporelle;
-
-        /// <summary>
-        /// Construit une instance du calculateur de performance.
-        /// </summary>
-        /// <param name="car">Instance de voiture voulue.</param>
-        public PerfCalc(Car car)
-        {
-            this.car = car;
-        }
 
         /// <summary>
         /// Calcule la torque produit par un moteur.

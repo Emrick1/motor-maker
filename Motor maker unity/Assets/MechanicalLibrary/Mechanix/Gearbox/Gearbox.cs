@@ -230,7 +230,7 @@ namespace Mechanix
             Dictionary<string, object> settings = (Dictionary<string, object>)Enregistreur.Load("GearBox.txt");
             gears = (List<Gear>)settings["gears"];
             initiationAffichageGears();
-            currentGear = gears[currentIndex];
+            //currentGear = gears[currentIndex];
             setActiveGear();
         }
 
@@ -239,7 +239,7 @@ namespace Mechanix
             string path = "GearBox.txt";
             Dictionary<string, object> settings = new Dictionary<string, object>();
             settings.Add("gears", gears);
-            Enregistreur.Save(settings);
+            Enregistreur.Save(settings, path);
         }
     }
 }

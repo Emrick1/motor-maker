@@ -12,12 +12,6 @@ namespace Mechanix
     /// </summary>
     public class Enregistreur : MonoBehaviour
     {
-        /// <summary>
-        /// <c>Classe permettant la sauvegarde de configurations.</c>
-        /// </summary>
-        public class Enregistreur : MonoBehaviour
-        {
-
             /// <summary>
             /// Charge l'instance d'un objet sauvegardé dans un fichier.
             /// </summary>
