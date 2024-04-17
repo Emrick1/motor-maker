@@ -196,7 +196,7 @@ namespace Mechanix
 
             if(recule) 
             {
-                ratio *= (-1) ;
+                ratio *= (-1);
             }
 
             return ratio;
@@ -223,6 +223,23 @@ namespace Mechanix
                     }
                 }
             }
+        }
+
+        public void LoadSettings()
+        {
+            Dictionary<string, object> settings = (Dictionary<string, object>)Enregistreur.Load("GearBox.txt");
+            gears = (List<Gear>)settings["gears"];
+            initiationAffichageGears();
+            currentGear = gears[currentIndex];
+            setActiveGear();
+        }
+
+        public void SaveSettings()
+        {
+            string path = "GearBox.txt";
+            Dictionary<string, object> settings = new Dictionary<string, object>();
+            settings.Add("gears", gears);
+            Enregistreur.Save(settings);
         }
     }
 }
