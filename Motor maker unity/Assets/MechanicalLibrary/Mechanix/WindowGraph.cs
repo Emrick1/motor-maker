@@ -27,10 +27,6 @@ public class WindowGraph : MonoBehaviour
     /// </summary>
     public Button boutonV8;
     /// <summary>
-    /// Boutton pour sélectionner le moteur V10.
-    /// </summary>
-    public Button boutonV10;
-    /// <summary>
     /// Boutton pour sélectionner le moteur V12.
     /// </summary>
     public Button boutonV12;
@@ -59,8 +55,22 @@ public class WindowGraph : MonoBehaviour
 
     void Start()
     {
-
-        descativer();       
+        descativer(); 
+        switch (engineList.moteurSelected)
+        {
+            case 0:
+                ClearGraph(); ShowGraph(EquationV6()); descativer(); showGraphDecalV6();
+                break;
+            case 1:
+                ClearGraph(); ShowGraph(EquationV6()); descativer(); showGraphDecalV6();
+                break;
+            case 2:
+                ClearGraph(); ShowGraph(EquationV8()); descativer(); showGraphDecalV8();
+                break;
+            case 3:
+                ClearGraph(); ShowGraph(EquationElectrique()); descativer(); showGraphDecalElectric();
+                break;
+        }   
         boutonV6.onClick.AddListener(delegate { ClearGraph(); ShowGraph(EquationV6()); descativer(); showGraphDecalV6(); }) ;
         boutonV8.onClick.AddListener(delegate { ClearGraph(); ShowGraph(EquationV8()); descativer(); showGraphDecalV8(); });
         boutonV12.onClick.AddListener(delegate { ClearGraph(); ShowGraph(EquationElectrique()); descativer(); showGraphDecalElectric(); });
@@ -193,15 +203,6 @@ public class WindowGraph : MonoBehaviour
     public void showGraphDecalV8()
     {
         imageV8.SetActive(true);
-
-    }
-
-    /// <summary>
-    /// Ajuste la graduation du graphique en fenction du moteur V10.
-    /// </summary>
-    public void ShowGraphDecalV10()
-    {
-        imageV10.SetActive(true);
 
     }
 

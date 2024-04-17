@@ -51,6 +51,7 @@ namespace Mechanix
         public GameObject gear28;
         public GameObject gear29;
         public GameObject gear30;
+        private static int initialSet = 0;
         private static List<GameObject> affichageGears = new List<GameObject>();
 
 
@@ -63,16 +64,51 @@ namespace Mechanix
 
         void Start()
         {
-            buttonReculons.onClick.AddListener(delegate { SwitchGearTo(0); setActiveGear();});
-            buttonGearMenante.onClick.AddListener(delegate { SwitchGearTo(1); setActiveGear();});
-            buttonGear1.onClick.AddListener(delegate { SwitchGearTo(2); setActiveGear(); });
-            buttonGear2.onClick.AddListener(delegate { SwitchGearTo(3); setActiveGear(); });
-            buttonGear3.onClick.AddListener(delegate { SwitchGearTo(4); setActiveGear(); });
-            buttonGear4.onClick.AddListener(delegate { SwitchGearTo(5); setActiveGear(); });
+            buttonReculons.onClick.AddListener(delegate { initialSet = 1; SwitchGearTo(0); setActiveGear();});
+            buttonGearMenante.onClick.AddListener(delegate { initialSet = 2; SwitchGearTo(1); setActiveGear();});
+            buttonGear1.onClick.AddListener(delegate { initialSet = 3; SwitchGearTo(2); setActiveGear(); });
+            buttonGear2.onClick.AddListener(delegate { initialSet = 4; SwitchGearTo(3); setActiveGear(); });
+            buttonGear3.onClick.AddListener(delegate { initialSet = 5; SwitchGearTo(4); setActiveGear(); });
+            buttonGear4.onClick.AddListener(delegate { initialSet = 6; SwitchGearTo(5); setActiveGear(); });
 
             dentsSlider.onValueChanged.AddListener(delegate { setTextDents(); setActiveGear(); });
             initiationAffichageGears();
             addGearToList();
+
+            switch (initialSet)
+            {
+                case 0:
+                    SwitchGearTo(2); setActiveGear();
+                    initialSet = 3;
+                    break;
+                case 1:
+                    SwitchGearTo(0); setActiveGear();
+                    initialSet = 1;
+                    break;
+                case 2:
+                    SwitchGearTo(1); setActiveGear();
+                    initialSet = 2;
+                    break;
+                case 3:
+                    SwitchGearTo(2); setActiveGear();
+                    initialSet = 3;
+                    break;
+                case 4:
+                    SwitchGearTo(3); setActiveGear();
+                    initialSet = 4;
+                    break;
+                case 5:
+                    SwitchGearTo(4); setActiveGear();
+                    initialSet = 5;
+                    break;
+                case 6:
+                    SwitchGearTo(5); setActiveGear();
+                    initialSet = 6;
+                    break;
+            }
+
+            dentsSlider.value = currentGear.NbDents;
+
         }
 
         private void initiationAffichageGears()

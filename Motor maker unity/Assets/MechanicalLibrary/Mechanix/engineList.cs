@@ -68,42 +68,44 @@ public class engineList : MonoBehaviour
 
     public GameObject moteurChoisie;
 
-    private int moteurSelected;
+    public static int moteurSelected = 0;
 
     private void Start()
     {
         switch (moteurSelected)
         {
             case 0:
-
-                moteurSelected = 0;
+                moteurSelected = 1;
                 moteurChoisie = V6;
                 break;
             case 1:
-                moteurChoisie = V8;
+                moteurChoisie = V6;
                 break;
             case 2:
+                moteurChoisie = V8;
+                break;
+            case 3:
                 moteurChoisie = electrique;
                 break;
-
         }
+        hideEngine();
+        SwitchEngineTo();
         moteurChoisie.SetActive(true);
 
-        hideEngine();
         buttonEngine1.onClick.AddListener(delegate {
-            SwitchEngineTo(); hideEngine(); showEngineV6();
-            moteurSelected = 0;
+            moteurSelected = 1;
             moteurChoisie = V6;
+            SwitchEngineTo(); hideEngine(); showEngineV6();
         });
         buttonEngine2.onClick.AddListener(delegate {
-            SwitchEngineTo(); hideEngine(); showEngineV8();
-            moteurSelected = 1;
+            moteurSelected = 2;
             moteurChoisie = V8;
+            SwitchEngineTo(); hideEngine(); showEngineV8();
         });
         buttonEngine4.onClick.AddListener(delegate {
-            SwitchEngineTo(); hideEngine(); showEngineElectirque();
-            moteurSelected = 2;
+            moteurSelected = 3;
             moteurChoisie = electrique;
+            SwitchEngineTo(); hideEngine(); showEngineElectirque();
         });
         addEngineToList();
     }
@@ -114,8 +116,7 @@ public class engineList : MonoBehaviour
     /// <param name="engineIndex">Indice du moteur voulu dans engineList.</param>
     public void SwitchEngineTo()
     {
-        currentEngine = enginesList[moteurSelected];
-        engineSelected.text = enginesList[moteurSelected].Name;
+        engineSelected.text = moteurChoisie.name;
     }
 
     /// <summary>
