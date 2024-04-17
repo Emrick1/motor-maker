@@ -214,13 +214,20 @@ namespace Mechanix
         {
             if (currentGear != null)
             {
+                Material gearMat = new Material(gear10.GetComponent<Renderer>().sharedMaterial);
+                if (currentGear.Name != "Menante" && currentGear.Name != "Reculons")
+                {
+                    gearMat.color = Color.HSVToRGB((float.Parse(currentGear.Name.Substring(9)) - 1f) / 5f, 1, 0.5f + (((float)currentGear.NbDents) - 10f) * (1f - 0.5f) / (30f - 10f));
+                } else gearMat.color = Color.gray;
                 TextDents.text = currentGear.NbDents.ToString() + " dents";
                 foreach (GameObject g in affichageGears)
                 {
                     if (g != null)
                     {
                         g.transform.Rotate(new Vector3(0.25f, 1, 0.5f), 100 * Time.deltaTime);
+                        g.GetComponent<Renderer>().material = gearMat;
                     }
+                    
                 }
             }
         }

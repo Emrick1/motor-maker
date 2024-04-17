@@ -34,12 +34,6 @@ namespace Mechanix
             get => name;
             set => name = value;
         }
-        void start()
-        {
-
-        }
-
-
      
     }
 }

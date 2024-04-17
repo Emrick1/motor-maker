@@ -192,6 +192,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: d646bd13bbb331c459a4e460784dc699, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 427158ec4b88e274399758569465f670, type: 2}
     - target: {fileID: 919132149155446097, guid: d646bd13bbb331c459a4e460784dc699, type: 3}
       propertyPath: m_Name
       value: gear26
@@ -267,6 +271,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: db22e20c72c809d4a91bfe599b547a91, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 427158ec4b88e274399758569465f670, type: 2}
     - target: {fileID: 919132149155446097, guid: db22e20c72c809d4a91bfe599b547a91, type: 3}
       propertyPath: m_Name
       value: gear25
@@ -600,6 +608,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: a4d75287beebf574aafcf05a5beae6a8, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 427158ec4b88e274399758569465f670, type: 2}
     - target: {fileID: 919132149155446097, guid: a4d75287beebf574aafcf05a5beae6a8, type: 3}
       propertyPath: m_Name
       value: gear28
@@ -1034,6 +1046,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 36954e99434ded64a852fc95f29bf1d6, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 427158ec4b88e274399758569465f670, type: 2}
     - target: {fileID: 919132149155446097, guid: 36954e99434ded64a852fc95f29bf1d6, type: 3}
       propertyPath: m_Name
       value: gear14
@@ -1114,6 +1130,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 03765eca8d744954ca293b881a072eeb, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 427158ec4b88e274399758569465f670, type: 2}
     - target: {fileID: 919132149155446097, guid: 03765eca8d744954ca293b881a072eeb, type: 3}
       propertyPath: m_Name
       value: gear21
@@ -1591,6 +1611,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: e9f14854aa4712a4bb8178ce9806415d, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 427158ec4b88e274399758569465f670, type: 2}
     - target: {fileID: 919132149155446097, guid: e9f14854aa4712a4bb8178ce9806415d, type: 3}
       propertyPath: m_Name
       value: gear22
@@ -1666,6 +1690,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: f61bfc5a34731d44e8a35f92fe9acc89, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 427158ec4b88e274399758569465f670, type: 2}
     - target: {fileID: 919132149155446097, guid: f61bfc5a34731d44e8a35f92fe9acc89, type: 3}
       propertyPath: m_Name
       value: gear27
@@ -1741,6 +1769,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: e2f1a0b51838eb4449b363fc40a0a5b6, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 427158ec4b88e274399758569465f670, type: 2}
     - target: {fileID: 919132149155446097, guid: e2f1a0b51838eb4449b363fc40a0a5b6, type: 3}
       propertyPath: m_Name
       value: gear11
@@ -1816,6 +1848,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 6b422ffff8b337c489a8bb9b7562a6be, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 427158ec4b88e274399758569465f670, type: 2}
     - target: {fileID: 919132149155446097, guid: 6b422ffff8b337c489a8bb9b7562a6be, type: 3}
       propertyPath: m_Name
       value: gear13
@@ -2102,6 +2138,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: e52ef8219f6748245a8a21e8127e43a1, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 427158ec4b88e274399758569465f670, type: 2}
     - target: {fileID: 919132149155446097, guid: e52ef8219f6748245a8a21e8127e43a1, type: 3}
       propertyPath: m_Name
       value: gear30
@@ -2528,6 +2568,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 82f8cf7371535ff42a64fd03a747fff2, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 427158ec4b88e274399758569465f670, type: 2}
     - target: {fileID: 919132149155446097, guid: 82f8cf7371535ff42a64fd03a747fff2, type: 3}
       propertyPath: m_Name
       value: gear16
@@ -2748,6 +2792,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 75c127ebbed9bd6408c242478a96272c, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 427158ec4b88e274399758569465f670, type: 2}
     - target: {fileID: 919132149155446097, guid: 75c127ebbed9bd6408c242478a96272c, type: 3}
       propertyPath: m_Name
       value: gear24
@@ -2950,6 +2998,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 65dfe53e2821e0e40aea73852d333fdd, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 427158ec4b88e274399758569465f670, type: 2}
     - target: {fileID: 919132149155446097, guid: 65dfe53e2821e0e40aea73852d333fdd, type: 3}
       propertyPath: m_Name
       value: gear19
@@ -3165,6 +3217,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 483f3436d31642644aea19c40b2ffcfd, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 427158ec4b88e274399758569465f670, type: 2}
     - target: {fileID: 919132149155446097, guid: 483f3436d31642644aea19c40b2ffcfd, type: 3}
       propertyPath: m_Name
       value: gear15
@@ -3245,6 +3301,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 8d0b7496cb942f34d8ae37cf218abb39, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 427158ec4b88e274399758569465f670, type: 2}
     - target: {fileID: 919132149155446097, guid: 8d0b7496cb942f34d8ae37cf218abb39, type: 3}
       propertyPath: m_Name
       value: gear12
@@ -3325,6 +3385,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: cd8cc120b0db713468e588ee3a474e60, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 427158ec4b88e274399758569465f670, type: 2}
     - target: {fileID: 919132149155446097, guid: cd8cc120b0db713468e588ee3a474e60, type: 3}
       propertyPath: m_Name
       value: gear20
@@ -3400,6 +3464,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 21ceddf0ce7f6a9489a7ce99ad4cc758, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 427158ec4b88e274399758569465f670, type: 2}
     - target: {fileID: 919132149155446097, guid: 21ceddf0ce7f6a9489a7ce99ad4cc758, type: 3}
       propertyPath: m_Name
       value: gear29
@@ -3802,6 +3870,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: d25121d7eb2a96b4ab906d824915e2e6, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 427158ec4b88e274399758569465f670, type: 2}
     - target: {fileID: 919132149155446097, guid: d25121d7eb2a96b4ab906d824915e2e6, type: 3}
       propertyPath: m_Name
       value: gear17
@@ -4404,6 +4476,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 00cce1ac5b3afef4abb2ce304151f9be, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 427158ec4b88e274399758569465f670, type: 2}
     - target: {fileID: 919132149155446097, guid: 00cce1ac5b3afef4abb2ce304151f9be, type: 3}
       propertyPath: m_Name
       value: gear10
@@ -4705,6 +4781,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 0e3aa4a98e7af494fa9418817bb40d1d, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 427158ec4b88e274399758569465f670, type: 2}
     - target: {fileID: 919132149155446097, guid: 0e3aa4a98e7af494fa9418817bb40d1d, type: 3}
       propertyPath: m_Name
       value: gear23
@@ -4780,6 +4860,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: a9f4ce5bce450de469ecec84dc8b545c, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 427158ec4b88e274399758569465f670, type: 2}
     - target: {fileID: 919132149155446097, guid: a9f4ce5bce450de469ecec84dc8b545c, type: 3}
       propertyPath: m_Name
       value: gear18
