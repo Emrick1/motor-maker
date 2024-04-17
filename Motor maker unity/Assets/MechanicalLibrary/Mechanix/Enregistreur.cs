@@ -12,52 +12,51 @@ namespace Mechanix
     /// </summary>
     public class Enregistreur : MonoBehaviour
     {
-
-        /// <summary>
-        /// Charge l'instance d'une voiture sauvegardée dans un fichier.
-        /// </summary>
-        /// <param name="path">Nom du fichier à utiliser.</param>
-        /// <returns>L'instance de la voiture sauvegardée.</returns>
-        public static Car LoadSettings(string path)
-        {
-            BinaryFormatter formatter = new BinaryFormatter();
-            Car car = new Car();
-            FileStream reader = new FileStream(path, FileMode.Open, FileAccess.Read);
-
-            try
+            /// <summary>
+            /// Charge l'instance d'un objet sauvegardé dans un fichier.
+            /// </summary>
+            /// <param name="path">Nom du fichier à utiliser.</param>
+            /// <returns>L'instance de la voiture sauvegardée.</returns>
+            public static object Load(string path)
             {
-                car = (Car)formatter.Deserialize(reader);
-                reader.Close();
+                BinaryFormatter formatter = new BinaryFormatter();
+                object obj = null;
+                FileStream reader = new FileStream(path, FileMode.Open, FileAccess.Read);
+
+                try
+                {
+                    obj = formatter.Deserialize(reader);
+                    reader.Close();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
+
+                return obj;
             }
-            catch (Exception e)
+
+            /// <summary>
+            /// Sauvegarde une instance d'un object dans un fichier.
+            /// </summary>
+            /// <param name="path">Nom du fichier à utiliser.</param>
+            /// <param name="car">Instance de l'object à sauvegarder.</param>
+            public static void Save(object obj, string path)
             {
-                Console.WriteLine(e);
-                throw;
-            }
+                BinaryFormatter formatter = new BinaryFormatter();
+                FileStream writer = new FileStream(path, FileMode.Create, FileAccess.Write);
 
-            return car;
-        }
-
-        /// <summary>
-        /// Sauvegarde une instance de voiture dans un fichier.
-        /// </summary>
-        /// <param name="path">Nom du fichier à utiliser.</param>
-        /// <param name="car">Instance de voiture à sauvegarder.</param>
-        public static void SaveCar(string path, Car car)
-        {
-            BinaryFormatter formatter = new BinaryFormatter();
-            FileStream writer = new FileStream(path, FileMode.Create, FileAccess.Write);
-
-            try
-            { 
-                formatter.Serialize(writer, car); 
-                writer.Close();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
+                try
+                {
+                    formatter.Serialize(writer, obj);
+                    writer.Close();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
             }
         }
     }
-}
