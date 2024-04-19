@@ -261,6 +261,7 @@ namespace Mechanix
         /// Échelle temporelle de la rotation de la boîte de vitesse.
         /// </summary>
         public Slider sliderEchelleTemporelle;
+        public List<GameObject> gearsAffiche;
 
         /// <summary>
         /// Calcule la torque produit par un moteur.
@@ -332,8 +333,22 @@ namespace Mechanix
                 gearDupliqueRetour.transform.localPosition = Vector3.zero;
                 gearDupliqueRetour.transform.localRotation = Quaternion.identity;
                 gearDupliqueRetour.transform.localScale = Vector3.one;
+
+                gearsAffiche.Add(gearDuplique);
+                gearsAffiche.Add(gearDupliqueRetour);
             }
            
+        }
+
+        public void ClearAffichage()
+        {
+            if (gearsAffiche != null && gearsAffiche.Count > 0) {
+                foreach (GameObject gear in gearsAffiche)
+                {
+                    Destroy(gear);
+                }
+            }
+            gearsAffiche = new List<GameObject>();
         }
 
         void Start()
@@ -354,6 +369,7 @@ namespace Mechanix
             {
                 chargerGears(gear);
             }
+
 
             sliderEchelleTemporelle.onValueChanged.AddListener(delegate { echelleTemporelle = sliderEchelleTemporelle.value; });
 

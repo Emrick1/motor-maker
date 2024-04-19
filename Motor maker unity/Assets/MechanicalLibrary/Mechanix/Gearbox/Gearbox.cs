@@ -240,7 +240,9 @@ namespace Mechanix
         public void LoadSettings()
         {
             Dictionary<string, object> settings = (Dictionary<string, object>) Enregistreur.Load("GearBox.txt");
-            gears = (List<Gear>) settings["gears"];
+            List<Gear> gearsList = (List<Gear>) settings["gears"];
+            gears.Clear();
+            gears.AddRange(gearsList);
             initiationAffichageGears();
             currentGear = gears[currentIndex];
             setActiveGear();
