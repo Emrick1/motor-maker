@@ -18,12 +18,12 @@ EditorBuildSettings:
     path: Assets/Scenes/GearBox.unity
     guid: 8e58cdc451edbb04688919674c339a31
   - enabled: 0
-    path: Assets/Scenes/Transmission.unity
-    guid: b5353463ef75eaa478739f47a6846379
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scenes/Wheels.unity
     guid: e6db71b8c2a8bdc41887214b4aa40232
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Skins.unity
     guid: 18268153a82cae349b89637bda90d7a9
   - enabled: 1
