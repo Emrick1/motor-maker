@@ -486,14 +486,14 @@ namespace Mechanix
             if (ValueText != null)
             {
                 ValueText.text = "Stats: "
-               + "\nRPM: " + RPM.ToString()
-               + "\nRPM Sortie: " + RPMOut.ToString()
-               + "\nTorque Moteur: " + $"{engineTorque:F4}"
-               + "\nPuissance (Hp): " + $"{horsePower:F4}"
-               + "\nTorque Output: " + $"{torqueOut:F4}"
-               + "\nForce du moteur (N): " + $"{engineForce:F4}"
+               + "\nRPM: " + $"{RPM:F3}"
+               + "\nRPM Sortie: " + $"{RPMOut:F3}"
+               + "\nTorque Moteur: " + $"{engineTorque:F3}"
+               + "\nPuissance (Hp): " + $"{horsePower:F3}"
+               + "\nTorque Output: " + $"{torqueOut:F3}"
+               + "\nForce du moteur (N): " + $"{engineForce:F3}"
                + "\nEngrenage: " + gearSelected.Name.ToString()
-               + "\nAcceleration (m/s^2): " + $"{acceleration:F4}"
+               + "\nAcceleration (m/s^2): " + $"{acceleration:F3}"
                + "\nVitesse (m/s): " + $"{speed:F3}" + " Vitesse (km/h): " + $"{(speed*3.6):F3}"
                + "\nForce de friction pneus (N): " + $"{frictionForceWheels:F3}"
                + "\nForce de friction vent (N): " + $"{frictionForceWind:F3}"
