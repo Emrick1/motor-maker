@@ -257,11 +257,14 @@ namespace Mechanix
         public GameObject cylMenant;
         public GameObject cylRetour;
         public GameObject cylChoisi;
+        public static bool VolantToggleBool = true;
         /// <summary>
         /// Échelle temporelle de la rotation de la boîte de vitesse.
         /// </summary>
         public Slider sliderEchelleTemporelle;
-        public List<GameObject> gearsAffiche;
+
+        public Toggle ToggleVolant;
+        
 
         /// <summary>
         /// Calcule la torque produit par un moteur.
@@ -334,42 +337,38 @@ namespace Mechanix
                 gearDupliqueRetour.transform.localRotation = Quaternion.identity;
                 gearDupliqueRetour.transform.localScale = Vector3.one;
 
-                gearsAffiche.Add(gearDuplique);
-                gearsAffiche.Add(gearDupliqueRetour);
             }
            
         }
 
-        public void ClearAffichage()
-        {
-            if (gearsAffiche != null && gearsAffiche.Count > 0) {
-                foreach (GameObject gear in gearsAffiche)
-                {
-                    Destroy(gear);
-                }
-            }
-            gearsAffiche = new List<GameObject>();
-        }
-
         void Start()
         {
+            if (ToggleVolant != null) 
+            {
+            ToggleVolant.isOn = VolantToggleBool;
+            ToggleVolant.onValueChanged.AddListener(delegate { VolantToggleBool = ToggleVolant.isOn; });
+            }
             if (Wheels.SelectedWheelType == 0) 
             {
                 Wheels.WheelsSetValues(0.65, 0.55, 0.5, 1, 140, 300, 200, PerfCalc.Mass);
                 Wheels.SelectedWheelType = 1;
-            };
+            }
             mass = Wheels.Mass;
             Wheels.CalculateTyreFriction();
             frictionForceWheels = Wheels.FrictionForce;
-            Gearbox.addGearToList();
+            if(Gearbox.GearsList().Count == 0)
+            {
+                Gearbox.addGearToList();
+            }
+            
             List<Gear> gears = Gearbox.GearsList();
             gearSelected = gears[2];
 
+            
             foreach (Gear gear in gears)
             {
                 chargerGears(gear);
             }
-
 
             sliderEchelleTemporelle.onValueChanged.AddListener(delegate { echelleTemporelle = sliderEchelleTemporelle.value; });
 
@@ -377,12 +376,21 @@ namespace Mechanix
 
         void Update()
         {
-            LogitechGSDK.DIJOYSTATE2ENGINES rec;
-            rec = LogitechGSDK.LogiGetStateUnity(0);
             float y = 32767;
             float z = 32767;
-            z = rec.lRz;
-            y = rec.lY;
+            if (VolantToggleBool)
+            { 
+                LogitechGSDK.DIJOYSTATE2ENGINES rec;
+                rec = LogitechGSDK.LogiGetStateUnity(0);
+                z = rec.lRz;
+                y = rec.lY;
+            }
+
+            if (Input.GetKey(KeyCode.W))
+            {
+                y = -32767;
+                z = -32767;
+            }
             CalculateSpeedAndForces();
             getTorqueSelonMoteur();
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow) || (y != 0 && y <= 32761))
@@ -391,15 +399,11 @@ namespace Mechanix
                 speed += acceleration / 30;
                 if (RPM < (((y - 32767) / 32767) * -0.5) * RPMmax)
                 {
-                    //facteurAugmentation = (19 / (1 + (Mathf.Exp((-0.1f * t) + 5))) + 1);
                     RPM += (((y - 32767) / 32767) * -0.5); 
-                    //t += 0.05f;
                 } 
                 else
                 {
                     RPM -= (((y - 60000) / 32767) * -0.5);
-                    //RPM = (int)facteurAugmentation * (((y - 32767) / 32767) * -0.5) * RPMmax;
-                    //t -= 0.05f;
                 }
             }
             else if (RPM > RPMmin)

@@ -152,11 +152,15 @@ namespace Mechanix
             {
                _rb.MoveRotation(_rb.rotation * Quaternion.Euler(new Vector3(0, x / 3000, 0) * Time.fixedDeltaTime));
             }
-            //frontLeft.steerAngle = 5f * axis;
-            frontLeft.steerAngle = 1f * (x / 32764);
-            //frontRight.steerAngle = 5f * axis;
-            frontRight.steerAngle = 1f * (x / 32764);
 
+            if (PerfCalc.VolantToggleBool)
+            {
+                frontLeft.steerAngle = 5f * axis;
+                frontRight.steerAngle = 5f * axis;
+            } else {
+                frontLeft.steerAngle = 1f * (x / 32764);
+                frontRight.steerAngle = 1f * (x / 32764);
+            }
             UpdateWheel(frontLeft, frontLeftTransform);
             UpdateWheel(frontRight, frontRightTransform);
             UpdateWheel(rearLeft, rearLeftTransform);

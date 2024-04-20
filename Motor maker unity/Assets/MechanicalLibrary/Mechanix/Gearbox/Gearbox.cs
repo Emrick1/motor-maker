@@ -58,13 +58,6 @@ namespace Mechanix
         private static List<GameObject> affichageGears = new List<GameObject>();
 
 
-        public Gearbox(List<Gear> gearsSet)
-        {
-            gears = gearsSet;
-
-
-        }
-
         void Start()
         {
             buttonReculons.onClick.AddListener(delegate { initialSet = 1; SwitchGearTo(0); setActiveGear();});
@@ -77,7 +70,11 @@ namespace Mechanix
             sauvegarder.onClick.AddListener(delegate { SaveSettings(); });
             dentsSlider.onValueChanged.AddListener(delegate { setTextDents(); setActiveGear(); });
             initiationAffichageGears();
-            addGearToList();
+            if(gears.Count == 0)
+            {
+                addGearToList();
+            }
+            
 
             switch (initialSet)
             {
