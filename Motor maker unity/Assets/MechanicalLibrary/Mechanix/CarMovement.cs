@@ -98,9 +98,6 @@ namespace Mechanix
 
         void Update()
         {
-            LogitechGSDK.DIJOYSTATE2ENGINES rec;
-            rec = LogitechGSDK.LogiGetStateUnity(0);
-            float x = rec.lX;
             Quaternion deltaRotationLeft = Quaternion.Euler(new Vector3(0, 2, 0) * Time.fixedDeltaTime);
             Quaternion deltaRotationRight = Quaternion.Euler(new Vector3(0, -2, 0) * Time.fixedDeltaTime);
             setRbVector();
@@ -149,19 +146,24 @@ namespace Mechanix
                 }
             }
 
-            if (PerfCalc.Speed > 0)
-            {
-               _rb.MoveRotation(_rb.rotation * Quaternion.Euler(new Vector3(0, x / 3000, 0) * Time.fixedDeltaTime));
-            }
+            
 
-            if (PerfCalc.VolantToggleBool)
+            if (!PerfCalc.VolantToggleBool)
             {
                 frontLeft.steerAngle = 5f * axis;
                 frontRight.steerAngle = 5f * axis;
             } else {
+                LogitechGSDK.DIJOYSTATE2ENGINES rec;
+                rec = LogitechGSDK.LogiGetStateUnity(0);
+                float x = rec.lX;
                 frontLeft.steerAngle = 1f * (x / 32764);
                 frontRight.steerAngle = 1f * (x / 32764);
+                if (PerfCalc.Speed > 0)
+                {
+                  _rb.MoveRotation(_rb.rotation * Quaternion.Euler(new Vector3(0, x / 3000, 0) * Time.fixedDeltaTime));
+                }
             }
+            
             UpdateWheel(frontLeft, frontLeftTransform);
             UpdateWheel(frontRight, frontRightTransform);
             UpdateWheel(rearLeft, rearLeftTransform);
