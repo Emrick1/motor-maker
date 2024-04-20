@@ -57,14 +57,6 @@ namespace Mechanix
         /// </summary>
         private static double acceleration = 0;
         /// <summary>
-        /// Facteur d'augmentation.
-        /// </summary>
-        private static float facteurAugmentation;
-        /// <summary>
-        /// Variable de temps utilisée pour les calculs.
-        /// </summary>
-        private static float t;
-        /// <summary>
         /// Friction produite sur les roues.
         /// </summary>
         private static double frictionForceWheels = 0;
@@ -408,7 +400,6 @@ namespace Mechanix
             }
             else if (RPM > RPMmin)
             {
-                t = 0;
                 RPM -= 1;
                 if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
                 {

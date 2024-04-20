@@ -191,6 +191,10 @@ namespace Mechanix
         {
             return gears;
         }
+        public static Gear CurrentGear()
+        {
+            return currentGear;
+        }
 
         public static double calculateRatio(Gear menant, Gear menee, Boolean recule)
         {

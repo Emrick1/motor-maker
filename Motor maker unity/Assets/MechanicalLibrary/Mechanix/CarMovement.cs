@@ -35,6 +35,7 @@ namespace Mechanix
         [SerializeField] public TextMeshProUGUI wasdText;
         [SerializeField] public TextMeshProUGUI arrowkeysText;
         [SerializeField] public TextMeshProUGUI arrowkeysText2;
+        [SerializeField] public TextMeshProUGUI currentGearText;
         /// <summary>
         /// Zone de texte affich� pour retourner la voiture.
         /// </summary>
@@ -174,6 +175,7 @@ namespace Mechanix
         /// </summary>
         private void UpdateSpeedometer()
         {
+            currentGearText.text = "Current Gear:" + (Gearbox.CurrentGear()).Name;
             SpeedometerArrow.transform.rotation = Quaternion.Euler(new Vector3(0, 0, ((float) (PerfCalc.Speed * -2.8) + 8)));
             double speed = (PerfCalc.Speed * 3.6);
             speedText.text = "Vitesse" + $"\n{speed:F2}";
