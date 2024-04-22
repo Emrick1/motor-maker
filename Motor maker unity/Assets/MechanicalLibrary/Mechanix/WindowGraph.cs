@@ -154,7 +154,7 @@ public class WindowGraph : MonoBehaviour
         List<float> values = new List<float>();
         for (int i = 0; i < 4000; i += 200)
         {
-            float value = (float)(0.000028 * (Math.Pow(i, 2) + 200));
+            float value = (float)(0.000028 * (Math.Pow(i, 2) + 429));
             values.Add(value);
 
         }

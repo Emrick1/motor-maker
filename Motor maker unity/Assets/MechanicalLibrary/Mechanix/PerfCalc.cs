@@ -252,8 +252,11 @@ namespace Mechanix
         public GameObject cylRetour;
         public GameObject cylChoisi;
         public GameObject cylBloque12;
+        public Vector3 posCylBloque12;
         public GameObject cylBloque34;
+        public Vector3 posCylBloque34;
         public GameObject cylBloque5R;
+        public Vector3 posCylBloque5R;
         public static bool VolantToggleBool = false;
         /// <summary>
         /// �chelle temporelle de la rotation de la bo�te de vitesse.
@@ -280,7 +283,7 @@ namespace Mechanix
                 {
                     engineTorque = (-0.000001625 * (Math.Pow(((RPM) - 6000), 2))) + 500;
                 }
-                horsePower = (engineTorque * RPM) / 5252;
+                
             //v8
             } else if (engineList.moteurSelected == 2) {
                 if (RPM <= 4000)
@@ -295,17 +298,19 @@ namespace Mechanix
             } else
             //électrique
             {
-                if (RPM <= 4000)
+               
+                if (RPM <= 12000)
                 {
-                    engineTorque = (0.000016375 * (Math.Pow((RPM), 2))) + 173;
+                    Debug.Log("nigger ici");
+                    engineTorque = (800);
                 }
                 else
                 {
-                    engineTorque = (-0.000001625 * (Math.Pow(((RPM) - 6000), 2))) + 500;
+                    engineTorque = ((0.000042 * Math.Pow(RPM - 15000, 2) + 400));
                 }
 
             }
-
+            horsePower = (engineTorque * RPM) / 5252;
         }
 
         /// <summary>
@@ -389,6 +394,10 @@ namespace Mechanix
             List<Gear> gears = Gearbox.GearsList();
             gearSelected = gears[2];
 
+            posCylBloque12 = cylBloque12.transform.position;
+            posCylBloque34 = cylBloque34.transform.position;
+            posCylBloque5R = cylBloque5R.transform.position;
+            translationCylindresBloque();
             
             foreach (Gear gear in gears)
             {
@@ -511,6 +520,8 @@ namespace Mechanix
                 gearSelected = Gearbox.Gears(indexGearSelect);
             }
 
+            translationCylindresBloque();
+
 
             RPMOut = (int)(((double)RPM) * (calculateRatio(Gearbox.Gears(1), gearSelected, (gearSelected == Gears(0)))));
             torqueOut = (horsePower * 5252) / RPMOut;
@@ -608,6 +619,42 @@ namespace Mechanix
                     }
 
                     pos.transform.Rotate(Vector3.forward, (float)angleRotation * Time.deltaTime * echelleTemporelle);
+                }
+            }
+        }
+
+        public void translationCylindresBloque()
+        {
+            Vector3 direcion = Vector3.right;
+            String noGear = gearSelected.Name.Substring(9);
+
+            if (gearSelected.Name.StartsWith("R"))
+            {
+                cylBloque5R.transform.position = Vector3.Lerp(cylBloque5R.transform.position, posCylBloque5R + direcion * 0.25f, 3 * Time.deltaTime);
+            } 
+            else
+            {
+                if (int.Parse(noGear) % 2 == 1)
+                {
+                    direcion = Vector3.left;
+                }
+
+                foreach (GameObject g in FindObjectsOfType<GameObject>())
+                {
+                    if(g.name.StartsWith("CylBloque"))
+                    {
+                        string fieldName = "pos" + g.name;
+                        FieldInfo field = GetType().GetField(fieldName);
+
+                        if (g.name.Contains(noGear))
+                        {
+                            g.transform.position = Vector3.Lerp(g.transform.position, (Vector3)field.GetValue(this) + direcion * 0.25f, 3*Time.deltaTime);
+                        }
+                        else
+                        {
+                            g.transform.position = Vector3.Lerp(g.transform.position, (Vector3)field.GetValue(this), 3*Time.deltaTime);
+                        }
+                    }
                 }
             }
         }
