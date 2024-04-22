@@ -14,16 +14,16 @@ using UnityEngine.SceneManagement;
 namespace Mechanix
 {
     /// <summary>
-    /// <c>Classe servant à calculer les performances d'une voiture.</c>
+    /// <c>Classe servant ï¿½ calculer les performances d'une voiture.</c>
     /// </summary>
     public class PerfCalc : MonoBehaviour
     {
         /// <summary>
-        /// Engrenage selectionné.
+        /// Engrenage selectionnï¿½.
         /// </summary>
         public static Gear gearSelected;//gearSelected
         /// <summary>
-        /// Zone de texte utilisée pour afficher les informations relatives au performances.
+        /// Zone de texte utilisï¿½e pour afficher les informations relatives au performances.
         /// </summary>
         public TextMeshProUGUI ValueText;
 
@@ -45,15 +45,15 @@ namespace Mechanix
         /// </summary>
         private static double RPM = 0;
         /// <summary>
-        /// Rotations par minutes (RPM) à la sortie du moteur.
+        /// Rotations par minutes (RPM) ï¿½ la sortie du moteur.
         /// </summary>
         private static double RPMOut = 0;
         /// <summary>
-        /// Vélocité de la voiture actuelle.
+        /// Vï¿½locitï¿½ de la voiture actuelle.
         /// </summary>
         private static double speed = 0;
         /// <summary>
-        /// Accélération de la voiture actuelle.
+        /// Accï¿½lï¿½ration de la voiture actuelle.
         /// </summary>
         private static double acceleration = 0;
         /// <summary>
@@ -65,11 +65,11 @@ namespace Mechanix
         /// </summary>
         private static double frictionForceWind = 0;
         /// <summary>
-        /// Coefficent de réduction de frottement du moteur.
+        /// Coefficent de rï¿½duction de frottement du moteur.
         /// </summary>
         private static double frictionForceEngineReductionCoefficient = 0.7;
         /// <summary>
-        /// Coefficient de le trainée de la voiture.
+        /// Coefficient de le trainï¿½e de la voiture.
         /// </summary>
         private static double dragCoefficient = 0.3; //TODO CHANGER SELON CHAR
         /// <summary>
@@ -77,11 +77,11 @@ namespace Mechanix
         /// </summary>
         private static double frontCarArea = 2.5; //TODO CHANGER SELON CHAR
         /// <summary>
-        /// Densité du vent.
+        /// Densitï¿½ du vent.
         /// </summary>
         private static double windDensity = 0;
         /// <summary>
-        /// Température ambiante.
+        /// Tempï¿½rature ambiante.
         /// </summary>
         private static double ambientTemperature = 30; //TODO CHANGER SELON Hiver (-6) ou ete (30)
         /// <summary>
@@ -101,7 +101,7 @@ namespace Mechanix
         /// </summary>
         private static double horsePower = 0;
         /// <summary>
-        /// Échelle temporelle utilisée par les calculs de performances.
+        /// ï¿½chelle temporelle utilisï¿½e par les calculs de performances.
         /// </summary>
         private static float echelleTemporelle = 0.101f;
 
@@ -190,59 +190,59 @@ namespace Mechanix
         /// </summary>
         public GameObject gear30;
         /// <summary>
-        /// GameObject de l'engrenage menant dans la scène actuelle.
+        /// GameObject de l'engrenage menant dans la scï¿½ne actuelle.
         /// </summary>
         public GameObject posMenant;
         /// <summary>
-        /// GameObject de l'engrenage menant dans les autres scène.
+        /// GameObject de l'engrenage menant dans les autres scï¿½ne.
         /// </summary>
         public GameObject posMenantRetour;
         /// <summary>
-        /// GameObject de l'engrenage numéro 1 dans la scène actuelle.
+        /// GameObject de l'engrenage numï¿½ro 1 dans la scï¿½ne actuelle.
         /// </summary>
         public GameObject posGear1;
         /// <summary>
-        /// GameObject de l'engrenage numéro 1 dans les autres scène.
+        /// GameObject de l'engrenage numï¿½ro 1 dans les autres scï¿½ne.
         /// </summary>
         public GameObject posGear1Retour;
         /// <summary>
-        /// GameObject de l'engrenage numéro 2 dans la scène actuelle.
+        /// GameObject de l'engrenage numï¿½ro 2 dans la scï¿½ne actuelle.
         /// </summary>
         public GameObject posGear2;
         /// <summary>
-        /// GameObject de l'engrenage numéro 2 dans les autres scène.
+        /// GameObject de l'engrenage numï¿½ro 2 dans les autres scï¿½ne.
         /// </summary>
         public GameObject posGear2Retour;
         /// <summary>
-        /// GameObject de l'engrenage numéro 3 dans la scène actuelle.
+        /// GameObject de l'engrenage numï¿½ro 3 dans la scï¿½ne actuelle.
         /// </summary>
         public GameObject posGear3;
         /// <summary>
-        /// GameObject de l'engrenage numéro 3 dans les autres scène.
+        /// GameObject de l'engrenage numï¿½ro 3 dans les autres scï¿½ne.
         /// </summary>
         public GameObject posGear3Retour;
         /// <summary>
-        /// GameObject de l'engrenage numéro 4 dans la scène actuelle.
+        /// GameObject de l'engrenage numï¿½ro 4 dans la scï¿½ne actuelle.
         /// </summary>
         public GameObject posGear4;
         /// <summary>
-        /// GameObject de l'engrenage numéro 4 dans les autres scène.
+        /// GameObject de l'engrenage numï¿½ro 4 dans les autres scï¿½ne.
         /// </summary>
         public GameObject posGear4Retour;
         /// <summary>
-        /// GameObject de l'engrenage numéro 5 dans la scène actuelle.
+        /// GameObject de l'engrenage numï¿½ro 5 dans la scï¿½ne actuelle.
         /// </summary>
         public GameObject posGear5;
         /// <summary>
-        /// GameObject de l'engrenage numéro 5 dans les autres scène.
+        /// GameObject de l'engrenage numï¿½ro 5 dans les autres scï¿½ne.
         /// </summary>
         public GameObject posGear5Retour;
         /// <summary>
-        /// GameObject de l'engrenage pour le reculons dans la scène actuelle.
+        /// GameObject de l'engrenage pour le reculons dans la scï¿½ne actuelle.
         /// </summary>
         public GameObject posReculon;
         /// <summary>
-        /// GameObject de l'engrenage pour le reculons dans les autres scène.
+        /// GameObject de l'engrenage pour le reculons dans les autres scï¿½ne.
         /// </summary>
         public GameObject posReculonRetour;
 
@@ -250,8 +250,12 @@ namespace Mechanix
         public GameObject cylRetour;
         public GameObject cylChoisi;
         public static bool VolantToggleBool = true;
+
+        public GameObject cylBloque12;
+        public GameObject cylBloque34;
+        public GameObject cylBloque5R;
         /// <summary>
-        /// Échelle temporelle de la rotation de la boîte de vitesse.
+        /// ï¿½chelle temporelle de la rotation de la boï¿½te de vitesse.
         /// </summary>
         public Slider sliderEchelleTemporelle;
 
@@ -479,7 +483,7 @@ namespace Mechanix
         }
 
     /// <summary>
-    /// Gère l'affichage de test des diférentes données calculées.
+    /// Gï¿½re l'affichage de test des difï¿½rentes donnï¿½es calculï¿½es.
     /// </summary>
         private void WriteStats()
         {
@@ -524,7 +528,7 @@ namespace Mechanix
         }
 
         /// <summary>
-        /// Gère la rotation visuelle des composants mécaniques dans le menu.
+        /// Gï¿½re la rotation visuelle des composants mï¿½caniques dans le menu.
         /// </summary>
         private void rotateComponents()
         {
@@ -566,7 +570,7 @@ namespace Mechanix
         }
 
         /// <summary>
-        /// Fait le calcul de vitesse et de force selon les pièces choisies.
+        /// Fait le calcul de vitesse et de force selon les piï¿½ces choisies.
         /// </summary>
         private void CalculateSpeedAndForces()
         {
@@ -576,10 +580,10 @@ namespace Mechanix
         }
 
         /// <summary>
-        /// Transfère le contenu d'un dictionary (Map) en chaîne de caratère (String).
+        /// Transfï¿½re le contenu d'un dictionary (Map) en chaï¿½ne de caratï¿½re (String).
         /// </summary>
         /// <param name="dictionary"></param>
-        /// <returns>Chaîne de caratère du contenu du dictionary.</returns>
+        /// <returns>Chaï¿½ne de caratï¿½re du contenu du dictionary.</returns>
         public static string DictionnaryToString(Dictionary<string, double> dictionary)
         {
             string returnString = "";
