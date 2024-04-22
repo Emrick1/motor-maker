@@ -260,23 +260,51 @@ namespace Mechanix
         public Slider sliderEchelleTemporelle;
 
         public Toggle ToggleVolant;
-        
+
 
         /// <summary>
         /// Calcule la torque produit par un moteur.
         /// </summary>
         public void getTorqueSelonMoteur()
         {
+
             //V6
-            if (RPM <= 4000)
+            if (engineList.moteurSelected == 1 || engineList.moteurSelected == 0)
             {
-                engineTorque = (0.000016375 * (Math.Pow((RPM), 2))) + 173;
-            }
-            else
+                if (RPM <= 4000)
+                {
+                    engineTorque = (0.000016375 * (Math.Pow((RPM), 2))) + 173;
+                }
+                else
+                {
+                    engineTorque = (-0.000001625 * (Math.Pow(((RPM) - 6000), 2))) + 500;
+                }
+                horsePower = (engineTorque * RPM) / 5252;
+            //v8
+            } else if (engineList.moteurSelected == 2) {
+                if (RPM <= 4000)
+                {
+                    engineTorque = (0.000028 * (Math.Pow((RPM), 2))) + 380;
+                }
+                else
+                {
+                    engineTorque = (-0.000001625 * (Math.Pow(((RPM) - 6000), 2))) + 707;
+                }
+
+            } else
+            //électrique
             {
-                engineTorque = (-0.000001625 * (Math.Pow(((RPM) - 6000), 2))) + 500;
+                if (RPM <= 4000)
+                {
+                    engineTorque = (0.000016375 * (Math.Pow((RPM), 2))) + 173;
+                }
+                else
+                {
+                    engineTorque = (-0.000001625 * (Math.Pow(((RPM) - 6000), 2))) + 500;
+                }
+
             }
-            horsePower = (engineTorque * RPM) / 5252;
+
         }
 
         /// <summary>
