@@ -252,8 +252,11 @@ namespace Mechanix
         public GameObject cylRetour;
         public GameObject cylChoisi;
         public GameObject cylBloque12;
+        public Vector3 posCylBloque12;
         public GameObject cylBloque34;
+        public Vector3 posCylBloque34;
         public GameObject cylBloque5R;
+        public Vector3 posCylBloque5R;
         public static bool VolantToggleBool = false;
         /// <summary>
         /// �chelle temporelle de la rotation de la bo�te de vitesse.
@@ -391,6 +394,10 @@ namespace Mechanix
             List<Gear> gears = Gearbox.GearsList();
             gearSelected = gears[2];
 
+            posCylBloque12 = cylBloque12.transform.position;
+            posCylBloque34 = cylBloque34.transform.position;
+            posCylBloque5R = cylBloque5R.transform.position;
+            translationCylindresBloque();
             
             foreach (Gear gear in gears)
             {
@@ -513,6 +520,8 @@ namespace Mechanix
                 gearSelected = Gearbox.Gears(indexGearSelect);
             }
 
+            translationCylindresBloque();
+
 
             RPMOut = (int)(((double)RPM) * (calculateRatio(Gearbox.Gears(1), gearSelected, (gearSelected == Gears(0)))));
             torqueOut = (horsePower * 5252) / RPMOut;
@@ -542,7 +551,7 @@ namespace Mechanix
                + "\nTorque Output: " + $"{torqueOut:F3}"
                + "\nForce du moteur (N): " + $"{engineForce:F3}"
                + "\nEngrenage: " + gearSelected.Name.ToString()
-               + "\nAcceleration (m/s^2): " + $"{acceleration:F3}"
+               + "\nAcceleration (m/s^2): " + $"{(acceleration * 10):F3}"
                + "\nVitesse (m/s): " + $"{speed:F3}" + " Vitesse (km/h): " + $"{(speed*3.6):F3}"
                + "\nForce de friction pneus (N): " + $"{frictionForceWheels:F3}"
                + "\nForce de friction vent (N): " + $"{frictionForceWind:F3}"
@@ -614,6 +623,42 @@ namespace Mechanix
             }
         }
 
+        public void translationCylindresBloque()
+        {
+            Vector3 direcion = Vector3.right;
+            String noGear = gearSelected.Name.Substring(9);
+
+            if (gearSelected.Name.StartsWith("R"))
+            {
+                cylBloque5R.transform.position = Vector3.Lerp(cylBloque5R.transform.position, posCylBloque5R + direcion * 0.25f, 3 * Time.deltaTime);
+            } 
+            else
+            {
+                if (int.Parse(noGear) % 2 == 1)
+                {
+                    direcion = Vector3.left;
+                }
+
+                foreach (GameObject g in FindObjectsOfType<GameObject>())
+                {
+                    if(g.name.StartsWith("CylBloque"))
+                    {
+                        string fieldName = "pos" + g.name;
+                        FieldInfo field = GetType().GetField(fieldName);
+
+                        if (g.name.Contains(noGear))
+                        {
+                            g.transform.position = Vector3.Lerp(g.transform.position, (Vector3)field.GetValue(this) + direcion * 0.25f, 3*Time.deltaTime);
+                        }
+                        else
+                        {
+                            g.transform.position = Vector3.Lerp(g.transform.position, (Vector3)field.GetValue(this), 3*Time.deltaTime);
+                        }
+                    }
+                }
+            }
+        }
+
         /// <summary>
         /// Fait le calcul de vitesse et de force selon les pi�ces choisies.
         /// </summary>
@@ -624,6 +669,10 @@ namespace Mechanix
             if (!gearSelected.Name.Equals("Reculons"))
             {
                 acceleration = ((frictionForceEngineReductionCoefficient * engineForce) - frictionForceWheels - (6.5 * frictionForceWind)) / (mass);
+                if (acceleration * 60 > (Wheels.FrictionForce * 120) / mass)
+                {
+                    acceleration = ((Wheels.FrictionForce * 120) / mass) / 60;
+                }
             }
             else
             {

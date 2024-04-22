@@ -71,6 +71,7 @@ namespace Mechanix
         /// Type de pneu selectionné.
         /// </summary>
         private static int selectedWheelType = 0;
+        private static int wheelSpeedOffset = 0;
         /// <summary>
         /// Sélecteur de pression du pneu.
         /// </summary>
@@ -219,7 +220,7 @@ namespace Mechanix
                 { "Pressure (psi)", pressure },
                 { "Mass (kg)", mass },
                 { "Car Load (N)", carLoad },
-                { "Contact Area (cm^2)", contactArea },
+                { "Contact Area (m^2)", contactArea },
                 { "Radial Rigidity", radialRigidity },
                 { "RadialTyreDeflexion (mm)", radialTyreDeflexion },
                 { "Radius (mm)", radius },
@@ -257,24 +258,30 @@ namespace Mechanix
             {
                 case 0:
                     minPressure = PressureSlider.minValue - 1;
-                    Wheels.WheelsSetValues(0.65, 0.55, 0.5, 1, 140, 300, 200, PerfCalc.Mass);
+                    Wheels.WheelsSetValues(0.65, 0.55, 0.5, 1, 140, 280, 200, PerfCalc.Mass);
                     selectedWheelType = 1;
                     PneuChoisi = PneuEte;
+                    wheelSpeedOffset = -3;
                     break;
                 case 1:
                     PneuChoisi = PneuEte;
+                    wheelSpeedOffset = -3;
                     break;
                 case 2:
                     PneuChoisi = PneuSport;
+                    wheelSpeedOffset = -7;
                     break;
                 case 3:
                     PneuChoisi = PneuToutTerrain;
+                    wheelSpeedOffset = 0;
                     break;
                 case 4:
                     PneuChoisi = PneuCourse;
+                    wheelSpeedOffset = 18;
                     break;
                 case 5:
                     PneuChoisi = PneuProffessionnel;
+                    wheelSpeedOffset = 20;
                     break;
             }
 
@@ -288,6 +295,7 @@ namespace Mechanix
                 desactiverModelPneus();
                 PneuChoisi = PneuEte;
                 PneuEte.SetActive(true);
+                wheelSpeedOffset = -3;
             });
             WheelType2.onClick.AddListener(delegate { 
                 Wheels.WheelsSetValues(0.7, 0.6, 0.5, 1, 100, 240, 200, 3000 + 15);
@@ -295,6 +303,7 @@ namespace Mechanix
                 desactiverModelPneus();
                 PneuChoisi = PneuSport;
                 PneuSport.SetActive(true);
+                wheelSpeedOffset = -7;
             });
             WheelType3.onClick.AddListener(delegate { 
                 Wheels.WheelsSetValues(0.8, 0.7, 0.6, 1, 80, 220, 220, 3000 + 30);
@@ -302,6 +311,7 @@ namespace Mechanix
                 desactiverModelPneus();
                 PneuChoisi = PneuToutTerrain;
                 PneuToutTerrain.SetActive(true);
+                wheelSpeedOffset = 0;
             });
             WheelType4.onClick.AddListener(delegate { 
                 Wheels.WheelsSetValues(0.6, 0.5, 0.4, 1, 165, 330, 230, 3000 - 10);
@@ -309,6 +319,7 @@ namespace Mechanix
                 desactiverModelPneus();
                 PneuChoisi = PneuCourse;
                 PneuCourse.SetActive(true);
+                wheelSpeedOffset = 18;
             });
             WheelType5.onClick.AddListener(delegate { 
                 Wheels.WheelsSetValues(0.5, 0.4, 0.3, 1, 180, 350, 250, 3000 - 20);
@@ -316,6 +327,7 @@ namespace Mechanix
                 desactiverModelPneus();
                 PneuChoisi = PneuProffessionnel;
                 PneuProffessionnel.SetActive(true);
+                wheelSpeedOffset = 20;
             });
             
         }
@@ -348,7 +360,7 @@ namespace Mechanix
             VitesseMaxSlider.value = (float) (350 - (frictionForce / 2));
             FrictionStats.text = $"{frictionForce:F3}" + " (N)";
             AccelStats.text = $"{((frictionForce * 120) / mass):F3}" + " (m/s^2)";
-            VitesseMaxStats.text = $"{(350 - (frictionForce)/1.5):F3}" + " (km/h)";
+            VitesseMaxStats.text = $"{(200 - (frictionForce)/5 + wheelSpeedOffset):F3}" + " (km/h)";
 
         }
 
