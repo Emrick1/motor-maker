@@ -105,6 +105,8 @@ namespace Mechanix
         /// </summary>
         private static float echelleTemporelle = 0.101f;
 
+        private static double modificateurReculons = 0.1;
+
         /// <summary>
         /// GameObject pour un engrenage de 10 dents.
         /// </summary>
@@ -249,37 +251,64 @@ namespace Mechanix
         public GameObject cylMenant;
         public GameObject cylRetour;
         public GameObject cylChoisi;
-        public static bool VolantToggleBool = true;
-
         public GameObject cylBloque12;
         public Vector3 posCylBloque12;
         public GameObject cylBloque34;
         public Vector3 posCylBloque34;
         public GameObject cylBloque5R;
         public Vector3 posCylBloque5R;
+        public static bool VolantToggleBool = false;
         /// <summary>
         /// �chelle temporelle de la rotation de la bo�te de vitesse.
         /// </summary>
         public Slider sliderEchelleTemporelle;
 
         public Toggle ToggleVolant;
-        
+
 
         /// <summary>
         /// Calcule la torque produit par un moteur.
         /// </summary>
         public void getTorqueSelonMoteur()
         {
+
             //V6
-            if (RPM <= 4000)
+            if (engineList.moteurSelected == 1 || engineList.moteurSelected == 0)
             {
-                engineTorque = (0.000016375 * (Math.Pow((RPM), 2))) + 173;
-            }
-            else
+                if (RPM <= 4000)
+                {
+                    engineTorque = (0.000016375 * (Math.Pow((RPM), 2))) + 173;
+                }
+                else
+                {
+                    engineTorque = (-0.000001625 * (Math.Pow(((RPM) - 6000), 2))) + 500;
+                }
+                horsePower = (engineTorque * RPM) / 5252;
+            //v8
+            } else if (engineList.moteurSelected == 2) {
+                if (RPM <= 4000)
+                {
+                    engineTorque = (0.000028 * (Math.Pow((RPM), 2))) + 380;
+                }
+                else
+                {
+                    engineTorque = (-0.000001625 * (Math.Pow(((RPM) - 6000), 2))) + 707;
+                }
+
+            } else
+            //électrique
             {
-                engineTorque = (-0.000001625 * (Math.Pow(((RPM) - 6000), 2))) + 500;
+                if (RPM <= 4000)
+                {
+                    engineTorque = (0.000016375 * (Math.Pow((RPM), 2))) + 173;
+                }
+                else
+                {
+                    engineTorque = (-0.000001625 * (Math.Pow(((RPM) - 6000), 2))) + 500;
+                }
+
             }
-            horsePower = (engineTorque * RPM) / 5252;
+
         }
 
         /// <summary>
@@ -392,10 +421,31 @@ namespace Mechanix
             if (Input.GetKey(KeyCode.W))
             {
                 y = -32767;
+            }
+            if (Input.GetKey(KeyCode.S))
+            {
                 z = -32767;
             }
             CalculateSpeedAndForces();
             getTorqueSelonMoteur();
+            
+            if (!gearSelected.Name.Equals("Reculons"))
+            {
+                modificateurReculons = 0.15;
+                if (speed < 0)
+                {
+                    speed = (speed * 0.999) + 0.03;
+                }
+            }
+            else
+            {
+                modificateurReculons = -0.15;
+                if (speed > 0)
+                {
+                    speed = (speed * 0.999) - 0.03;
+                } 
+            }
+
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow) || (y != 0 && y <= 32761))
             {
                 
@@ -424,23 +474,15 @@ namespace Mechanix
 
             if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow) || (z != 0 && z <= 32761))
             {
-                acceleration = ((speed / -75) * (((z - 32767) / 32767) * -0.5)) - 0.5;
+                acceleration = ((speed / -75) * (((z - 32767) / 32767) * -0.5)) - modificateurReculons * 5;
                 speed += acceleration / 60;
-                if (speed < 0)
-                {
-                    speed = 0;
-                }
             }
 
             if (!(Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) && !(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) && !(z != 0 && z <= 32761) && !(y != 0 && y <= 32761))
             {
 
-                acceleration = (speed / -180) - 0.1;
+                acceleration = (speed / -180) - modificateurReculons;
                 speed += acceleration / 60;
-                if (speed < 0)
-                {
-                    speed = 0;
-                }
             }
 
             for (int i = 1; i <= Gearbox.GearsList().Count - 1; i++)
@@ -478,6 +520,7 @@ namespace Mechanix
 
             translationCylindresBloque();
 
+
             RPMOut = (int)(((double)RPM) * (calculateRatio(Gearbox.Gears(1), gearSelected, (gearSelected == Gears(0)))));
             torqueOut = (horsePower * 5252) / RPMOut;
             engineForce = torqueOut * (Wheels.Radius / 100);
@@ -506,7 +549,7 @@ namespace Mechanix
                + "\nTorque Output: " + $"{torqueOut:F3}"
                + "\nForce du moteur (N): " + $"{engineForce:F3}"
                + "\nEngrenage: " + gearSelected.Name.ToString()
-               + "\nAcceleration (m/s^2): " + $"{acceleration:F3}"
+               + "\nAcceleration (m/s^2): " + $"{(acceleration * 10):F3}"
                + "\nVitesse (m/s): " + $"{speed:F3}" + " Vitesse (km/h): " + $"{(speed*3.6):F3}"
                + "\nForce de friction pneus (N): " + $"{frictionForceWheels:F3}"
                + "\nForce de friction vent (N): " + $"{frictionForceWind:F3}"
@@ -621,7 +664,18 @@ namespace Mechanix
         {
             windDensity = 101.3 / (8.395 * ambientTemperature);
             frictionForceWind = 0.5 * dragCoefficient * frontCarArea * windDensity * (speed * speed);
-            acceleration = ((frictionForceEngineReductionCoefficient * engineForce) - (frictionForceWheels + (6.5 * frictionForceWind))) / (mass);
+            if (!gearSelected.Name.Equals("Reculons"))
+            {
+                acceleration = ((frictionForceEngineReductionCoefficient * engineForce) - frictionForceWheels - (6.5 * frictionForceWind)) / (mass);
+                if (acceleration * 60 > (Wheels.FrictionForce * 120) / mass)
+                {
+                    acceleration = ((Wheels.FrictionForce * 120) / mass) / 60;
+                }
+            }
+            else
+            {
+                acceleration = ((frictionForceEngineReductionCoefficient * engineForce * 0.5) + (0.5 * frictionForceWheels + (20 * frictionForceWind))) / (mass);
+            }
         }
 
         /// <summary>

@@ -15,8 +15,8 @@ namespace Mechanix
         private static int currentIndex;
         public TextMeshProUGUI gearSelected;
         public TextMeshProUGUI TextDents;
-        private static Gear gearReculons = new Gear(30, 1, "Reculons");
-        private static Gear gearMenante = new Gear(10, 1, "Menante");
+        private static Gear gearReculons = new Gear(15, 1, "Reculons");
+        private static Gear gearMenante = new Gear(15, 1, "Menante");
         private static Gear gear1 = new Gear(30, 1, "Engrenage1");
         private static Gear gear2 = new Gear(26, 1, "Engrenage2");
         private static Gear gear3 = new Gear(22, 1, "Engrenage3");
