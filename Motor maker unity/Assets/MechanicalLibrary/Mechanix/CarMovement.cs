@@ -108,14 +108,14 @@ namespace Mechanix
             int axis = 0;
             if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
             {
-                if (PerfCalc.Speed > 0)
+                if (PerfCalc.Speed > 0.5)
                 {
                     _rb.MoveRotation(_rb.rotation * deltaRotationRight);
                 }
                 axis = -1;
             } else if (Input.GetKey(KeyCode.D))
             {
-                if (PerfCalc.Speed > 0)
+                if (PerfCalc.Speed > 0.5)
                 {
                     _rb.MoveRotation(_rb.rotation * deltaRotationLeft);
                 }
@@ -180,7 +180,7 @@ namespace Mechanix
             currentGearText.text = "Current Gear:" + "\n " + PerfCalc.gearSelected.Name.ToString();
             SpeedometerArrow.transform.rotation = Quaternion.Euler(new Vector3(0, 0, ((float) (PerfCalc.Speed * -2.8) + 8)));
             double speed = (PerfCalc.Speed * 3.6);
-            speedText.text = "Vitesse" + $"\n{speed:F2}";
+            speedText.text = "Vitesse" + $"\n{speed:F0}";
             RPMArrow.transform.rotation = Quaternion.Euler(new Vector3(0, 0, ((float)(PerfCalc.GetRPM / -62) + 8)));
             double RPM = PerfCalc.GetRPM;
             RPMText.text = "RPM x1000" + $"\n{RPM:F0}";

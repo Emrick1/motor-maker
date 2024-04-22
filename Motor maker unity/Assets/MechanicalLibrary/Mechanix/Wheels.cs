@@ -283,35 +283,35 @@ namespace Mechanix
             PressureSlider.value = (float) pressure;
 
             WheelType1.onClick.AddListener(delegate { 
-                Wheels.WheelsSetValues(0.65, 0.55, 0.5, 1, 140, 300, 200, 3000);
+                Wheels.WheelsSetValues(0.65, 0.55, 0.5, 1, 140, 280, 200, 3000);
                 selectedWheelType = 1;
                 desactiverModelPneus();
                 PneuChoisi = PneuEte;
                 PneuEte.SetActive(true);
             });
             WheelType2.onClick.AddListener(delegate { 
-                Wheels.WheelsSetValues(0.7, 0.6, 0.5, 1, 100, 310, 200, 3000 + 15);
+                Wheels.WheelsSetValues(0.7, 0.6, 0.5, 1, 100, 240, 200, 3000 + 15);
                 selectedWheelType = 2;
                 desactiverModelPneus();
                 PneuChoisi = PneuSport;
                 PneuSport.SetActive(true);
             });
             WheelType3.onClick.AddListener(delegate { 
-                Wheels.WheelsSetValues(0.8, 0.7, 0.6, 1, 80, 350, 220, 3000 + 30);
+                Wheels.WheelsSetValues(0.8, 0.7, 0.6, 1, 80, 220, 220, 3000 + 30);
                 selectedWheelType = 3;
                 desactiverModelPneus();
                 PneuChoisi = PneuToutTerrain;
                 PneuToutTerrain.SetActive(true);
             });
             WheelType4.onClick.AddListener(delegate { 
-                Wheels.WheelsSetValues(0.6, 0.5, 0.4, 1, 165, 250, 230, 3000 - 10);
+                Wheels.WheelsSetValues(0.6, 0.5, 0.4, 1, 165, 330, 230, 3000 - 10);
                 selectedWheelType = 4;
                 desactiverModelPneus();
                 PneuChoisi = PneuCourse;
-                PneuCourse.SetActive(true); //todo changer type pneu
+                PneuCourse.SetActive(true);
             });
             WheelType5.onClick.AddListener(delegate { 
-                Wheels.WheelsSetValues(0.5, 0.4, 0.3, 1, 180, 220, 250, 3000 - 20);
+                Wheels.WheelsSetValues(0.5, 0.4, 0.3, 1, 180, 350, 250, 3000 - 20);
                 selectedWheelType = 5;
                 desactiverModelPneus();
                 PneuChoisi = PneuProffessionnel;
@@ -345,10 +345,10 @@ namespace Mechanix
         {
             FrictionSlider.value = (float) (frictionForce);
             AccelerationSlider.value = (float) (frictionForce * 2);
-            VitesseMaxSlider.value = (float) (350 - (frictionForce / 2));  //todo
+            VitesseMaxSlider.value = (float) (350 - (frictionForce / 2));
             FrictionStats.text = $"{frictionForce:F3}" + " (N)";
             AccelStats.text = $"{((frictionForce * 120) / mass):F3}" + " (m/s^2)";
-            VitesseMaxStats.text = $"{(350 - (frictionForce / 2)):F3}" + " (m/s)";
+            VitesseMaxStats.text = $"{(350 - (frictionForce)/1.5):F3}" + " (km/h)";
 
         }
 
