@@ -275,6 +275,7 @@ namespace Mechanix
             //V6
             if (engineList.moteurSelected == 1 || engineList.moteurSelected == 0)
             {
+                RPMmax = 7100;
                 if (RPM <= 4000)
                 {
                     engineTorque = (0.000016375 * (Math.Pow((RPM), 2))) + 173;
@@ -286,6 +287,7 @@ namespace Mechanix
                 
             //v8
             } else if (engineList.moteurSelected == 2) {
+                RPMmax = 7500;
                 if (RPM <= 4000)
                 {
                     engineTorque = (0.000028 * (Math.Pow((RPM), 2))) + 380;
@@ -298,10 +300,9 @@ namespace Mechanix
             } else
             //électrique
             {
-               
+                RPMmax = 15000;
                 if (RPM <= 12000)
                 {
-                    Debug.Log("nigger ici");
                     engineTorque = (800);
                 }
                 else
