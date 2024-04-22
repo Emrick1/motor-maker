@@ -280,7 +280,7 @@ namespace Mechanix
                 {
                     engineTorque = (-0.000001625 * (Math.Pow(((RPM) - 6000), 2))) + 500;
                 }
-                horsePower = (engineTorque * RPM) / 5252;
+                
             //v8
             } else if (engineList.moteurSelected == 2) {
                 if (RPM <= 4000)
@@ -295,17 +295,19 @@ namespace Mechanix
             } else
             //électrique
             {
-                if (RPM <= 4000)
+               
+                if (RPM <= 12000)
                 {
-                    engineTorque = (0.000016375 * (Math.Pow((RPM), 2))) + 173;
+                    Debug.Log("nigger ici");
+                    engineTorque = (800);
                 }
                 else
                 {
-                    engineTorque = (-0.000001625 * (Math.Pow(((RPM) - 6000), 2))) + 500;
+                    engineTorque = ((0.000042 * Math.Pow(RPM - 15000, 2) + 400));
                 }
 
             }
-
+            horsePower = (engineTorque * RPM) / 5252;
         }
 
         /// <summary>
