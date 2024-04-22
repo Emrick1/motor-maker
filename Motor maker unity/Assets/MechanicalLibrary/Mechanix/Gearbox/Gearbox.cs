@@ -16,7 +16,7 @@ namespace Mechanix
         public TextMeshProUGUI gearSelected;
         public TextMeshProUGUI TextDents;
         private static Gear gearReculons = new Gear(15, 1, "Reculons");
-        private static Gear gearMenante = new Gear(15, 1, "Menante");
+        private static Gear gearMenante = new Gear(10, 1, "Menante");
         private static Gear gear1 = new Gear(30, 1, "Engrenage1");
         private static Gear gear2 = new Gear(26, 1, "Engrenage2");
         private static Gear gear3 = new Gear(22, 1, "Engrenage3");
@@ -198,7 +198,7 @@ namespace Mechanix
 
         public static double calculateRatio(Gear menant, Gear menee, Boolean recule)
         {
-            double ratio = ((double)(menant.NbDents)/(double)(menee.NbDents));
+            double ratio = ((double)(menee.NbDents)/(double)(menant.NbDents)) * 0.25;
 
             if(recule) 
             {
