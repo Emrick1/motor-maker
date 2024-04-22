@@ -512,7 +512,7 @@ namespace Mechanix
                + "\nTorque Output: " + $"{torqueOut:F3}"
                + "\nForce du moteur (N): " + $"{engineForce:F3}"
                + "\nEngrenage: " + gearSelected.Name.ToString()
-               + "\nAcceleration (m/s^2): " + $"{acceleration:F3}"
+               + "\nAcceleration (m/s^2): " + $"{(acceleration * 10):F3}"
                + "\nVitesse (m/s): " + $"{speed:F3}" + " Vitesse (km/h): " + $"{(speed*3.6):F3}"
                + "\nForce de friction pneus (N): " + $"{frictionForceWheels:F3}"
                + "\nForce de friction vent (N): " + $"{frictionForceWind:F3}"
@@ -594,6 +594,10 @@ namespace Mechanix
             if (!gearSelected.Name.Equals("Reculons"))
             {
                 acceleration = ((frictionForceEngineReductionCoefficient * engineForce) - frictionForceWheels - (6.5 * frictionForceWind)) / (mass);
+                if (acceleration * 60 > (Wheels.FrictionForce * 120) / mass)
+                {
+                    acceleration = ((Wheels.FrictionForce * 120) / mass) / 60;
+                }
             }
             else
             {
