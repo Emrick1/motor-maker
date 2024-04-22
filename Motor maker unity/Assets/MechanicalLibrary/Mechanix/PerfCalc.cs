@@ -105,6 +105,8 @@ namespace Mechanix
         /// </summary>
         private static float echelleTemporelle = 0.101f;
 
+        private static double modificateurReculons = 0.1;
+
         /// <summary>
         /// GameObject pour un engrenage de 10 dents.
         /// </summary>
@@ -249,7 +251,7 @@ namespace Mechanix
         public GameObject cylMenant;
         public GameObject cylRetour;
         public GameObject cylChoisi;
-        public static bool VolantToggleBool = true;
+        public static bool VolantToggleBool = false;
         /// <summary>
         /// Échelle temporelle de la rotation de la boîte de vitesse.
         /// </summary>
@@ -381,10 +383,31 @@ namespace Mechanix
             if (Input.GetKey(KeyCode.W))
             {
                 y = -32767;
+            }
+            if (Input.GetKey(KeyCode.S))
+            {
                 z = -32767;
             }
             CalculateSpeedAndForces();
             getTorqueSelonMoteur();
+            
+            if (!gearSelected.Name.Equals("Reculons"))
+            {
+                modificateurReculons = 0.15;
+                if (speed < 0)
+                {
+                    speed = (speed * 0.999) + 0.03;
+                }
+            }
+            else
+            {
+                modificateurReculons = -0.15;
+                if (speed > 0)
+                {
+                    speed = (speed * 0.999) - 0.03;
+                } 
+            }
+
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow) || (y != 0 && y <= 32761))
             {
                 
@@ -413,23 +436,15 @@ namespace Mechanix
 
             if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow) || (z != 0 && z <= 32761))
             {
-                acceleration = ((speed / -75) * (((z - 32767) / 32767) * -0.5)) - 0.5;
+                acceleration = ((speed / -75) * (((z - 32767) / 32767) * -0.5)) - modificateurReculons * 5;
                 speed += acceleration / 60;
-                if (speed < 0)
-                {
-                    speed = 0;
-                }
             }
 
             if (!(Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) && !(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) && !(z != 0 && z <= 32761) && !(y != 0 && y <= 32761))
             {
 
-                acceleration = (speed / -180) - 0.1;
+                acceleration = (speed / -180) - modificateurReculons;
                 speed += acceleration / 60;
-                if (speed < 0)
-                {
-                    speed = 0;
-                }
             }
 
             for (int i = 1; i <= Gearbox.GearsList().Count - 1; i++)
@@ -464,6 +479,7 @@ namespace Mechanix
                 }
                 gearSelected = Gearbox.Gears(indexGearSelect);
             }
+
 
             RPMOut = (int)(((double)RPM) * (calculateRatio(Gearbox.Gears(1), gearSelected, (gearSelected == Gears(0)))));
             torqueOut = (horsePower * 5252) / RPMOut;
@@ -572,7 +588,14 @@ namespace Mechanix
         {
             windDensity = 101.3 / (8.395 * ambientTemperature);
             frictionForceWind = 0.5 * dragCoefficient * frontCarArea * windDensity * (speed * speed);
-            acceleration = ((frictionForceEngineReductionCoefficient * engineForce) - (frictionForceWheels + (6.5 * frictionForceWind))) / (mass);
+            if (!gearSelected.Name.Equals("Reculons"))
+            {
+                acceleration = ((frictionForceEngineReductionCoefficient * engineForce) - frictionForceWheels - (6.5 * frictionForceWind)) / (mass);
+            }
+            else
+            {
+                acceleration = ((frictionForceEngineReductionCoefficient * engineForce * 0.5) + (0.5 * frictionForceWheels + (20 * frictionForceWind))) / (mass);
+            }
         }
 
         /// <summary>
