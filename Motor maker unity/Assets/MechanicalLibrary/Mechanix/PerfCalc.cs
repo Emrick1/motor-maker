@@ -607,8 +607,12 @@ namespace Mechanix
                         angleRotation = (calculateRatio(Gearbox.Gears(1), new Gear(40 - Gearbox.Gears(1).NbDents, 1, "Retour"), false) * RPM * 360) / (60);
                         updateCylinders("Retour", angleRotation);
                     }
-
-                    if (pos.name[7..].Equals(gearSelected.Name[9..]))
+                    if (pos.name[3..].Equals(gearSelected.Name.Substring(7)))
+                    {
+                        updateCylinders("Choisi", angleRotation);
+                        Debug.Log(gearSelected.Name.Substring(gearSelected.Name.Length - 1));
+                    }
+                    else if (pos.name[7..].Equals(gearSelected.Name[9..]))
                     {
                         updateCylinders("Choisi", angleRotation);
                     }
@@ -625,8 +629,8 @@ namespace Mechanix
 
         public void translationCylindresBloque()
         {
+
             Vector3 direcion = Vector3.right;
-            String noGear = gearSelected.Name.Substring(9);
 
             if (gearSelected.Name.StartsWith("R"))
             {
@@ -634,6 +638,7 @@ namespace Mechanix
             } 
             else
             {
+                String noGear = gearSelected.Name.Substring(9);
                 if (int.Parse(noGear) % 2 == 1)
                 {
                     direcion = Vector3.left;
@@ -676,7 +681,13 @@ namespace Mechanix
             }
             else
             {
-                acceleration = ((frictionForceEngineReductionCoefficient * engineForce * 0.5) + (0.5 * frictionForceWheels + (20 * frictionForceWind))) / (mass);
+                if (speed < 0)
+                {
+                    acceleration = ((frictionForceEngineReductionCoefficient * engineForce * 0.5) + (0.5 * frictionForceWheels + (20 * frictionForceWind))) / (mass);
+                } else if (speed >= 0)
+                {
+                    acceleration = ((frictionForceEngineReductionCoefficient * engineForce * 0.5) - (0.5 * frictionForceWheels + (20 * frictionForceWind))) / (mass);
+                }
             }
         }
 
