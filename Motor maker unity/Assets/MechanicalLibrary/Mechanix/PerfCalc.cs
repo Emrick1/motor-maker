@@ -300,14 +300,14 @@ namespace Mechanix
             } else
             //électrique
             {
-                RPMmax = 15000;
-                if (RPM <= 12000)
+                RPMmax = 13000;
+                if (RPM <= 10000)
                 {
                     engineTorque = (800);
                 }
                 else
                 {
-                    engineTorque = ((0.000042 * Math.Pow(RPM - 15000, 2) + 400));
+                    engineTorque = ((0.000042 * Math.Pow(RPM - 13000, 2) + 400));
                 }
 
             }
