@@ -537,7 +537,10 @@ namespace Mechanix
             }
 
             Wheels.CalculateTyreFriction();
-            statWindow.UpdateTexte(GetStats());
+            if (statWindow != null)
+            {
+                statWindow.UpdateTexte(GetStats());
+            }
             WriteStats();
         }
 
