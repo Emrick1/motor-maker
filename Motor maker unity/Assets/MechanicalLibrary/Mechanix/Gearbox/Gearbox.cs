@@ -109,7 +109,6 @@ namespace Mechanix
             }
 
             dentsSlider.value = currentGear.NbDents;
-
         }
 
         private void initiationAffichageGears()
@@ -152,10 +151,12 @@ namespace Mechanix
         }
         public void SwitchGearTo(int gearIndex)
         {
-            currentGear = gears[gearIndex];
-            currentIndex = gearIndex;
-            gearSelected.text = gears[gearIndex].Name;
-            initialiserSlider(currentGear);
+            if (gearIndex >= 0 && gearIndex < gears.Count) {
+                currentGear = gears[gearIndex];
+                currentIndex = gearIndex;
+                gearSelected.text = gears[gearIndex].Name;
+                initialiserSlider(currentGear);
+            }
         }
 
         public void setTextDents()

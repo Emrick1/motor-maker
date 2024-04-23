@@ -264,6 +264,8 @@ namespace Mechanix
         public Slider sliderEchelleTemporelle;
 
         public Toggle ToggleVolant;
+        private StatWindow statWindow;
+        public Button bouttonStats;
 
 
         /// <summary>
@@ -406,7 +408,8 @@ namespace Mechanix
             }
 
             sliderEchelleTemporelle.onValueChanged.AddListener(delegate { echelleTemporelle = sliderEchelleTemporelle.value; });
-
+            statWindow = new StatWindow();
+            bouttonStats.onClick.AddListener(delegate { Show(); });
         }
 
         void Update()
@@ -534,6 +537,7 @@ namespace Mechanix
             }
 
             Wheels.CalculateTyreFriction();
+            statWindow.UpdateTexte(GetStats());
             WriteStats();
         }
 
@@ -544,7 +548,7 @@ namespace Mechanix
         {
             if (ValueText != null)
             {
-                ValueText.text = "Stats: "
+                ValueText.text = "Stats : "
                + "\nRPM: " + $"{RPM:F3}"
                + "\nRPM Sortie: " + $"{RPMOut:F3}"
                + "\nTorque Moteur: " + $"{engineTorque:F3}"
@@ -563,9 +567,58 @@ namespace Mechanix
             if (echelleTText != null)
             {
                 echelleTText.text = echelleTemporelle.ToString()[..4];
+            
             }
         }
 
+        private void Show()
+        {
+            statWindow.Show();
+        }
+
+        private string GetStats()
+        {
+            string selectedGear = GetPositionEmbrayage();
+            return "Statistiques principales : "
+               + "\n\nRPM: " + $"{RPM:F3}" + "\nPosition du levier d'embrayage : "
+               + selectedGear + "\nVitesse (km/h): " + $"{(speed * 3.6):F3}"
+               + "\nVitesse (m/s): " + $"{speed:F3}"
+               + "\nAcceleration (m/s^2): " + $"{(acceleration * 10):F3}"
+               + "\n\nStatistiques supplémentaires : "
+               + "\nForce de friction pneus (N): " + $"{frictionForceWheels:F3}"
+               + "\nForce de friction vent (N): " + $"{frictionForceWind:F3}"
+               + "\nTorque Moteur: " + $"{engineTorque:F3}"
+               + "\nForce du moteur (N): " + $"{engineForce:F3}";
+        }
+
+        private string GetPositionEmbrayage()
+        {
+            string str = gearSelected.Name;
+            string retour = "";
+            if (str.Length > 1) {
+                char c1 = str[0];
+                char c2 = str[str.Length - 1];
+
+                if (c1 == 'E')
+                {
+                    if (c2 == '1')
+                    {
+                        retour = "1ère Vitesse";
+                    } else
+                    {
+                        retour = c2 + "ième Vitesse";
+                    }
+                } else if (c1 == 'M')
+                {
+                    retour = "Neutre";
+                } else if (c1 == 'R')
+                {
+                    retour = "Marche Arrière";
+                }
+            }
+            
+            return retour;
+        }
         private void updateCylinders(string cylName, double angleRotation)
         {
             string fieldName = "cyl" + cylName;
