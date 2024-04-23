@@ -1,9 +1,12 @@
 using Mechanix;
 using System;
+using System.Linq;
 using System.Numerics;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Animations;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using UnityEngine.UIElements;
 using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
@@ -13,7 +16,7 @@ namespace Mechanix
     /// <summary>
     /// <c>Classe qui d�crit le mouvement d'une voiture dans le moteur graphique</c>
     /// </summary>
-     public class CarMovement : MonoBehaviour
+    public class CarMovement : MonoBehaviour
     {
         /// <summary>
         /// Sp�cifie la pr�sence physique de la voiture simul�e.
@@ -85,6 +88,13 @@ namespace Mechanix
         /// �tat de la rotation de la roue arri�wre gauche.
         /// </summary>
         [SerializeField] private Transform rearLeftTransform;
+
+        public string sourceSceneName;
+        public string cameraObjectName;
+
+        public RawImage rawImage;
+
+
         /// <summary>
         /// Vecteur utilis�e dans l'actualisationde la voiture.
         /// </summary>
@@ -92,17 +102,19 @@ namespace Mechanix
 
         void Start()
         {
+           // cameratransmission();
             flippedText.enabled = false;
             flippedpanel.SetActive(false);
         }
 
         void Update()
         {
+           
             Quaternion deltaRotationLeft = Quaternion.Euler(new Vector3(0, 2, 0) * Time.fixedDeltaTime);
             Quaternion deltaRotationRight = Quaternion.Euler(new Vector3(0, -2, 0) * Time.fixedDeltaTime);
             setRbVector();
-            
-            var vel = rbVector * (float) PerfCalc.Speed;
+
+            var vel = rbVector * (float)PerfCalc.Speed;
             vel.y = _rb.velocity.y;
             _rb.velocity = vel;
             int axis = 0;
@@ -113,7 +125,8 @@ namespace Mechanix
                     _rb.MoveRotation(_rb.rotation * deltaRotationRight);
                 }
                 axis = -1;
-            } else if (Input.GetKey(KeyCode.D))
+            }
+            else if (Input.GetKey(KeyCode.D))
             {
                 if (PerfCalc.Speed > 0.5)
                 {
@@ -134,10 +147,11 @@ namespace Mechanix
                 flippedpanel.SetActive(true);
                 if (Input.GetKey(KeyCode.Space))
                 {
-                    _rb.rotation = Quaternion.Euler(new Vector3(0, _rb.rotation.y * 360, 0));                    
+                    _rb.rotation = Quaternion.Euler(new Vector3(0, _rb.rotation.y * 360, 0));
                     _rb.angularVelocity = new Vector3(0, 0, 0);
                 }
-            } else
+            }
+            else
             {
                 if (!Input.GetKey(KeyCode.Tab))
                 {
@@ -146,13 +160,15 @@ namespace Mechanix
                 }
             }
 
-            
+
 
             if (!PerfCalc.VolantToggleBool)
             {
                 frontLeft.steerAngle = 5f * axis;
                 frontRight.steerAngle = 5f * axis;
-            } else {
+            }
+            else
+            {
                 LogitechGSDK.DIJOYSTATE2ENGINES rec;
                 rec = LogitechGSDK.LogiGetStateUnity(0);
                 float x = rec.lX;
@@ -160,10 +176,10 @@ namespace Mechanix
                 frontRight.steerAngle = 1f * (x / 32764);
                 if (PerfCalc.Speed > 0)
                 {
-                  _rb.MoveRotation(_rb.rotation * Quaternion.Euler(new Vector3(0, x / 3000, 0) * Time.fixedDeltaTime));
+                    _rb.MoveRotation(_rb.rotation * Quaternion.Euler(new Vector3(0, x / 3000, 0) * Time.fixedDeltaTime));
                 }
             }
-            
+
             UpdateWheel(frontLeft, frontLeftTransform);
             UpdateWheel(frontRight, frontRightTransform);
             UpdateWheel(rearLeft, rearLeftTransform);
@@ -171,6 +187,52 @@ namespace Mechanix
 
             UpdateSpeedometer();
         }
+        public void cameratransmission()
+        {
+            /* Camera cameraSceneTransmission = SceneManager.GetSceneAt(0).GetRootGameObjects()
+              .SelectMany(g => g.GetComponentsInChildren<Camera>())
+              .FirstOrDefault();
+              RenderTexture renderTexture = new RenderTexture(Screen.width, Screen.height, 24);
+              cameraSceneTransmission.targetTexture = renderTexture;
+              cameraSceneTransmission.Render();
+              rawImage = GetComponent<RawImage>();
+              rawImage.texture = renderTexture;
+            */
+            SceneManager.LoadScene(sourceSceneName, LoadSceneMode.Additive);
+
+            // Récupération de la caméra de la scène chargée
+            Scene sourceScene = SceneManager.GetSceneByName(sourceSceneName);
+            if (sourceScene.IsValid())
+            {
+                GameObject[] rootObjects = sourceScene.GetRootGameObjects();
+                foreach (GameObject obj in rootObjects)
+                {
+                    if (obj.name == cameraObjectName)
+                    {
+                        Camera sourceCamera = obj.GetComponent<Camera>();
+                        if (sourceCamera != null)
+                        {
+                           
+                            // Création de la Render Texture
+                            RenderTexture renderTexture = new RenderTexture(1, 1, 1);
+                            sourceCamera.targetTexture = renderTexture;
+
+                            // Création du matériau avec la Render Texture
+                            Material material = new Material(Shader.Find("Standard"));
+                            material.mainTexture = renderTexture;
+
+                            // Attribution du matériau à l'objet cible
+                            Renderer targetRenderer = rawImage.GetComponent<Renderer>();
+                            targetRenderer.material = material;
+
+                            return;
+                        }
+                    }
+                }
+            }
+
+            Debug.LogError("Camera object not found in the source scene.");
+    }
 
         /// <summary>
         /// Actualise le compteur de vitesse de la voiture.
