@@ -120,7 +120,7 @@ namespace Mechanix
             int axis = 0;
             if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
             {
-                if (PerfCalc.Speed > 0.5)
+                if (PerfCalc.Speed > 0.5 || PerfCalc.Speed < -0.5)
                 {
                     _rb.MoveRotation(_rb.rotation * deltaRotationRight);
                 }
@@ -128,7 +128,7 @@ namespace Mechanix
             }
             else if (Input.GetKey(KeyCode.D))
             {
-                if (PerfCalc.Speed > 0.5)
+                if (PerfCalc.Speed > 0.5 || PerfCalc.Speed < -0.5)
                 {
                     _rb.MoveRotation(_rb.rotation * deltaRotationLeft);
                 }
