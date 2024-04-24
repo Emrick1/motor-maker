@@ -15,15 +15,15 @@ namespace Mechanix
         private static int currentIndex;
         public TextMeshProUGUI gearSelected;
         public TextMeshProUGUI TextDents;
-        private static Gear gearReculons = new Gear(15, 1, "Reculons");
-        private static Gear gearMenante = new Gear(10, 1, "Menante");
+        private static Gear gearReculons = new Gear(20, 1, "Reculons");
+        private static Gear gearMenante = new Gear(15, 1, "Menante");
         private static Gear gear1 = new Gear(30, 1, "Engrenage1");
         private static Gear gear2 = new Gear(26, 1, "Engrenage2");
         private static Gear gear3 = new Gear(22, 1, "Engrenage3");
         private static Gear gear4 = new Gear(18, 1, "Engrenage4");
         private static Gear gear5 = new Gear(14, 1, "Engrenage5");
         private static Gear gearLimitante = new Gear(5, 1, "Limitante");
-        public Button buttonReculons;
+        public Button buttonGear5;
         public Button buttonGearMenante;
         public Button buttonGear1;
         public Button buttonGear2;
@@ -60,12 +60,12 @@ namespace Mechanix
 
         void Start()
         {
-            buttonReculons.onClick.AddListener(delegate { initialSet = 1; SwitchGearTo(0); setActiveGear();});
             buttonGearMenante.onClick.AddListener(delegate { initialSet = 2; SwitchGearTo(1); setActiveGear();});
             buttonGear1.onClick.AddListener(delegate { initialSet = 3; SwitchGearTo(2); setActiveGear(); });
             buttonGear2.onClick.AddListener(delegate { initialSet = 4; SwitchGearTo(3); setActiveGear(); });
             buttonGear3.onClick.AddListener(delegate { initialSet = 5; SwitchGearTo(4); setActiveGear(); });
             buttonGear4.onClick.AddListener(delegate { initialSet = 6; SwitchGearTo(5); setActiveGear(); });
+            buttonGear5.onClick.AddListener(delegate { initialSet = 1; SwitchGearTo(6); setActiveGear(); });
             charger.onClick.AddListener(delegate { LoadSettings(); });
             sauvegarder.onClick.AddListener(delegate { SaveSettings(); });
             dentsSlider.onValueChanged.AddListener(delegate { setTextDents(); setActiveGear(); });
@@ -109,7 +109,6 @@ namespace Mechanix
             }
 
             dentsSlider.value = currentGear.NbDents;
-
         }
 
         private void initiationAffichageGears()
@@ -152,10 +151,12 @@ namespace Mechanix
         }
         public void SwitchGearTo(int gearIndex)
         {
-            currentGear = gears[gearIndex];
-            currentIndex = gearIndex;
-            gearSelected.text = gears[gearIndex].Name;
-            initialiserSlider(currentGear);
+            if (gearIndex >= 0 && gearIndex < gears.Count) {
+                currentGear = gears[gearIndex];
+                currentIndex = gearIndex;
+                gearSelected.text = gears[gearIndex].Name;
+                initialiserSlider(currentGear);
+            }
         }
 
         public void setTextDents()
@@ -224,7 +225,7 @@ namespace Mechanix
                 if (currentGear.Name != "Menante" && currentGear.Name != "Reculons")
                 {
                     gearMat.color = Color.HSVToRGB((float.Parse(currentGear.Name.Substring(9)) - 1f) / 5f, 1, 0.5f + (((float)currentGear.NbDents) - 10f) * (1f - 0.5f) / (30f - 10f));
-                } else gearMat.color = Color.gray;
+                } else gearMat.color = Color.HSVToRGB(0, 0, 0.5f + (((float)currentGear.NbDents) - 10f) * (1f - 0.5f) / (30f - 10f));
                 TextDents.text = currentGear.NbDents.ToString() + " dents";
                 foreach (GameObject g in affichageGears)
                 {

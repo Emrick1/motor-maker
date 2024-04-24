@@ -243,6 +243,7 @@ namespace Mechanix
         /// GameObject de l'engrenage pour le reculons dans la sc�ne actuelle.
         /// </summary>
         public GameObject posReculon;
+        public GameObject posFolle;
         /// <summary>
         /// GameObject de l'engrenage pour le reculons dans les autres sc�ne.
         /// </summary>
@@ -264,6 +265,8 @@ namespace Mechanix
         public Slider sliderEchelleTemporelle;
 
         public Toggle ToggleVolant;
+        private StatWindow statWindow;
+        public Button bouttonStats;
 
 
         /// <summary>
@@ -275,6 +278,7 @@ namespace Mechanix
             //V6
             if (engineList.moteurSelected == 1 || engineList.moteurSelected == 0)
             {
+                RPMmax = 7100;
                 if (RPM <= 4000)
                 {
                     engineTorque = (0.000016375 * (Math.Pow((RPM), 2))) + 173;
@@ -286,6 +290,7 @@ namespace Mechanix
                 
             //v8
             } else if (engineList.moteurSelected == 2) {
+                RPMmax = 7500;
                 if (RPM <= 4000)
                 {
                     engineTorque = (0.000028 * (Math.Pow((RPM), 2))) + 380;
@@ -298,15 +303,14 @@ namespace Mechanix
             } else
             //électrique
             {
-               
-                if (RPM <= 12000)
+                RPMmax = 13000;
+                if (RPM <= 10000)
                 {
-                    Debug.Log("nigger ici");
                     engineTorque = (800);
                 }
                 else
                 {
-                    engineTorque = ((0.000042 * Math.Pow(RPM - 15000, 2) + 400));
+                    engineTorque = ((0.000042 * Math.Pow(RPM - 13000, 2) + 400));
                 }
 
             }
@@ -337,12 +341,29 @@ namespace Mechanix
                     gearDuplique.transform.SetParent(posMenant.transform, false);
                     gearDupliqueRetour.transform.SetParent(posMenantRetour.transform, false);
 
-                    gearMat.color = Color.gray;
+                    gearMat.color = Color.HSVToRGB(0, 0, 0.5f + (((float)g.NbDents) - 10f) * (1f - 0.5f) / (30f - 10f));
                 }
                 else if (g.Name.StartsWith("R"))
                 {
                     gearDuplique.transform.SetParent(posReculon.transform, false);
-                    gearDupliqueRetour.transform.SetParent(posReculonRetour.transform, false);
+
+                    string fieldNameFolle = "gear" + (30 - g.NbDents);
+                    FieldInfo fieldFolle = GetType().GetField(fieldNameFolle);
+
+                    GameObject gearFolle = Instantiate((GameObject)fieldFolle.GetValue(this));
+                    GameObject gearRetourReculons = Instantiate((GameObject)fieldFolle.GetValue(this));
+                    gearRetourReculons.transform.SetParent(posReculonRetour.transform, false);
+                    gearFolle.transform.SetParent(posFolle.transform, false);
+
+                    gearFolle.transform.localPosition = Vector3.zero;
+                    gearFolle.transform.localRotation = Quaternion.identity;
+                    gearFolle.transform.localScale = Vector3.one;
+
+                    gearRetourReculons.transform.localPosition = Vector3.zero;
+                    gearRetourReculons.transform.localRotation = Quaternion.identity;
+                    gearRetourReculons.transform.localScale = Vector3.one;
+
+                    gearMat.color = Color.HSVToRGB(0, 0, 0.5f + (((float)g.NbDents) - 10f) * (1f - 0.5f) / (30f - 10f));
                 }
                 else
                 {
@@ -405,7 +426,8 @@ namespace Mechanix
             }
 
             sliderEchelleTemporelle.onValueChanged.AddListener(delegate { echelleTemporelle = sliderEchelleTemporelle.value; });
-
+            statWindow = new StatWindow();
+            bouttonStats.onClick.AddListener(delegate { Show(); });
         }
 
         void Update()
@@ -533,6 +555,10 @@ namespace Mechanix
             }
 
             Wheels.CalculateTyreFriction();
+            if (statWindow != null)
+            {
+                statWindow.UpdateTexte(GetStats());
+            }
             WriteStats();
         }
 
@@ -543,7 +569,7 @@ namespace Mechanix
         {
             if (ValueText != null)
             {
-                ValueText.text = "Stats: "
+                ValueText.text = "Stats : "
                + "\nRPM: " + $"{RPM:F3}"
                + "\nRPM Sortie: " + $"{RPMOut:F3}"
                + "\nTorque Moteur: " + $"{engineTorque:F3}"
@@ -562,9 +588,58 @@ namespace Mechanix
             if (echelleTText != null)
             {
                 echelleTText.text = echelleTemporelle.ToString()[..4];
+            
             }
         }
 
+        private void Show()
+        {
+            statWindow.Show();
+        }
+
+        private string GetStats()
+        {
+            string selectedGear = GetPositionEmbrayage();
+            return "Statistiques principales : "
+               + "\n\nRPM: " + $"{RPM:F3}" + "\nPosition du levier d'embrayage : "
+               + selectedGear + "\nVitesse (km/h): " + $"{(speed * 3.6):F3}"
+               + "\nVitesse (m/s): " + $"{speed:F3}"
+               + "\nAcceleration (m/s^2): " + $"{(acceleration * 10):F3}"
+               + "\n\nStatistiques supplémentaires : "
+               + "\nForce de friction pneus (N): " + $"{frictionForceWheels:F3}"
+               + "\nForce de friction vent (N): " + $"{frictionForceWind:F3}"
+               + "\nTorque Moteur: " + $"{engineTorque:F3}"
+               + "\nForce du moteur (N): " + $"{engineForce:F3}";
+        }
+
+        private string GetPositionEmbrayage()
+        {
+            string str = gearSelected.Name;
+            string retour = "";
+            if (str.Length > 1) {
+                char c1 = str[0];
+                char c2 = str[str.Length - 1];
+
+                if (c1 == 'E')
+                {
+                    if (c2 == '1')
+                    {
+                        retour = "1ère Vitesse";
+                    } else
+                    {
+                        retour = c2 + "ième Vitesse";
+                    }
+                } else if (c1 == 'M')
+                {
+                    retour = "Neutre";
+                } else if (c1 == 'R')
+                {
+                    retour = "Marche Arrière";
+                }
+            }
+            
+            return retour;
+        }
         private void updateCylinders(string cylName, double angleRotation)
         {
             string fieldName = "cyl" + cylName;
@@ -574,8 +649,19 @@ namespace Mechanix
             if (cylName.Equals("Choisi"))
             {
                 Material cylMat = new Material(gear10.GetComponent<Renderer>().sharedMaterial);
-                cylMat.color = Color.HSVToRGB((float.Parse(gearSelected.Name.Substring(9)) - 1f) / 5f, 1, 0.5f + (((float)gearSelected.NbDents) - 10f) * (1f - 0.5f) / (30f - 10f));
+                if (gearSelected.Name != "Reculons")
+                {
+                    cylMat.color = Color.HSVToRGB((float.Parse(gearSelected.Name.Substring(9)) - 1f) / 5f, 1, 0.5f + (((float)gearSelected.NbDents) - 10f) * (1f - 0.5f) / (30f - 10f));
+                }
+                else
+                {
+                    cylMat.color = Color.HSVToRGB(0, 0, 0.5f + (((float)gearSelected.NbDents) - 10f) * (1f - 0.5f) / (30f - 10f));
+                }
                 cyl.GetComponent<Renderer>().material = cylMat;
+            }
+            else if (cylName.Equals("Menant"))
+            {
+                //cylMat.color = Color.HSVToRGB(0, 0, 0.5f + (((float)Gearbox.Gears(1).NbDents) - 10f) * (1f - 0.5f) / (30f - 10f));
             }
 
             cyl.transform.Rotate(Vector3.forward, (float)angleRotation * Time.deltaTime * echelleTemporelle);
@@ -592,11 +678,11 @@ namespace Mechanix
             {
                 if (pos != null && pos.name.Substring(0, 3).Equals("Pos"))
                 {
-                    if (!pos.name.EndsWith("Retour"))
+                    if (!pos.name.EndsWith("Retour") && !pos.name.EndsWith("Folle"))
                     {
                         for (int i = 0; i < Gearbox.GearsList().Count; i++)
                         {
-                            if (pos.name[4..].Equals(Gearbox.Gears(i).Name))
+                            if (pos.name[3..].Equals(Gearbox.Gears(i).Name))
                             {
                                 angleRotation = (calculateRatio(Gearbox.Gears(1), Gearbox.Gears(i), false) * RPM * 360) / (60);
                             }
@@ -607,7 +693,9 @@ namespace Mechanix
                         angleRotation = (calculateRatio(Gearbox.Gears(1), new Gear(40 - Gearbox.Gears(1).NbDents, 1, "Retour"), false) * RPM * 360) / (60);
                         updateCylinders("Retour", angleRotation);
                     }
-                    if (pos.name[3..].Equals(gearSelected.Name.Substring(7)))
+
+                    
+                    if (pos.name[3..].EndsWith(gearSelected.Name))
                     {
                         updateCylinders("Choisi", angleRotation);
                         Debug.Log(gearSelected.Name.Substring(gearSelected.Name.Length - 1));
@@ -634,7 +722,10 @@ namespace Mechanix
 
             if (gearSelected.Name.StartsWith("R"))
             {
-                cylBloque5R.transform.position = Vector3.Lerp(cylBloque5R.transform.position, posCylBloque5R + direcion * 0.25f, 3 * Time.deltaTime);
+                if (cylBloque5R != null)
+                {
+                    cylBloque5R.transform.position = Vector3.Lerp(cylBloque5R.transform.position, posCylBloque5R + direcion * 0.25f, 3 * Time.deltaTime);
+                }
             } 
             else
             {
