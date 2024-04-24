@@ -89,11 +89,6 @@ namespace Mechanix
         /// </summary>
         [SerializeField] private Transform rearLeftTransform;
 
-        public string sourceSceneName;
-        public string cameraObjectName;
-
-        public RawImage rawImage;
-
 
         /// <summary>
         /// Vecteur utilis�e dans l'actualisationde la voiture.
@@ -102,7 +97,6 @@ namespace Mechanix
 
         void Start()
         {
-            //cameratransmission();
             flippedText.enabled = false;
             flippedpanel.SetActive(false);
         }
@@ -196,52 +190,7 @@ namespace Mechanix
 
             UpdateSpeedometer();
         }
-        public void cameratransmission()
-        {
-            /* Camera cameraSceneTransmission = SceneManager.GetSceneAt(0).GetRootGameObjects()
-              .SelectMany(g => g.GetComponentsInChildren<Camera>())
-              .FirstOrDefault();
-              RenderTexture renderTexture = new RenderTexture(Screen.width, Screen.height, 24);
-              cameraSceneTransmission.targetTexture = renderTexture;
-              cameraSceneTransmission.Render();
-              rawImage = GetComponent<RawImage>();
-              rawImage.texture = renderTexture;
-            */
-            SceneManager.LoadScene(sourceSceneName, LoadSceneMode.Additive);
-
-            // Récupération de la caméra de la scène chargée
-            Scene sourceScene = SceneManager.GetSceneByName(sourceSceneName);
-            if (sourceScene.IsValid())
-            {
-                GameObject[] rootObjects = sourceScene.GetRootGameObjects();
-                foreach (GameObject obj in rootObjects)
-                {
-                    if (obj.name == cameraObjectName)
-                    {
-                        Camera sourceCamera = obj.GetComponent<Camera>();
-                        if (sourceCamera != null)
-                        {
-                           
-                            // Création de la Render Texture
-                            RenderTexture renderTexture = new RenderTexture(1, 1, 1);
-                            sourceCamera.targetTexture = renderTexture;
-
-                            // Création du matériau avec la Render Texture
-                            Material material = new Material(Shader.Find("Standard"));
-                            material.mainTexture = renderTexture;
-
-                            // Attribution du matériau à l'objet cible
-                            Renderer targetRenderer = rawImage.GetComponent<Renderer>();
-                            targetRenderer.material = material;
-
-                            return;
-                        }
-                    }
-                }
-            }
-
-            Debug.LogError("Camera object not found in the source scene.");
-    }
+     
 
         /// <summary>
         /// Actualise le compteur de vitesse de la voiture.

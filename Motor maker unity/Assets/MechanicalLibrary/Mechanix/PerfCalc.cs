@@ -103,7 +103,7 @@ namespace Mechanix
         /// <summary>
         /// �chelle temporelle utilis�e par les calculs de performances.
         /// </summary>
-        private static float echelleTemporelle = 0.101f;
+        private static float echelleTemporelle = 0.501f;
 
         private static double modificateurReculons = 0.1;
 
@@ -264,6 +264,7 @@ namespace Mechanix
         /// </summary>
         public Slider sliderEchelleTemporelle;
 
+        public GameObject CMCamera;
         public Toggle ToggleVolant;
         private StatWindow statWindow;
         public Button bouttonStats;
@@ -425,13 +426,31 @@ namespace Mechanix
                 chargerGears(gear);
             }
 
-            sliderEchelleTemporelle.onValueChanged.AddListener(delegate { echelleTemporelle = sliderEchelleTemporelle.value; });
+            if(sliderEchelleTemporelle != null)
+            {
+                sliderEchelleTemporelle.onValueChanged.AddListener(delegate { echelleTemporelle = sliderEchelleTemporelle.value; });
+            }
+            
             statWindow = new StatWindow();
-            bouttonStats.onClick.AddListener(delegate { Show(); });
+            if (bouttonStats != null)
+            {
+                bouttonStats.onClick.AddListener(delegate { Show(); });
+            }
+            
+        }
+
+        private void reafficherCamera()
+        {
+            if (CMCamera != null)
+            {
+                CMCamera.SetActive(false);
+                CMCamera.SetActive(true);
+            }
         }
 
         void Update()
         {
+            reafficherCamera();
             float y = 32767;
             float z = 32767;
             if (VolantToggleBool)
@@ -549,10 +568,7 @@ namespace Mechanix
             torqueOut = (horsePower * 5252) / RPMOut;
             engineForce = torqueOut * (Wheels.Radius / 100);
 
-            if (SceneManager.GetActiveScene().buildIndex == 1)
-            {
-                rotateComponents();
-            }
+            rotateComponents();
 
             Wheels.CalculateTyreFriction();
             if (statWindow != null)
@@ -671,12 +687,12 @@ namespace Mechanix
         /// G�re la rotation visuelle des composants m�caniques dans le menu.
         /// </summary>
         private void rotateComponents()
-        {
+        {   
             double angleRotation = 0;
 
             foreach (GameObject pos in FindObjectsOfType<GameObject>())
             {
-                if (pos != null && pos.name.Substring(0, 3).Equals("Pos"))
+                if (pos != null && pos.name.StartsWith("Pos"))
                 {
                     if (!pos.name.EndsWith("Retour") && !pos.name.EndsWith("Folle"))
                     {
