@@ -701,7 +701,6 @@ namespace Mechanix
                     if (pos.name[3..].EndsWith(gearSelected.Name))
                     {
                         updateCylinders("Choisi", angleRotation);
-                        Debug.Log(gearSelected.Name.Substring(gearSelected.Name.Length - 1));
                     }
                     else if (pos.name[3..].EndsWith(gearSelected.Name))
                     {
