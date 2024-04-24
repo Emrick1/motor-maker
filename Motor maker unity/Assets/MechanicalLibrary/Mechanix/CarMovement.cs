@@ -164,8 +164,17 @@ namespace Mechanix
 
             if (!PerfCalc.VolantToggleBool)
             {
-                frontLeft.steerAngle = 5f * axis;
-                frontRight.steerAngle = 5f * axis;
+                if (PerfCalc.Speed >= 0)
+                {
+                    frontLeft.steerAngle = 5f * axis;
+                    frontRight.steerAngle = 5f * axis;
+                }
+                else
+                {
+                    frontLeft.steerAngle = -5f * axis;
+                    frontRight.steerAngle = -5f * axis;
+                }
+
             }
             else
             {

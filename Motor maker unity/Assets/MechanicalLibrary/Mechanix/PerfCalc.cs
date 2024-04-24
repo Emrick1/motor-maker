@@ -518,7 +518,7 @@ namespace Mechanix
             }
 
             int indexGearSelect = Gearbox.GearsList().IndexOf(gearSelected);
-            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            if (Input.GetKeyDown(KeyCode.LeftArrow) && gearSelected != Gearbox.Gears(0))
             {
                 if (gearSelected != Gearbox.Gears(2))
                 {
@@ -578,12 +578,9 @@ namespace Mechanix
                + "\nForce du moteur (N): " + $"{engineForce:F3}"
                + "\nEngrenage: " + gearSelected.Name.ToString()
                + "\nAcceleration (m/s^2): " + $"{(acceleration * 10):F3}"
-               + "\nVitesse (m/s): " + $"{speed:F3}" + " Vitesse (km/h): " + $"{(speed*3.6):F3}"
+               + "\nVitesse (m/s): " + $"{speed:F3}" + " Vitesse (km/h): " + $"{(speed * 3.6):F3}"
                + "\nForce de friction pneus (N): " + $"{frictionForceWheels:F3}"
-               + "\nForce de friction vent (N): " + $"{frictionForceWind:F3}"
-               + "\n\nPneus: "
-               + DictionnaryToString(Wheels.GetInfosWheels)
-               + Wheels.getAdherenceString();
+               + "\nForce de friction vent (N): " + $"{frictionForceWind:F3}";
             }
             if (echelleTText != null)
             {
@@ -687,14 +684,14 @@ namespace Mechanix
                         {
                             if (pos.name[3..].Equals(Gearbox.Gears(i).Name))
                             {
-                                angleRotation = (calculateRatio(Gearbox.Gears(1), Gearbox.Gears(i), false) * RPM * 360) / (60);
+                                angleRotation = (0.1 / (Gearbox.Gears(i).NbDents / 15 + calculateRatio(Gearbox.Gears(1), Gearbox.Gears(i), false)) * RPM * 360) / (60);
                             }
                         }
                     } 
                     else
                     {
-                        angleRotation = (calculateRatio(Gearbox.Gears(1), new Gear(40 - Gearbox.Gears(1).NbDents, 1, "Retour"), false) * RPM * 360) / (60);
-                        updateCylinders("Retour", angleRotation);
+                        angleRotation = (0.3 / ((40 - Gearbox.Gears(1).NbDents) / 15 + calculateRatio(Gearbox.Gears(1), new Gear(40 - Gearbox.Gears(1).NbDents, 1, "Retour"), false)) * RPM * 360) / (60);
+                        updateCylinders("Retour", -angleRotation);
                     }
 
                     
