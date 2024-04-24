@@ -780,6 +780,10 @@ namespace Mechanix
                 {
                     acceleration = ((frictionForceEngineReductionCoefficient * engineForce * 0.5) - (0.5 * frictionForceWheels + (40 * frictionForceWind))) / (mass);
                 }
+                if (acceleration * 60 < -(Wheels.FrictionForce * 120) / mass)
+                {
+                    acceleration = -((Wheels.FrictionForce * 120) / mass) / 60;
+                }
             }
         }
 
