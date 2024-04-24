@@ -646,10 +646,9 @@ namespace Mechanix
             FieldInfo field = GetType().GetField(fieldName);
             GameObject cyl = (GameObject)field.GetValue(this);
 
-            Material cylMat = new Material(gear10.GetComponent<Renderer>().sharedMaterial);
-
             if (cylName.Equals("Choisi"))
             {
+                Material cylMat = new Material(gear10.GetComponent<Renderer>().sharedMaterial);
                 if (gearSelected.Name != "Reculons")
                 {
                     cylMat.color = Color.HSVToRGB((float.Parse(gearSelected.Name.Substring(9)) - 1f) / 5f, 1, 0.5f + (((float)gearSelected.NbDents) - 10f) * (1f - 0.5f) / (30f - 10f));
@@ -662,7 +661,7 @@ namespace Mechanix
             }
             else if (cylName.Equals("Menant"))
             {
-                cylMat.color = Color.HSVToRGB(0, 0, 0.5f + (((float)Gearbox.Gears(1).NbDents) - 10f) * (1f - 0.5f) / (30f - 10f));
+                //cylMat.color = Color.HSVToRGB(0, 0, 0.5f + (((float)Gearbox.Gears(1).NbDents) - 10f) * (1f - 0.5f) / (30f - 10f));
             }
 
             cyl.transform.Rotate(Vector3.forward, (float)angleRotation * Time.deltaTime * echelleTemporelle);

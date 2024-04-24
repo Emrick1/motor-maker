@@ -270,7 +270,7 @@ GameObject:
   - component: {fileID: 22317686}
   - component: {fileID: 22317685}
   m_Layer: 0
-  m_Name: PosGear5Retour
+  m_Name: PosEngrenage5Retour
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1571,7 +1571,7 @@ GameObject:
   - component: {fileID: 392328590}
   - component: {fileID: 392328589}
   m_Layer: 0
-  m_Name: PosGear1Retour
+  m_Name: PosEngrenage1Retour
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1918,7 +1918,7 @@ GameObject:
   - component: {fileID: 464578101}
   - component: {fileID: 464578100}
   m_Layer: 0
-  m_Name: PosReculonRetour
+  m_Name: PosReculonsRetour
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2283,7 +2283,7 @@ GameObject:
   - component: {fileID: 602648816}
   - component: {fileID: 602648815}
   m_Layer: 0
-  m_Name: PosGear2Retour
+  m_Name: PosEngrenage2Retour
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2960,7 +2960,7 @@ GameObject:
   - component: {fileID: 809136654}
   - component: {fileID: 809136653}
   m_Layer: 0
-  m_Name: PosGear1
+  m_Name: PosEngrenage1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3178,7 +3178,7 @@ GameObject:
   - component: {fileID: 947443795}
   - component: {fileID: 947443794}
   m_Layer: 0
-  m_Name: PosGear2
+  m_Name: PosEngrenage2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3511,7 +3511,7 @@ GameObject:
   - component: {fileID: 1031049294}
   - component: {fileID: 1031049293}
   m_Layer: 0
-  m_Name: PosReculon
+  m_Name: PosReculons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3574,14 +3574,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1031049292}
-  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 3.25, y: 1.25, z: 6}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 19
-  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1001 &1057699100
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4142,7 +4142,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1328857930}
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 3.25, y: 0.5, z: 5.5}
+  m_LocalPosition: {x: 3.25, y: 0.25, z: 5.5}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4161,7 +4161,7 @@ GameObject:
   - component: {fileID: 1351612239}
   - component: {fileID: 1351612238}
   m_Layer: 0
-  m_Name: PosGear3Retour
+  m_Name: PosEngrenage3Retour
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4738,7 +4738,7 @@ GameObject:
   - component: {fileID: 1496304152}
   - component: {fileID: 1496304151}
   m_Layer: 0
-  m_Name: PosGear3
+  m_Name: PosEngrenage3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5333,7 +5333,7 @@ GameObject:
   - component: {fileID: 1824710548}
   - component: {fileID: 1824710547}
   m_Layer: 0
-  m_Name: PosGear4Retour
+  m_Name: PosEngrenage4Retour
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5594,7 +5594,7 @@ GameObject:
   - component: {fileID: 1885290198}
   - component: {fileID: 1885290197}
   m_Layer: 0
-  m_Name: PosGear5
+  m_Name: PosEngrenage5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5947,7 +5947,7 @@ GameObject:
   - component: {fileID: 1965933752}
   - component: {fileID: 1965933751}
   m_Layer: 0
-  m_Name: PosGear4
+  m_Name: PosEngrenage4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
