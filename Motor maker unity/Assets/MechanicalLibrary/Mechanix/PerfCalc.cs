@@ -593,17 +593,19 @@ namespace Mechanix
 
         private void updateStatSliders()
         {
-            RPMSlider.value = (float)(Math.Abs(RPMOut));
-            AccelerationSlider.value = (float)(acceleration * 10);
-            VitesseSlider.value = (float)(speed * 3.6);
-            HPSlider.value = (float)(horsePower);
-            TorqueSlider.value = (float)(torqueOut);
+            if (RPMSlider != null && AccelerationSlider != null && VitesseSlider != null && HPSlider != null && TorqueSlider != null && RPMStats != null && AccelStats != null && VitesseStats != null && HPStats != null && TorqueStats != null) { 
+                RPMSlider.value = (float)(Math.Abs(RPMOut));
+                AccelerationSlider.value = (float)(acceleration * 10);
+                VitesseSlider.value = (float)(speed * 3.6);
+                HPSlider.value = (float)(horsePower);
+                TorqueSlider.value = (float)(torqueOut);
 
-            RPMStats.text = $"{(Math.Abs(RPMOut)):F0}" + " (RPM)";
-            AccelStats.text = $"{(acceleration * 10):F1}" + " (m/s^2)";
-            VitesseStats.text = $"{(speed * 3.6):F1}" + " (km/h)";
-            HPStats.text = $"{horsePower:F1}" + " (hp)";
-            TorqueStats.text = $"{torqueOut:F1}" + " (N)";
+                RPMStats.text = $"{(Math.Abs(RPMOut)):F0}" + " (RPM)";
+                AccelStats.text = $"{(acceleration * 10):F1}" + " (m/s^2)";
+                VitesseStats.text = $"{(speed * 3.6):F1}" + " (km/h)";
+                HPStats.text = $"{horsePower:F1}" + " (hp)";
+                TorqueStats.text = $"{torqueOut:F1}" + " (N)";
+            }
 
         }
 
