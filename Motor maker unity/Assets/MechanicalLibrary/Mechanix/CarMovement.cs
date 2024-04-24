@@ -102,7 +102,7 @@ namespace Mechanix
 
         void Start()
         {
-           // cameratransmission();
+            //cameratransmission();
             flippedText.enabled = false;
             flippedpanel.SetActive(false);
         }

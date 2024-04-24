@@ -700,7 +700,7 @@ namespace Mechanix
                         updateCylinders("Choisi", angleRotation);
                         Debug.Log(gearSelected.Name.Substring(gearSelected.Name.Length - 1));
                     }
-                    else if (pos.name[7..].Equals(gearSelected.Name[9..]))
+                    else if (pos.name[3..].EndsWith(gearSelected.Name))
                     {
                         updateCylinders("Choisi", angleRotation);
                     }
@@ -764,7 +764,7 @@ namespace Mechanix
             frictionForceWind = 0.5 * dragCoefficient * frontCarArea * windDensity * (speed * speed);
             if (!gearSelected.Name.Equals("Reculons"))
             {
-                acceleration = ((frictionForceEngineReductionCoefficient * engineForce) - frictionForceWheels - (6.5 * frictionForceWind)) / (mass);
+                acceleration = ((frictionForceEngineReductionCoefficient * engineForce) - frictionForceWheels - (20 * frictionForceWind)) / (mass);
                 if (acceleration * 60 > (Wheels.FrictionForce * 120) / mass)
                 {
                     acceleration = ((Wheels.FrictionForce * 120) / mass) / 60;
@@ -774,10 +774,10 @@ namespace Mechanix
             {
                 if (speed < 0)
                 {
-                    acceleration = ((frictionForceEngineReductionCoefficient * engineForce * 0.5) + (0.5 * frictionForceWheels + (20 * frictionForceWind))) / (mass);
+                    acceleration = ((frictionForceEngineReductionCoefficient * engineForce * 0.5) + (0.5 * frictionForceWheels + (40 * frictionForceWind))) / (mass);
                 } else if (speed >= 0)
                 {
-                    acceleration = ((frictionForceEngineReductionCoefficient * engineForce * 0.5) - (0.5 * frictionForceWheels + (20 * frictionForceWind))) / (mass);
+                    acceleration = ((frictionForceEngineReductionCoefficient * engineForce * 0.5) - (0.5 * frictionForceWheels + (40 * frictionForceWind))) / (mass);
                 }
             }
         }

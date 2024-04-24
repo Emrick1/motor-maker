@@ -360,7 +360,7 @@ namespace Mechanix
             VitesseMaxSlider.value = (float) (350 - (frictionForce / 2));
             FrictionStats.text = $"{frictionForce:F3}" + " (N)";
             AccelStats.text = $"{((frictionForce * 120) / mass):F3}" + " (m/s^2)";
-            VitesseMaxStats.text = $"{(200 - (frictionForce)/5 + wheelSpeedOffset):F3}" + " (km/h)";
+            //VitesseMaxStats.text = $"{(200 - (frictionForce)/5 + wheelSpeedOffset):F3}" + " (km/h)";
 
         }
 
