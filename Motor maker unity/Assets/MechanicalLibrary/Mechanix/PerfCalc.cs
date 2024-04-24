@@ -725,6 +725,7 @@ namespace Mechanix
                 if (cylBloque5R != null)
                 {
                     cylBloque5R.transform.position = Vector3.Lerp(cylBloque5R.transform.position, posCylBloque5R + direcion * 0.25f, 3 * Time.deltaTime);
+                    cylBloque12.transform.position = Vector3.Lerp(cylBloque12.transform.position, posCylBloque12, 3* Time.deltaTime);
                 }
             } 
             else
