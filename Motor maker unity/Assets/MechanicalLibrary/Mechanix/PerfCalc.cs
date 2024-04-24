@@ -243,6 +243,7 @@ namespace Mechanix
         /// GameObject de l'engrenage pour le reculons dans la sc�ne actuelle.
         /// </summary>
         public GameObject posReculon;
+        public GameObject posFolle;
         /// <summary>
         /// GameObject de l'engrenage pour le reculons dans les autres sc�ne.
         /// </summary>
@@ -340,12 +341,29 @@ namespace Mechanix
                     gearDuplique.transform.SetParent(posMenant.transform, false);
                     gearDupliqueRetour.transform.SetParent(posMenantRetour.transform, false);
 
-                    gearMat.color = Color.gray;
+                    gearMat.color = Color.HSVToRGB(0, 0, 0.5f + (((float)g.NbDents) - 10f) * (1f - 0.5f) / (30f - 10f));
                 }
                 else if (g.Name.StartsWith("R"))
                 {
                     gearDuplique.transform.SetParent(posReculon.transform, false);
-                    gearDupliqueRetour.transform.SetParent(posReculonRetour.transform, false);
+
+                    string fieldNameFolle = "gear" + (30 - g.NbDents);
+                    FieldInfo fieldFolle = GetType().GetField(fieldNameFolle);
+
+                    GameObject gearFolle = Instantiate((GameObject)fieldFolle.GetValue(this));
+                    GameObject gearRetourReculons = Instantiate((GameObject)fieldFolle.GetValue(this));
+                    gearRetourReculons.transform.SetParent(posReculonRetour.transform, false);
+                    gearFolle.transform.SetParent(posFolle.transform, false);
+
+                    gearFolle.transform.localPosition = Vector3.zero;
+                    gearFolle.transform.localRotation = Quaternion.identity;
+                    gearFolle.transform.localScale = Vector3.one;
+
+                    gearRetourReculons.transform.localPosition = Vector3.zero;
+                    gearRetourReculons.transform.localRotation = Quaternion.identity;
+                    gearRetourReculons.transform.localScale = Vector3.one;
+
+                    gearMat.color = Color.HSVToRGB(0, 0, 0.5f + (((float)g.NbDents) - 10f) * (1f - 0.5f) / (30f - 10f));
                 }
                 else
                 {
@@ -628,11 +646,23 @@ namespace Mechanix
             FieldInfo field = GetType().GetField(fieldName);
             GameObject cyl = (GameObject)field.GetValue(this);
 
+            Material cylMat = new Material(gear10.GetComponent<Renderer>().sharedMaterial);
+
             if (cylName.Equals("Choisi"))
             {
-                Material cylMat = new Material(gear10.GetComponent<Renderer>().sharedMaterial);
-                cylMat.color = Color.HSVToRGB((float.Parse(gearSelected.Name.Substring(9)) - 1f) / 5f, 1, 0.5f + (((float)gearSelected.NbDents) - 10f) * (1f - 0.5f) / (30f - 10f));
+                if (gearSelected.Name != "Reculons")
+                {
+                    cylMat.color = Color.HSVToRGB((float.Parse(gearSelected.Name.Substring(9)) - 1f) / 5f, 1, 0.5f + (((float)gearSelected.NbDents) - 10f) * (1f - 0.5f) / (30f - 10f));
+                }
+                else
+                {
+                    cylMat.color = Color.HSVToRGB(0, 0, 0.5f + (((float)gearSelected.NbDents) - 10f) * (1f - 0.5f) / (30f - 10f));
+                }
                 cyl.GetComponent<Renderer>().material = cylMat;
+            }
+            else if (cylName.Equals("Menant"))
+            {
+                cylMat.color = Color.HSVToRGB(0, 0, 0.5f + (((float)Gearbox.Gears(1).NbDents) - 10f) * (1f - 0.5f) / (30f - 10f));
             }
 
             cyl.transform.Rotate(Vector3.forward, (float)angleRotation * Time.deltaTime * echelleTemporelle);
@@ -649,11 +679,11 @@ namespace Mechanix
             {
                 if (pos != null && pos.name.Substring(0, 3).Equals("Pos"))
                 {
-                    if (!pos.name.EndsWith("Retour"))
+                    if (!pos.name.EndsWith("Retour") && !pos.name.EndsWith("Folle"))
                     {
                         for (int i = 0; i < Gearbox.GearsList().Count; i++)
                         {
-                            if (pos.name[4..].Equals(Gearbox.Gears(i).Name))
+                            if (pos.name[3..].Equals(Gearbox.Gears(i).Name))
                             {
                                 angleRotation = (calculateRatio(Gearbox.Gears(1), Gearbox.Gears(i), false) * RPM * 360) / (60);
                             }
@@ -665,7 +695,8 @@ namespace Mechanix
                         updateCylinders("Retour", angleRotation);
                     }
 
-                    if (pos.name[7..].Equals(gearSelected.Name[9..]))
+                    
+                    if (pos.name[3..].EndsWith(gearSelected.Name))
                     {
                         updateCylinders("Choisi", angleRotation);
                     }
@@ -683,14 +714,17 @@ namespace Mechanix
         public void translationCylindresBloque()
         {
             Vector3 direcion = Vector3.right;
-            String noGear = gearSelected.Name.Substring(9);
 
             if (gearSelected.Name.StartsWith("R"))
             {
-                cylBloque5R.transform.position = Vector3.Lerp(cylBloque5R.transform.position, posCylBloque5R + direcion * 0.25f, 3 * Time.deltaTime);
+                if (cylBloque5R != null)
+                {
+                    cylBloque5R.transform.position = Vector3.Lerp(cylBloque5R.transform.position, posCylBloque5R + direcion * 0.25f, 3 * Time.deltaTime);
+                }
             } 
             else
             {
+                String noGear = gearSelected.Name.Substring(9);
                 if (int.Parse(noGear) % 2 == 1)
                 {
                     direcion = Vector3.left;
