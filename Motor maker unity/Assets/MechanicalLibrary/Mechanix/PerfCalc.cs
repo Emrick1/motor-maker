@@ -270,6 +270,17 @@ namespace Mechanix
         public Button bouttonStats;
 
 
+        public Slider RPMSlider;
+        public Slider AccelerationSlider;
+        public Slider VitesseSlider;
+        public Slider HPSlider;
+        public Slider TorqueSlider;
+        public TextMeshProUGUI RPMStats;
+        public TextMeshProUGUI AccelStats;
+        public TextMeshProUGUI VitesseStats;
+        public TextMeshProUGUI HPStats;
+        public TextMeshProUGUI TorqueStats;
+
         /// <summary>
         /// Calcule la torque produit par un moteur.
         /// </summary>
@@ -576,11 +587,29 @@ namespace Mechanix
                 statWindow.UpdateTexte(GetStats());
             }
             WriteStats();
+            updateStatSliders();
+
         }
 
-    /// <summary>
-    /// G�re l'affichage de test des dif�rentes donn�es calcul�es.
-    /// </summary>
+        private void updateStatSliders()
+        {
+            RPMSlider.value = (float)(Math.Abs(RPMOut));
+            AccelerationSlider.value = (float)(acceleration * 10);
+            VitesseSlider.value = (float)(speed * 3.6);
+            HPSlider.value = (float)(horsePower);
+            TorqueSlider.value = (float)(torqueOut);
+
+            RPMStats.text = $"{(Math.Abs(RPMOut)):F0}" + " (RPM)";
+            AccelStats.text = $"{(acceleration * 10):F1}" + " (m/s^2)";
+            VitesseStats.text = $"{(speed * 3.6):F1}" + " (km/h)";
+            HPStats.text = $"{horsePower:F1}" + " (hp)";
+            TorqueStats.text = $"{torqueOut:F1}" + " (N)";
+
+        }
+
+        /// <summary>
+        /// G�re l'affichage de test des dif�rentes donn�es calcul�es.
+        /// </summary>
         private void WriteStats()
         {
             if (ValueText != null)
