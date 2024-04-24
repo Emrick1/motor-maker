@@ -174,7 +174,7 @@ namespace Mechanix
                 float x = rec.lX;
                 frontLeft.steerAngle = 1f * (x / 32764);
                 frontRight.steerAngle = 1f * (x / 32764);
-                if (PerfCalc.Speed > 0)
+                if (PerfCalc.Speed > 1 || PerfCalc.Speed < -1)
                 {
                     _rb.MoveRotation(_rb.rotation * Quaternion.Euler(new Vector3(0, x / 3000, 0) * Time.fixedDeltaTime));
                 }
