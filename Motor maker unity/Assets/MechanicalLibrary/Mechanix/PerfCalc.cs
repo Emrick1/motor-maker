@@ -442,7 +442,7 @@ namespace Mechanix
                 y = rec.lY;
             }
 
-            if (Input.GetKey(KeyCode.W))
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
             {
                 y = -32767;
             }
