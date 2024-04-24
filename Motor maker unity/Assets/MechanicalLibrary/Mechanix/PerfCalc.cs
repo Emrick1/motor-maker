@@ -663,7 +663,10 @@ namespace Mechanix
             {
                 //cylMat.color = Color.HSVToRGB(0, 0, 0.5f + (((float)Gearbox.Gears(1).NbDents) - 10f) * (1f - 0.5f) / (30f - 10f));
             }
-
+            if(gearSelected.Name == "Reculons")
+            {
+                angleRotation *= -1;
+            }
             cyl.transform.Rotate(Vector3.forward, (float)angleRotation * Time.deltaTime * echelleTemporelle);
         }
 
