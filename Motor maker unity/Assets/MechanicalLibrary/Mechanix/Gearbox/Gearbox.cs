@@ -199,7 +199,7 @@ namespace Mechanix
 
         public static double calculateRatio(Gear menant, Gear menee, Boolean recule)
         {
-            double ratio = ((double)(menee.NbDents)/(double)(menant.NbDents)) * 0.25;
+            double ratio = ((double)(menee.NbDents)/(double)(menant.NbDents))  * 0.25 ;
 
             if(recule) 
             {

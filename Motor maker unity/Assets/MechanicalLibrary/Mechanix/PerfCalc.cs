@@ -293,11 +293,11 @@ namespace Mechanix
                 RPMmax = 7100;
                 if (RPM <= 4000)
                 {
-                    engineTorque = (0.000016375 * (Math.Pow((RPM), 2))) + 173;
+                    engineTorque = (0.0000104375 * (Math.Pow((RPM), 2))) + 173;
                 }
                 else
                 {
-                    engineTorque = (-0.000001625 * (Math.Pow(((RPM) - 6000), 2))) + 500;
+                    engineTorque = (-0.00004 * (Math.Pow(((RPM) - 6000), 2))) + 500;
                 }
                 
             //v8
@@ -305,11 +305,11 @@ namespace Mechanix
                 RPMmax = 7500;
                 if (RPM <= 4000)
                 {
-                    engineTorque = (0.000028 * (Math.Pow((RPM), 2))) + 380;
+                    engineTorque = (0.0000133125 * (Math.Pow((RPM), 2))) + 429;
                 }
                 else
                 {
-                    engineTorque = (-0.000001625 * (Math.Pow(((RPM) - 6000), 2))) + 707;
+                    engineTorque = (-0.000065 * (Math.Pow(((RPM) - 5000), 2))) + 707;
                 }
 
             } else
