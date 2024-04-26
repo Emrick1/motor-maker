@@ -8,6 +8,7 @@ using UnityEngine.UIElements;
 
 namespace Mechanix
 {
+    /*
     public class StatWindow : EditorWindow
     {
         private VisualElement root;
@@ -39,4 +40,5 @@ namespace Mechanix
             texte = newTexte;
         }
     }
+    */
 }

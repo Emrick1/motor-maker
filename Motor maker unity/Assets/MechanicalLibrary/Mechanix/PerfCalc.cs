@@ -266,7 +266,7 @@ namespace Mechanix
 
         public GameObject CMCamera;
         public Toggle ToggleVolant;
-        private StatWindow statWindow;
+        //private StatWindow statWindow;
         public Button bouttonStats;
 
 
@@ -442,7 +442,7 @@ namespace Mechanix
                 sliderEchelleTemporelle.onValueChanged.AddListener(delegate { echelleTemporelle = sliderEchelleTemporelle.value; });
             }
             
-            statWindow = new StatWindow();
+            //statWindow = new StatWindow();
             if (bouttonStats != null)
             {
                 bouttonStats.onClick.AddListener(delegate { Show(); });
@@ -582,10 +582,12 @@ namespace Mechanix
             rotateComponents();
 
             Wheels.CalculateTyreFriction();
+            /*
             if (statWindow != null)
             {
                 statWindow.UpdateTexte(GetStats());
             }
+            */
             WriteStats();
             updateStatSliders();
 
@@ -638,7 +640,7 @@ namespace Mechanix
 
         private void Show()
         {
-            statWindow.Show();
+            //statWindow.Show();
         }
 
         private string GetStats()
