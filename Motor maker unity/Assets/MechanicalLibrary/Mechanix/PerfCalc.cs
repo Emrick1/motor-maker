@@ -280,6 +280,7 @@ namespace Mechanix
         public TextMeshProUGUI VitesseStats;
         public TextMeshProUGUI HPStats;
         public TextMeshProUGUI TorqueStats;
+        private float update;
 
         /// <summary>
         /// Calcule la torque produit par un moteur.
@@ -406,6 +407,7 @@ namespace Mechanix
 
         void Start()
         {
+            Application.targetFrameRate = 60;
             if (ToggleVolant != null) 
             {
             ToggleVolant.isOn = VolantToggleBool;
@@ -503,14 +505,14 @@ namespace Mechanix
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow) || (y != 0 && y <= 32761))
             {
                 
-                speed += acceleration / 30;
+                speed += acceleration / 4.6;
                 if (RPM < (((y - 32767) / 32767) * -0.5) * RPMmax)
                 {
-                    RPM += (((y - 32767) / 32767) * -0.5); 
+                    RPM += (((y - 32767) / 32767) * -0.5 * 6.5); 
                 } 
                 else
                 {
-                    RPM -= (((y - 60000) / 32767) * -0.5);
+                    RPM -= (((y - 60000) / 32767) * -0.5 * 6.5);
                 }
             }
             else if (RPM > RPMmin)
@@ -518,7 +520,7 @@ namespace Mechanix
                 RPM -= 1;
                 if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
                 {
-                    RPM = (int)((RPM * 0.999) - 1);
+                    RPM = (int)((RPM * 0.99) - 1);
                 }
             }
             else if (RPM < RPMmin)
@@ -528,14 +530,14 @@ namespace Mechanix
 
             if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow) || (z != 0 && z <= 32761))
             {
-                acceleration = ((speed / -75) * (((z - 32767) / 32767) * -0.5)) - modificateurReculons * 5;
+                acceleration = ((speed / -12) * (((z - 32767) / 32767) * -0.5)) - modificateurReculons * 5;
                 speed += acceleration / 60;
             }
 
             if (!(Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) && !(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) && !(z != 0 && z <= 32761) && !(y != 0 && y <= 32761))
             {
 
-                acceleration = (speed / -180) - modificateurReculons;
+                acceleration = (speed / -30) - modificateurReculons;
                 speed += acceleration / 60;
             }
 
@@ -590,7 +592,6 @@ namespace Mechanix
             */
             WriteStats();
             updateStatSliders();
-
         }
 
         private void updateStatSliders()
