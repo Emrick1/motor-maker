@@ -99,6 +99,8 @@ namespace Mechanix
         {
             flippedText.enabled = false;
             flippedpanel.SetActive(false);
+            PerfCalc.Speed = 0;
+            PerfCalc.GetRPM = 0;
         }
 
         void Update()
