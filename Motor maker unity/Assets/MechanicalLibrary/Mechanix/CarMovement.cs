@@ -39,6 +39,7 @@ namespace Mechanix
         [SerializeField] public TextMeshProUGUI arrowkeysText;
         [SerializeField] public TextMeshProUGUI arrowkeysText2;
         [SerializeField] public TextMeshProUGUI currentGearText;
+        [SerializeField] public TextMeshProUGUI currentEngineText;
         /// <summary>
         /// Zone de texte affich� pour retourner la voiture.
         /// </summary>
