@@ -48,6 +48,7 @@ namespace Mechanix
         /// </summary>
         [SerializeField] public GameObject SpeedometerArrow;
         [SerializeField] public GameObject RPMArrow;
+        [SerializeField] public GameObject RPMaViserTrapeze;
         /// <summary>
         /// Vecteur de v�locit� angulaire.
         /// </summary>
