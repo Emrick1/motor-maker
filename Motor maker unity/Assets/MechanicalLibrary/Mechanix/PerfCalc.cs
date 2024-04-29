@@ -296,9 +296,13 @@ namespace Mechanix
                 {
                     engineTorque = (0.0000104375 * (Math.Pow((RPM), 2))) + 173;
                 }
-                else
+                else if (RPM <= 6000)
                 {
                     engineTorque = (-0.00004 * (Math.Pow(((RPM) - 6000), 2))) + 500;
+                }
+                else
+                {
+                    engineTorque = (-0.00008 * (Math.Pow(((RPM) - 6000), 2))) + 500;
                 }
                 
             //v8
