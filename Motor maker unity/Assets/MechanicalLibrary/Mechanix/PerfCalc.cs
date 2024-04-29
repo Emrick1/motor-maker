@@ -774,7 +774,10 @@ namespace Mechanix
                 if (cylBloque5R != null)
                 {
                     cylBloque5R.transform.position = Vector3.Lerp(cylBloque5R.transform.position, posCylBloque5R + direcion * 0.25f, 3 * Time.deltaTime);
+                    cylBloque5R.GetComponent<Renderer>().material.color = new Color(1, 1, 1);
+
                     cylBloque12.transform.position = Vector3.Lerp(cylBloque12.transform.position, posCylBloque12, 3* Time.deltaTime);
+                    cylBloque12.GetComponent<Renderer>().material.color = new Color(.8f, .8f, .8f);
                 }
             } 
             else
@@ -794,11 +797,13 @@ namespace Mechanix
 
                         if (g.name.Contains(noGear))
                         {
-                            g.transform.position = Vector3.Lerp(g.transform.position, (Vector3)field.GetValue(this) + direcion * 0.25f, 3*Time.deltaTime);
+                            g.transform.position = Vector3.Lerp(g.transform.position, (Vector3)field.GetValue(this) + direcion * 0.25f, 3 * Time.deltaTime);
+                            g.GetComponent<Renderer>().material.color = Color.HSVToRGB((float.Parse(gearSelected.Name.Substring(9)) - 1f) / 5f, .4f, 1);
                         }
                         else
                         {
                             g.transform.position = Vector3.Lerp(g.transform.position, (Vector3)field.GetValue(this), 3*Time.deltaTime);
+                            g.GetComponent<Renderer>().material.color = new Color(.8f, .8f, .8f);
                         }
                     }
                 }
