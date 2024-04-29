@@ -517,7 +517,7 @@ namespace Mechanix
             }
             else if (RPM > RPMmin)
             {
-                RPM -= 1;
+                RPM = (int)((RPM * 0.996) - 0.3);
                 if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
                 {
                     RPM = (int)((RPM * 0.99) - 1);
@@ -538,7 +538,7 @@ namespace Mechanix
             {
 
                 acceleration = (speed / -30) - modificateurReculons;
-                speed += acceleration / 15;
+                speed += acceleration / 30;
             }
 
             for (int i = 1; i <= Gearbox.GearsList().Count - 1; i++)
