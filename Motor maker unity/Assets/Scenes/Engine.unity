@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7732a3c2925d3c4981aadda2ca1018f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  circleSprite: {fileID: 21300000, guid: eea1ff4eaa2e1ee498caea8bccabc5fa, type: 3}
+  circleSprite: {fileID: 21300000, guid: f8a6f132206355643a75b3fb850ad35e, type: 3}
   graphContainer: {fileID: 7159471}
   boutonV6: {fileID: 443751991}
   boutonV8: {fileID: 513143344}
@@ -692,7 +692,6 @@ MonoBehaviour:
   V6: {fileID: 398216606}
   V8: {fileID: 1487989139}
   electrique: {fileID: 1477829563}
-  moteurChoisie: {fileID: 0}
 --- !u!1 &398216606
 GameObject:
   m_ObjectHideFlags: 0
