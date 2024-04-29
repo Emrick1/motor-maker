@@ -96,7 +96,8 @@ public class WindowGraph : MonoBehaviour
         GameObject gameObject = new GameObject("circle", typeof(Image));
         gameObject.transform.SetParent(graphContainer, false);
         gameObject.GetComponent<Image>().sprite = circleSprite;
-        
+        gameObject.GetComponent<Image>().color = Color.HSVToRGB((anchoredPosition.y/750)+ 0.05f,1,1);
+
         RectTransform rectTransform = gameObject.GetComponent<RectTransform>();
         rectTransform.anchoredPosition = anchoredPosition;
         rectTransform.sizeDelta = new Vector2(11, 11);
