@@ -490,7 +490,7 @@ namespace Mechanix
                 modificateurReculons = 0.15;
                 if (speed < 0)
                 {
-                    speed = (speed * 0.999) + 0.03;
+                    speed = (speed * 0.99) + 0.06;
                 }
             }
             else
@@ -498,7 +498,7 @@ namespace Mechanix
                 modificateurReculons = -0.15;
                 if (speed > 0)
                 {
-                    speed = (speed * 0.999) - 0.03;
+                    speed = (speed * 0.99) - 0.06;
                 } 
             }
 
@@ -531,14 +531,14 @@ namespace Mechanix
             if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow) || (z != 0 && z <= 32761))
             {
                 acceleration = ((speed / -12) * (((z - 32767) / 32767) * -0.5)) - modificateurReculons * 5;
-                speed += acceleration / 60;
+                speed += acceleration / 15;
             }
 
             if (!(Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) && !(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) && !(z != 0 && z <= 32761) && !(y != 0 && y <= 32761))
             {
 
                 acceleration = (speed / -30) - modificateurReculons;
-                speed += acceleration / 60;
+                speed += acceleration / 15;
             }
 
             for (int i = 1; i <= Gearbox.GearsList().Count - 1; i++)
