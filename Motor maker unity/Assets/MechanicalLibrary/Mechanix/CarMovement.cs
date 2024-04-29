@@ -49,7 +49,9 @@ namespace Mechanix
         /// </summary>
         [SerializeField] public GameObject SpeedometerArrow;
         [SerializeField] public GameObject RPMArrow;
-        [SerializeField] public GameObject RPMaViserTrapeze;
+        [SerializeField] public GameObject Trapeze1;
+        [SerializeField] public GameObject Trapeze2;
+        [SerializeField] public GameObject Trapeze3;
         /// <summary>
         /// Vecteur de v�locit� angulaire.
         /// </summary>
@@ -103,6 +105,25 @@ namespace Mechanix
             flippedpanel.SetActive(false);
             PerfCalc.Speed = 0;
             PerfCalc.GetRPM = 0;
+            Trapeze1.SetActive(false);
+            Trapeze2.SetActive(false);
+            Trapeze3.SetActive(false);
+            switch (engineList.moteurSelected)
+            {
+                case 0:
+                    Trapeze1.SetActive(true);
+                    break;
+                case 1:
+                    Trapeze1.SetActive(true);
+                    break;
+                case 2:
+                    Trapeze2.SetActive(true);
+                    break;
+                case 3:
+                    Trapeze3.SetActive(true);
+                    break;
+            }
+
         }
 
         void Update()
