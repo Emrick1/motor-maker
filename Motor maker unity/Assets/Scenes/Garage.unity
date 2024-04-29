@@ -3706,7 +3706,7 @@ MonoBehaviour:
   m_MinValue: 0.001
   m_MaxValue: 1.001
   m_WholeNumbers: 0
-  m_Value: 0.101
+  m_Value: 0.501
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -7197,6 +7197,7 @@ MonoBehaviour:
   cylBloque5R: {fileID: 1378354070}
   posCylBloque5R: {x: 0, y: 0, z: 0}
   sliderEchelleTemporelle: {fileID: 740084215}
+  CMCamera: {fileID: 0}
   ToggleVolant: {fileID: 786437786}
   bouttonStats: {fileID: 312563501}
   RPMSlider: {fileID: 2097975925}
