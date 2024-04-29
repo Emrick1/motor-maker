@@ -66,7 +66,7 @@ public class engineList : MonoBehaviour
     /// </summary>
     public GameObject electrique;
 
-    public GameObject moteurChoisie;
+    public static GameObject moteurChoisie;
 
     public static int moteurSelected = 0;
 
@@ -77,15 +77,19 @@ public class engineList : MonoBehaviour
             case 0:
                 moteurSelected = 1;
                 moteurChoisie = V6;
+                moteurChoisie.name = "V6";
                 break;
             case 1:
                 moteurChoisie = V6;
+                moteurChoisie.name = "V6";
                 break;
             case 2:
                 moteurChoisie = V8;
+                moteurChoisie.name = "V8";
                 break;
             case 3:
                 moteurChoisie = electrique;
+                moteurChoisie.name = "Électrique";
                 break;
         }
         hideEngine();
