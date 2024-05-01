@@ -220,7 +220,12 @@ namespace Mechanix
                 _rb.transform.Translate(new Vector3 (0, 5, 0), Space.World);
                 _rb.velocity = new Vector3(_rb.velocity.x, 0, _rb.velocity.z);
             }
-
+            if (Input.GetKey(KeyCode.B))
+            {
+                _rb.transform.position = new Vector3(4353.4f, 0 , 529.3f);
+                _rb.velocity = new Vector3(0, 0, 0);
+                _rb.angularVelocity = new Vector3(0, 0, 0);
+            }
             UpdateSpeedometer();
         }
      
