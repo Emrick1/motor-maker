@@ -3,6 +3,7 @@ using System;
 using System.Linq;
 using System.Numerics;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.SceneManagement;
@@ -204,14 +205,21 @@ namespace Mechanix
                 frontRight.steerAngle = 1f * (x / 32764);
                 if (PerfCalc.Speed > 1 || PerfCalc.Speed < -1)
                 {
-                    _rb.MoveRotation(_rb.rotation * Quaternion.Euler(new Vector3(0, x / 3000, 0) * Time.fixedDeltaTime));
+                    _rb.MoveRotation(_rb.rotation * Quaternion.Euler(new Vector3(0, x / 500, 0) * Time.fixedDeltaTime));
                 }
             }
+            
 
             UpdateWheel(frontLeft, frontLeftTransform);
             UpdateWheel(frontRight, frontRightTransform);
             UpdateWheel(rearLeft, rearLeftTransform);
             UpdateWheel(rearRight, rearRightTransform);
+
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                _rb.transform.Translate(new Vector3 (0, 5, 0), Space.World);
+                _rb.velocity = new Vector3(_rb.velocity.x, 0, _rb.velocity.z);
+            }
 
             UpdateSpeedometer();
         }
