@@ -258,7 +258,7 @@ namespace Mechanix
         public Vector3 posCylBloque34;
         public GameObject cylBloque5R;
         public Vector3 posCylBloque5R;
-        public static bool VolantToggleBool = false;
+        public static bool VolantToggleBool = true;
         /// <summary>
         /// �chelle temporelle de la rotation de la bo�te de vitesse.
         /// </summary>
@@ -605,13 +605,13 @@ namespace Mechanix
         private void updateStatSliders()
         {
             if (RPMSlider != null && AccelerationSlider != null && VitesseSlider != null && HPSlider != null && TorqueSlider != null && RPMStats != null && AccelStats != null && VitesseStats != null && HPStats != null && TorqueStats != null) { 
-                RPMSlider.value = (float)(Math.Abs(RPMOut));
+                RPMSlider.value = (float)(Math.Abs(RPM));
                 AccelerationSlider.value = (float)(acceleration * 10);
                 VitesseSlider.value = (float)(speed * 3.6);
                 HPSlider.value = (float)(horsePower);
                 TorqueSlider.value = (float)(torqueOut);
 
-                RPMStats.text = $"{(Math.Abs(RPMOut)):F0}" + " (RPM)";
+                RPMStats.text = $"{(Math.Abs(RPM)):F0}" + " (RPM)";
                 AccelStats.text = $"{(acceleration * 10):F1}" + " (m/s^2)";
                 VitesseStats.text = $"{(speed * 3.6):F1}" + " (km/h)";
                 HPStats.text = $"{horsePower:F1}" + " (hp)";
